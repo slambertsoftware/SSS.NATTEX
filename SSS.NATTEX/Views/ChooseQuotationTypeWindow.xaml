@@ -1,0 +1,82 @@
+﻿<Window x:Class="SSS.NATTEX.Views.ChooseQuotationTypeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SSS.NATTEX.Views"
+        mc:Ignorable="d"
+        Title="Select Quotation Type" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="46"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0"  Margin="0" BorderBrush="#FF231F1F" BorderThickness="0.5">
+            <Border.Background>
+                <ImageBrush ImageSource="..\Resources\Images\2f2f2f.png"  TileMode="Tile"/>
+            </Border.Background>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="81"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="1" Foreground="#FFF0ECEC" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontFamily="Arial" FontWeight="Bold" Height="20" Margin="53,5,54,5" Width="443"><Run Text="NATTEX Application Management System (v1.0.0)"/><Run Text="  (NAMS"/><Run Text=")"/></TextBlock>
+                <Button Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Width="150" Height="20" Margin="1, 5, 10, 1" HorizontalAlignment="Right" VerticalAlignment="Top" BorderBrush="#FFF" Name="LogoutButton" FontFamily="Arial" Background="#FFFF0800" Foreground="#FFF3ECEC">
+                    <Button.Content>
+                        <TextBlock Text="LOGOUT" FontWeight="Bold" Foreground="#FFFFFF"></TextBlock>
+                    </Button.Content>
+                </Button>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Current Date:" FontFamily="Arial" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 5,1" FontSize="11"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="20 October 2017" FontFamily="Arial" FontWeight="Bold"  Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="11"/>
+                <WrapPanel Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"  Orientation="Horizontal" Margin="0,0, 0,0" VerticalAlignment="Center">
+                    <TextBlock Text="Application User:" FontFamily="Arial" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0, 0,1" FontSize="11"/>
+                    <TextBlock Text="John Doe" FontFamily="Arial" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,10,1" FontSize="11"/>
+                </WrapPanel>
+            </Grid>
+        </Border>
+        <Border Grid.Row ="1" Margin="1, 1, 1, 1" BorderThickness="0.5" BorderBrush="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Border.Background>
+                <ImageBrush ImageSource="../Resources\Images\sss_logo_main.png" Opacity="0.2" Stretch="Uniform"/>
+            </Border.Background>
+            <DockPanel>
+                <Menu DockPanel.Dock="Top">
+                    <MenuItem Header="Quotations" FontFamily="Arial">
+                        <MenuItem Header="New Quoation" IsCheckable="true"/>
+                        <MenuItem Header="Modify Quoation" IsCheckable="true"/>
+                        <MenuItem Header="Remove Quoation" IsCheckable="true"/>
+                        <MenuItem Header="View Quoation" IsCheckable="true"/>
+                    </MenuItem>
+
+                    <MenuItem Header="Applications">
+                        <MenuItem Header="New Application" IsCheckable="true"/>
+                        <MenuItem Header="Update Application" IsCheckable="true"/>
+                        <MenuItem Header="Remove Application" IsCheckable="true"/>
+                        <MenuItem Header="View Application" IsCheckable="true"/>
+                    </MenuItem>
+                    <MenuItem Header="Reports" />
+                    <MenuItem Header="Administration">
+                        <MenuItem Header="Application Setup" IsCheckable="true"/>
+                        <MenuItem Header="User Management" IsCheckable="true"/>
+                    </MenuItem>
+                    <MenuItem Header="Help">
+                        <MenuItem Header="Abouts NAMS" IsCheckable="true"/>
+                    </MenuItem>
+                </Menu>
+                <TextBox Name="MyText" AcceptsReturn="True" AcceptsTab="True" TextWrapping="NoWrap" />
+            </DockPanel>
+        </Border>
+        <Border Grid.Row="2" x:Name="FooterBorder"  Margin="0" BorderBrush="#FF231F1F" BorderThickness="0.5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Border.Background>
+                <ImageBrush ImageSource="../Resources\Images\2f2f2f.png"  TileMode="Tile"/>
+            </Border.Background>
+            <TextBlock Text="Developed by Slambert Software Solutions (Pty) Ltd." FontSize="8" Foreground="#FFF0ECEC" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        </Border>
+    </Grid>
+</Window>

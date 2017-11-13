@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="SSS.NATTEX.Views.Controls.ProspectiveMemberSchemeUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:viewModel="clr-namespace:SSS.NATTEX.ViewModel"
+             xmlns:local="clr-namespace:SSS.NATTEX.Views.Controls"
+             xmlns:model="clr-namespace:SSS.NATTEX.Models"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" FontFamily="Arial">
+    <UserControl.Resources>
+        <DataTemplate x:Key="Level2">
+            <TextBlock Text="{Binding Path=IDNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+        </DataTemplate>
+        <HierarchicalDataTemplate x:Key="Level1"  ItemsSource="{Binding Members, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource Level2}">
+            <TextBlock Text="{Binding Description}" />
+        </HierarchicalDataTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <TreeView x:Name="memberSchemesTreeview" 
+                  ItemsSource="{Binding Path=ProspectiveMemberSchemeList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                  ItemTemplate="{StaticResource Level1}"
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+        </TreeView>
+    </Grid>
+</UserControl>

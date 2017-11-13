@@ -1,0 +1,119 @@
+﻿<Window x:Class="SSS.NATTEX.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SSS.NATTEX.Views"
+        xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:dockctrl="clr-namespace:Xceed.Wpf.AvalonDock.Controls;assembly=Xceed.Wpf.AvalonDock"
+        mc:Ignorable="d"
+        WindowState="Maximized" 
+        Title="Main">
+    <Window.Resources>
+        <Style x:Key="LogoutRoundButtonTemplate" TargetType="Button">
+            <Setter Property="Background" Value="#FF8D9195" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+            <Setter Property="Height" Value="30"></Setter>
+            <Setter Property="BorderBrush" Value="#FFF"></Setter>
+            <Setter Property="FontFamily" Value="Arial"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="15" Background="{TemplateBinding Background}"
+                                BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"></RowDefinition>
+            <RowDefinition Height="22"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="22"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0"  Margin="0" BorderBrush="#FF231F1F" BorderThickness="0.5">
+            <Border.Background>
+                <ImageBrush ImageSource="..\Resources\Images\2f2f2f.png"  TileMode="Tile"/>
+            </Border.Background>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Grid.Row="0" Grid.Column="2" Foreground="#FFF0ECEC" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontFamily="Arial" FontWeight="Bold" Height="20" Margin="53,5,54,5" Width="443"><Run Text="NATTEX Application Management System (v1.0.0)"/><Run Text="  (NAMS"/><Run Text=")"/></TextBlock>
+                <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource LogoutRoundButtonTemplate}" Width="150" Height="25" Margin="1, 5, 10, 1" HorizontalAlignment="Right" VerticalAlignment="Top" BorderBrush="#FFF" Name="LogoutButton" FontFamily="Arial" Background="#FFD83622" Foreground="#FFF3ECEC">
+                    <Button.Content>
+                        <TextBlock Text="LOGOUT" FontWeight="Bold" Foreground="#FFFFFF"></TextBlock>
+                    </Button.Content>
+                </Button>
+                <TextBlock Grid.Row="1" Grid.Column="2"  Text="{Binding Source={x:Static sys:DateTime.Now}, StringFormat='{} {0: dddd, MM.dd.yy, HH:mm:ss}'}" FontFamily="Arial" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0, 5,1" FontSize="10"/>
+                <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal" Margin="0,0, 10,0" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <TextBlock Text="Application User:" FontFamily="Arial" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0, 0,1" FontSize="10"/>
+                    <TextBlock Text="Administrator" FontFamily="Arial" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,10,1" FontSize="10"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border Grid.Row ="1" Margin="1, 1, 1, 1" BorderThickness="0.5" BorderBrush="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Border.Background>
+                <ImageBrush ImageSource="../Resources\Images\sss_logo_main.png" Opacity="0.1" Stretch="None" />
+            </Border.Background>
+            <DockPanel>
+                <Menu DockPanel.Dock="Top">
+                    <MenuItem Header="Quotations" FontFamily="Arial">
+                        <MenuItem Header="New Quotation" IsCheckable="true" Click="MenuItem_Click"/>
+                        <MenuItem Header="Modify Quoation" IsCheckable="true"/>
+                        <MenuItem Header="Remove Quoation" IsCheckable="true"/>
+                        <MenuItem Header="View Quoation" IsCheckable="true"/>
+                    </MenuItem>
+
+                    <MenuItem Header="Applications">
+                        <MenuItem Header="New Application" IsCheckable="true"/>
+                        <MenuItem Header="Update Application" IsCheckable="true"/>
+                        <MenuItem Header="Remove Application" IsCheckable="true"/>
+                        <MenuItem Header="View Application" IsCheckable="true"/>
+                    </MenuItem>
+                    <MenuItem Header="Reports" />
+                    <MenuItem Header="Administration">
+                        <MenuItem Header="Application Setup" IsCheckable="true"/>
+                        <MenuItem Header="User Management" IsCheckable="true"/>
+                    </MenuItem>
+                    <MenuItem Header="Help">
+                        <MenuItem Header="Abouts NAMS" IsCheckable="true"/>
+                    </MenuItem>
+                </Menu>
+            </DockPanel>
+        </Border>
+        <avalonDock:DockingManager Grid.Row="2" x:Name="dockingManager" Margin="0">
+            <avalonDock:DockingManager.Background>
+                <ImageBrush ImageSource="/SSS.NATTEX;component/Resources/Images/map.png" Stretch="None" Opacity="0.7"/>
+            </avalonDock:DockingManager.Background>
+            <avalonDock:LayoutRoot>
+                <avalonDock:LayoutPanel Orientation="Horizontal">
+                </avalonDock:LayoutPanel>
+            </avalonDock:LayoutRoot>
+        </avalonDock:DockingManager>
+        <StatusBar Grid.Row="3">
+            <StatusBarItem Content="Please select one of the menu options."/>
+        </StatusBar>
+        <Border Grid.Row="4" x:Name="FooterBorder"  Margin="0" BorderBrush="#FF231F1F" BorderThickness="0.5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Border.Background>
+                <ImageBrush ImageSource="../Resources\Images\2f2f2f.png"  TileMode="Tile"/>
+            </Border.Background>
+            <TextBlock Text="Developed by Slambert Software Solutions (Pty) Ltd." FontSize="10" Foreground="#FFF0ECEC" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial"></TextBlock>
+        </Border>
+    </Grid>
+</Window>

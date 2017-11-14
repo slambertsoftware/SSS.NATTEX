@@ -201,7 +201,7 @@ namespace SSS.NATTEX.ViewModel
         public ExportDistributeViewModel(DockingSetupModel layoutModel)
         {
             this.LayoutModel = layoutModel;
-            this.ControlCaption = "Export and or Distribute Quotation";
+            this.ControlCaption = "Export and Distribute Quotation";
             this.QuotationHeading = GenerateQuotationHeading();
             WireUpEvents();
         }

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SSS.NATTEX.Views.Controls"
              xmlns:wpfToolkit="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
-             mc:Ignorable="d" HorizontalAlignment="Stretch" FontFamily="Arial" FontSize="10" HorizontalContentAlignment="Stretch" x:Name="ExportDistributionUserControl" Loaded="ExportDistributionUserControl_Loaded">
+             mc:Ignorable="d" HorizontalAlignment="Stretch" FontFamily="Arial" FontSize="11" MinWidth="250" HorizontalContentAlignment="Stretch" x:Name="ExportDistributionUserControl" Loaded="ExportDistributionUserControl_Loaded">
     <UserControl.Resources>
         <Style x:Key="PrimaryRoundButtonTemplate" TargetType="Button">
             <Setter Property="Background" Value="#FF428BCA" />
@@ -84,7 +84,7 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Stretch" >
+            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" >
                 <TextBlock Text="{Binding QuotationHeading, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial"  FontSize="16" FontWeight="Bold"></TextBlock>
             </StackPanel>
 
@@ -92,14 +92,14 @@
             <ComboBox Grid.Row="1" Grid.Column="1" Height="22" Width="120" ItemsSource="{Binding ExportOptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  SelectedItem="{Binding SelectedExportOption, UpdateSourceTrigger=PropertyChanged}" Margin="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"></ComboBox>
 
             <TextBlock Grid.Row="1" Grid.Column="2" Text="Distribute To:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0,10,0" FontWeight="Bold"></TextBlock>
-            <ComboBox Grid.Row="1" Grid.Column="3" Height="22" Width="120" ItemsSource="{Binding DistributionOptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  SelectedItem="{Binding SelectedDistributionOption, UpdateSourceTrigger=PropertyChanged}" Margin="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"></ComboBox>
+            <ComboBox Grid.Row="1" Grid.Column="3" Height="22" Width="140" ItemsSource="{Binding DistributionOptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  SelectedItem="{Binding SelectedDistributionOption, UpdateSourceTrigger=PropertyChanged}" Margin="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"></ComboBox>
 
-            <Border    Grid.Row="4" Grid.ColumnSpan="4"  BorderThickness="0.65" BorderBrush="DarkGray"  VerticalAlignment="Top"></Border>
-            <WrapPanel Grid.Row="4" Grid.ColumnSpan="4" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Border    Grid.Row="4" Grid.ColumnSpan="5"  BorderThickness="0.65" BorderBrush="DarkGray"  VerticalAlignment="Top"></Border>
+            <WrapPanel Grid.Row="4" Grid.ColumnSpan="5" HorizontalAlignment="Right" VerticalAlignment="Center">
                 <Button BorderBrush="#FFF" Name="FinaliseButton" FontFamily="Arial" Background="#FF0487F3" Foreground="#FFF3ECEC" Style="{StaticResource PrimaryRoundButtonTemplate}" Content="FINALISE" Height="22" Width="120" Command="{Binding FinaliseCommand}"
-                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip="Click to finalise (complete) the process." />
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip="Click to finalise (complete) the process." IsDefault="True" />
                 <Button Content="CANCEL" Height="22" Width="120" Command="{Binding CancelCommand}" Margin="2,2,0,2"  Style="{StaticResource CancelRoundButtonTemplate}" 
-				CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip ="Cancel any changes made, terminate the process and then close the window." Background="#FF8D9195" />
+				CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip ="Cancel any changes made, terminate the process and then close the window." Background="#FF8D9195" IsCancel="True" />
             </WrapPanel>
         </Grid>
     </Border>

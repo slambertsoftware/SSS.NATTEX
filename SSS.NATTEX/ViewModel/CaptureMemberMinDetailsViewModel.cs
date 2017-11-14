@@ -28,6 +28,8 @@ namespace SSS.NATTEX.ViewModel
         private string _calculatedAge;
         private string _premium;
         private string _scheme;
+        private string _quotationHeading;
+        private string _quotationNumberHeading;
 
         private ObservableCollection<string> _coverAmounts;
         private ObservableCollection<string> _memberCoverAmounts;
@@ -58,6 +60,8 @@ namespace SSS.NATTEX.ViewModel
         private ProspectiveMembersViewModel _prospectiveMembersViewModel;
         private ProspectiveMemberSchemeViewModel _schemeGroupedMembersViewModel;
         private ProcessedDataModel _processedData;
+        private NewQuotation _quotationModel;
+
         private ObservableCollection<string> _quotationTypes;
         
         private Visibility _validationMessageVisibility;
@@ -359,19 +363,6 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
-        public Visibility ValidationMessageVisibility
-        {
-            get
-            {
-                return _validationMessageVisibility;
-            }
-            set
-            {
-                _validationMessageVisibility = value;
-                this.RaisePropertyChanged("ValidationMessageVisibility");
-            }
-        }
-
         public bool IDNumberLengthValidation
         {
             get
@@ -408,6 +399,19 @@ namespace SSS.NATTEX.ViewModel
             {
                 _idDayValidation = value;
                 this.RaisePropertyChanged("IDNumberDayValidation");
+            }
+        }
+
+        public Visibility ValidationMessageVisibility
+        {
+            get
+            {
+                return _validationMessageVisibility;
+            }
+            set
+            {
+                _validationMessageVisibility = value;
+                this.RaisePropertyChanged("ValidationMessageVisibility");
             }
         }
 
@@ -499,6 +503,32 @@ namespace SSS.NATTEX.ViewModel
             {
                 _scheme = value;
                 this.RaisePropertyChanged("Schemes");
+            }
+        }
+
+        public string QuotationHeading
+        {
+            get
+            {
+                return _quotationHeading;
+            }
+            set
+            {
+                _quotationHeading = value;
+                this.RaisePropertyChanged("QuotationHeading");
+            }
+        }
+
+        public string QuotationNumberHeading
+        {
+            get
+            {
+                return _quotationNumberHeading;
+            }
+            set
+            {
+                _quotationNumberHeading = value;
+                this.RaisePropertyChanged("QuotationNumberHeading");
             }
         }
 
@@ -632,6 +662,19 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
+        public NewQuotation QuotationModel
+        {
+            get
+            {
+                return _quotationModel;
+            }
+            set
+            {
+                _quotationModel = value;
+                this.RaisePropertyChanged("QuotationModel");
+            }
+        }
+
         private bool IsValidInput
         {
             get
@@ -652,9 +695,13 @@ namespace SSS.NATTEX.ViewModel
         #endregion
 
         #region constructors
-        public CaptureMemberMinDetailsViewModel(DockingSetupModel layoutModel)
+        public CaptureMemberMinDetailsViewModel(DockingSetupModel layoutModel, NewQuotation quotationModel)
         {
             this.LayoutModel = layoutModel;
+            this.QuotationModel = quotationModel;
+            this.QuotationHeading = "Quotation Type: " + this.QuotationModel.QuotationType;
+            this.QuotationNumberHeading = "Quotation No: " + this.QuotationModel.QuotationNumber;
+
             this.ControlCaption = "Capture Prospective Member Minumum Required Details";
             this.SelectedQuotationType = "Society Scheme Quotation";
             this.CoverAmounts = new ObservableCollection<string>(this.GetCoverAmounts());
@@ -682,10 +729,8 @@ namespace SSS.NATTEX.ViewModel
                 this.PremiumVisibility = Visibility.Collapsed;
                 this.SchemeVisibility = Visibility.Collapsed;
             }
+            PopulateQuotationTypes();
 
-            this.QuotationTypes.Add(string.Empty);
-            this.QuotationTypes.Add("Society Scheme Quotation");
-            this.QuotationTypes.Add("Single Member Quotation");
             this.ValidationMessage = "";
             this.ValidationMessageVisibility = Visibility.Collapsed;
             this.ValidationMessage = "";
@@ -698,6 +743,17 @@ namespace SSS.NATTEX.ViewModel
 
 
         #region methods
+
+        private void PopulateQuotationTypes()
+        {
+            if (this.QuotationTypes == null)
+            {
+                this.QuotationTypes = new ObservableCollection<string>();
+            }
+            this.QuotationTypes.Add(string.Empty);
+            this.QuotationTypes.Add("Society Scheme Quotation");
+            this.QuotationTypes.Add("Single Member Quotation");
+        }
 
         private void Validate()
         {
@@ -1268,7 +1324,6 @@ namespace SSS.NATTEX.ViewModel
             }
             return result;
         }
-
 
         private void ProceedAction(Window window)
         {

@@ -16,7 +16,7 @@ namespace SSS.NATTEX.ViewModel
     public class ConfirmQuotationViewModel : MainViewModel
     {
         #region fields
-        private ObservableCollection<QuotationDetailItem> _quotationDetailResults;
+        private ObservableCollection<QuotationCalculationItem> _quotationDetailResults;
         private string _quotationNumber;
         private string _quotationHeader;
         private string _quotationCreateDate;
@@ -35,7 +35,7 @@ namespace SSS.NATTEX.ViewModel
         #endregion
 
         #region Properties
-        public ObservableCollection<QuotationDetailItem> QuotationDetailResults
+        public ObservableCollection<QuotationCalculationItem> QuotationDetailResults
         {
             get
             {
@@ -255,9 +255,9 @@ namespace SSS.NATTEX.ViewModel
         {
             if (this.QuotationDetailResults == null)
             {
-                this.QuotationDetailResults = new ObservableCollection<QuotationDetailItem>();
+                this.QuotationDetailResults = new ObservableCollection<QuotationCalculationItem>();
             }
-            this.QuotationDetailResults.Add(new QuotationDetailItem
+            this.QuotationDetailResults.Add(new QuotationCalculationItem
             { SchemeGroup = "1 + 13 Member < 65 Years",
                 NumOfGroups = Convert.ToString(22),
                 NumOfMembers = Convert.ToString(306),
@@ -266,25 +266,25 @@ namespace SSS.NATTEX.ViewModel
                 TotalMembers = "",
                 TotalPremium = ""
             });
-            this.QuotationDetailResults.Add(new QuotationDetailItem
+            this.QuotationDetailResults.Add(new QuotationCalculationItem
             { SchemeGroup = "1 + 13 Member 65 - 70 Years", NumOfGroups = Convert.ToString(0), NumOfMembers = Convert.ToString(0) });
-            this.QuotationDetailResults.Add(new QuotationDetailItem
+            this.QuotationDetailResults.Add(new QuotationCalculationItem
             { SchemeGroup = "1 + 13 Member 71 - 74 Years", NumOfGroups = Convert.ToString(22), NumOfMembers = Convert.ToString(0) });
-            this.QuotationDetailResults.Add(new QuotationDetailItem
+            this.QuotationDetailResults.Add(new QuotationCalculationItem
             { SchemeGroup = "1 + 9  Member < 65 Years", NumOfGroups = Convert.ToString(22), NumOfMembers = Convert.ToString(0) });
-            this.QuotationDetailResults.Add(new QuotationDetailItem
+            this.QuotationDetailResults.Add(new QuotationCalculationItem
             { SchemeGroup = "1 + 9  Member 65 - 70 Years", NumOfGroups = Convert.ToString(22), NumOfMembers = Convert.ToString(0) });
-            this.QuotationDetailResults.Add(new QuotationDetailItem
+            this.QuotationDetailResults.Add(new QuotationCalculationItem
             { SchemeGroup = "1 + 9  Member 71 - 74 Years", NumOfGroups = Convert.ToString(22), NumOfMembers = Convert.ToString(0) });
-            this.QuotationDetailResults.Add(new QuotationDetailItem
+            this.QuotationDetailResults.Add(new QuotationCalculationItem
             { SchemeGroup = "1 + 5  Member < 65 Years", NumOfGroups = Convert.ToString(22), NumOfMembers = Convert.ToString(0) });
-            this.QuotationDetailResults.Add(new QuotationDetailItem
+            this.QuotationDetailResults.Add(new QuotationCalculationItem
             { SchemeGroup = "1 + 5  Member < 65 - 70 Years", NumOfGroups = Convert.ToString(22), NumOfMembers = Convert.ToString(306) });
-            this.QuotationDetailResults.Add(new QuotationDetailItem
+            this.QuotationDetailResults.Add(new QuotationCalculationItem
             { SchemeGroup = "1 + 5  Member < 71 - 74 Years", NumOfGroups = Convert.ToString(22), NumOfMembers = Convert.ToString(306) });
-            this.QuotationDetailResults.Add(new QuotationDetailItem
+            this.QuotationDetailResults.Add(new QuotationCalculationItem
             { SchemeGroup = "Single Member < 75 - 84 Years", NumOfGroups = Convert.ToString(22), NumOfMembers = Convert.ToString(306) });
-            this.QuotationDetailResults.Add(new QuotationDetailItem
+            this.QuotationDetailResults.Add(new QuotationCalculationItem
             { SchemeGroup = "Single Member < 85 - 99 Years", NumOfGroups = Convert.ToString(22), NumOfMembers = Convert.ToString(306) });
         }
 

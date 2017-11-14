@@ -4,30 +4,53 @@ using SSS.NATTEX.Views.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using Xceed.Words.NET;
 using Xceed.Wpf.AvalonDock.Layout;
+using Microsoft.Office.Interop.Word;
+using Microsoft.Win32;
+using System.Windows.Xps.Packaging;
 
 namespace SSS.NATTEX.ViewModel
 {
     public class ExportDistributeViewModel : MainViewModel
     {
         #region fields 
-        private bool _isProceedEnbaled;
-        private bool _isValidInput;
+        private string _templatesDirectory;
+        private string _documentOutputDirectory;
         private string _validationMessage;
         private string _quotationHeading;
+        private string _quotationNumber;
+        private string _quotationCustomerNumber;
         private string _controlCaption;
         private string _selectedExportOption;
         private string _selectedDistributionOption;
+        
+
+        private string _quotationWordDocumentFilePath;
+        private string _quotationXPSDocumentFilePath;
+        private string _quotationPrintDateTime;
+       
+        private bool _isProceedEnbaled;
+        private bool _isValidInput;
         private Visibility _validationMessageVisibility;
         private Visibility _proceedVisibility;
-        public ObservableCollection<string> _distributionOptions;
-        public ObservableCollection<string> _exportOptions;
-        public ObservableCollection<QuotationDetailItem> _quotationDetails;
+
+        private Dictionary<string, string> _replacementPatterns;
+        private Dictionary<string, string> _documentCustomProperties;
+        private Dictionary<string, string> _documentCoreProperties;
+        private XpsDocument _quotationXPSDocument;
+        private ObservableCollection<string> _distributionOptions;
+        private ObservableCollection<string> _exportOptions;
+        private ObservableCollection<QuotationCalculationItem> _quotationDetails;
+        private QuotationHeaderItem _quotationHeaderItem;
 
         #endregion
 
@@ -71,6 +94,57 @@ namespace SSS.NATTEX.ViewModel
                 _selectedDistributionOption = value;
                 this.RaisePropertyChanged("SelectedDistributionOption");
                 Validate();
+            }
+        }
+
+        public string QuotationNumber
+        {
+            get
+            {
+                return _quotationNumber;
+            }
+            set
+            {
+                _quotationNumber = value;
+            }
+        }
+
+        public string QuotationHeading
+        {
+            get
+            {
+                return _quotationHeading;
+            }
+            set
+            {
+                _quotationHeading = value;
+                this.RaisePropertyChanged("QuotationHeading");
+            }
+        }
+
+        public string QuotationCustomerNumber
+        {
+            get
+            {
+                return _quotationCustomerNumber;
+            }
+            set
+            {
+                _quotationCustomerNumber = value;
+                this.RaisePropertyChanged("QuotationCustomerNumber");
+            }
+        }
+
+        public QuotationHeaderItem QuotationHeaderDetail
+        {
+            get
+            {
+                return _quotationHeaderItem;
+            }
+            set
+            {
+                _quotationHeaderItem = value;
+                this.RaisePropertyChanged("QuotationHeaderDetail");
             }
         }
 
@@ -138,20 +212,126 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
-        public string QuotationHeading
+        public string TemplatesDirectory
         {
             get
             {
-                return _quotationHeading;
+                return _templatesDirectory;
             }
-            set
+            private set
             {
-                _quotationHeading = value;
-                this.RaisePropertyChanged("QuotationHeading");
+                _templatesDirectory = value;
+                this.RaisePropertyChanged("TemplatesDirectory");
             }
         }
 
-        public ObservableCollection<QuotationDetailItem> QuotationDetails
+        public string DocumentOutputDirectory
+        {
+            get
+            {
+                return _documentOutputDirectory;
+            }
+            private set
+            {
+                _documentOutputDirectory = value;
+                this.RaisePropertyChanged("DocumentOutputDirectory");
+            }
+        }
+
+        public XpsDocument QuotationXPSDocument
+        {
+            get
+            {
+                return _quotationXPSDocument;
+            }
+            set
+            {
+                 _quotationXPSDocument = value;
+                this.RaisePropertyChanged("QuotationXPSDocument");
+            }
+        }
+
+        public string QuotationXPSDocumentFilePath
+        {
+            get
+            {
+                return _quotationXPSDocumentFilePath;
+            }
+            set
+            {
+                _quotationXPSDocumentFilePath = value;
+                this.RaisePropertyChanged("QuotationXPSDocumentFilePath");
+            }
+        }
+
+        public string QuotationWordDocumentFilePath
+        {
+            get
+            {
+                return _quotationWordDocumentFilePath;
+            }
+            set
+            {
+                _quotationWordDocumentFilePath = value;
+                this.RaisePropertyChanged("QuotationWordDocumentFilePath");
+            }
+        }
+
+        public string QuotationPrintDateTime
+        {
+            get
+            {
+                return DateTime.Now.ToString("yyyyMMddHHmmss");
+            }
+            set
+            {
+                _quotationPrintDateTime = value;
+                this.RaisePropertyChanged("QuotationPrintDateTime");
+            }
+        }
+
+        public Dictionary<string, string> ReplacementPatterns
+        {
+            get
+            {
+                return _replacementPatterns;
+            }
+            set
+            {
+                _replacementPatterns = value;
+                this.RaisePropertyChanged("ReplacementPatterns");
+            }
+        }
+
+        public Dictionary<string, string> DocumentCustomProperties
+        {
+            get
+            {
+                return _documentCustomProperties;
+            }
+            set
+            {
+                _documentCustomProperties = value;
+                this.RaisePropertyChanged("DocumentCustomProperties");
+            }
+
+        }
+
+        public Dictionary<string, string> DocumentCoreProperties
+        {
+            get
+            {
+                return _documentCoreProperties;
+            }
+            set
+            {
+                _documentCoreProperties = value;
+                this.RaisePropertyChanged("DocumentCoreProperties");
+            }
+
+        }
+
+        public ObservableCollection<QuotationCalculationItem> QuotationDetails
         {
             get
             {
@@ -192,9 +372,9 @@ namespace SSS.NATTEX.ViewModel
 
         public DockingSetupModel LayoutModel { get; set; }
 
-        public RelayCommand<Window> FinaliseCommand { get; set; }
+        public RelayCommand<System.Windows.Window> FinaliseCommand { get; set; }
 
-        public RelayCommand<Window> CancelCommand { get; set; }
+        public RelayCommand<System.Windows.Window> CancelCommand { get; set; }
         #endregion
 
         #region constructors
@@ -202,6 +382,12 @@ namespace SSS.NATTEX.ViewModel
         {
             this.LayoutModel = layoutModel;
             this.ControlCaption = "Export and Distribute Quotation";
+            this.TemplatesDirectory = @"Templates\";
+            this.DocumentOutputDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\NATTEX\NAMS\";
+            if (!Directory.Exists(this.DocumentOutputDirectory))
+            {
+                Directory.CreateDirectory(this.DocumentOutputDirectory);
+            }
             this.QuotationHeading = GenerateQuotationHeading();
             WireUpEvents();
         }
@@ -210,13 +396,13 @@ namespace SSS.NATTEX.ViewModel
         #region methods
         private void WireUpEvents()
         {
-            FinaliseCommand = new RelayCommand<Window>(FinaliseAction);
-            CancelCommand = new RelayCommand<Window>(CancelAction);
+            FinaliseCommand = new RelayCommand<System.Windows.Window>(FinaliseAction);
+            CancelCommand = new RelayCommand<System.Windows.Window>(CancelAction);
         }
 
-        private void FinaliseAction(Window window)
+        private void FinaliseAction(System.Windows.Window window)
         {
-            Window win = (Window)window;
+            System.Windows.Window win = (System.Windows.Window)window;
 
             if (win != null)
             {
@@ -241,6 +427,20 @@ namespace SSS.NATTEX.ViewModel
 
         }
 
+        /// <summary>
+        /// Closes the form.
+        /// </summary>
+        /// <param name="window">The window.</param>
+        private void CancelAction(System.Windows.Window window)
+        {
+            System.Windows.Window win = (System.Windows.Window)window;
+            if (win != null)
+            {
+                win.Close();
+            }
+        }
+
+
         private string GenerateQuotationHeading()
         {
             string result = string.Empty;
@@ -257,6 +457,8 @@ namespace SSS.NATTEX.ViewModel
         private void Validate()
         {
             this.IsValidInput = true;
+            var filePath = this.DocumentOutputDirectory + GenerateOutputWordDocumentName();
+
             if (string.IsNullOrEmpty(this.SelectedDistributionOption))
             {
                 this.ValidationMessage = "Please select a distribution option.";
@@ -269,8 +471,16 @@ namespace SSS.NATTEX.ViewModel
                 this.ValidationMessageVisibility = Visibility.Visible;
                 this.IsValidInput = false;
             }
+            else if (File.Exists(filePath) && (this.IsFileInUse(filePath)))
+            {
+                this.ValidationMessage = "Please contact the system administrator if the problem persists. Note the following error message : " + 
+                    "Quotation document is in use. Please save and close document and retry again. ";
+                this.ValidationMessageVisibility = Visibility.Visible;
+                this.IsValidInput = false;
+            }
             else
             {
+                this.IsValidInput = true;
                 this.ValidationMessage = "";
                 this.ValidationMessageVisibility = Visibility.Collapsed;
             }
@@ -285,29 +495,6 @@ namespace SSS.NATTEX.ViewModel
         {
             MessageBox.Show(message, this.ControlCaption, MessageBoxButton.OK, MessageBoxImage.Information);
         }
-
-
-
-
-        private void ReviewAction(Window window)
-        {
-
-        }
-
-
-        /// <summary>
-        /// Closes the form.
-        /// </summary>
-        /// <param name="window">The window.</param>
-        private void CancelAction(Window window)
-        {
-            Window win = (Window)window;
-            if (win != null)
-            {
-                win.Close();
-            }
-        }
-
 
         public void LoadExportOptions()
         {
@@ -336,28 +523,73 @@ namespace SSS.NATTEX.ViewModel
         {
             if (this.SelectedExportOption == "MS Excel")
             {
-                GeneratMSExcelDocument();
+                GenerateMSExcelDocument();
             }
             else if (this.SelectedExportOption == "MS Word")
             {
-                GeneratMSWordDocument();
+                GenerateMSWordDocument();
             }
             else if (this.SelectedExportOption == "PDF")
             {
-                GeneratPDFDocument();
+                GeneratePDFDocument();
             }
         }
 
-        private void GeneratMSExcelDocument()
+        private void GenerateMSExcelDocument()
         {
 
         }
 
-        private void GeneratMSWordDocument()
+        private void GenerateMSWordDocument()
         {
+            Assembly _assembly = Assembly.GetExecutingAssembly();
+            string resourceName = GetQuotationDocumentResourceName();
+            Stream docStream = _assembly.GetManifestResourceStream(resourceName);
+            Validate();
+         
+            if ((docStream != null) && (IsValidInput))
+            {
+                PopulateReplacementPatterns();
+                using (DocX document = DocX.Load(docStream))
+                {
+                    document.AddCustomProperty(new Xceed.Words.NET.CustomProperty("CompanyName", "Nattex Funeral Schemes"));
+                    document.AddCustomProperty(new Xceed.Words.NET.CustomProperty("Product", "NATTEX Application Management System (NAMS)"));
+                    document.AddCustomProperty(new Xceed.Words.NET.CustomProperty("Address", "Kimberley, Northern Cape, South Africa"));
 
+                    document.AddCustomProperty(new Xceed.Words.NET.CustomProperty("Date", DateTime.Now));
+                    document.AddCoreProperty("dc:title", "Quotation document - " + "QUO-NAT-20171113-0001.docx");
+                    document.AddCoreProperty("dc:subject", "Quotation document");
+                    document.AddCoreProperty("dc:creator", "NAMS");
+
+                    var searchValueList = document.FindUniqueByPattern(@"<[\w \=]{4,}>", RegexOptions.IgnoreCase);
+                    if (document.FindUniqueByPattern(@"<[\w \=]{4,}>", RegexOptions.IgnoreCase).Count == this.ReplacementPatterns.Count)
+                    {
+                        for (int i = 0; i < searchValueList.Count; ++i)
+                        {
+                            document.ReplaceText(searchValueList[i], GetReplacementValue(searchValueList[i]), false, RegexOptions.IgnoreCase);
+                        }
+
+                        try
+                        {
+                            this.QuotationWordDocumentFilePath = this.DocumentOutputDirectory + GenerateOutputWordDocumentName();
+                            this.QuotationXPSDocumentFilePath  = this.DocumentOutputDirectory + GenerateOutputXPSDocumentName();
+                            this.QuotationPrintDateTime = DateTime.Now.ToString("yyyyMMddHHmmss");
+                            document.SaveAs(this.QuotationWordDocumentFilePath);
+                            this.QuotationXPSDocument = ConvertWordDocumentToXPSDocument(this.QuotationWordDocumentFilePath, this.QuotationXPSDocumentFilePath);
+
+                        }
+                        catch (IOException exp)
+                        {
+                            this.ValidationMessage = "Please contact the system administrator if the problem persists. " + "Note the following: " + exp.Message;
+                            this.ValidationMessageVisibility = Visibility.Visible;
+                            this.IsValidInput = false;
+                        }
+                    }
+                }
+            }
         }
-        private void GeneratPDFDocument()
+
+        private void GeneratePDFDocument()
         {
 
         }
@@ -373,9 +605,9 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
-        private ObservableCollection<QuotationDetailItem> GetQuotationDetails()
+        private ObservableCollection<QuotationCalculationItem> GetQuotationDetails()
         {
-            ObservableCollection<QuotationDetailItem> result = new ObservableCollection<QuotationDetailItem>();
+            ObservableCollection<QuotationCalculationItem> result = new ObservableCollection<QuotationCalculationItem>();
             return result;
         }
 
@@ -393,6 +625,125 @@ namespace SSS.NATTEX.ViewModel
         {
 
         }
+
+        private void PopulateReplacementPatterns()
+        {
+            if (this.ReplacementPatterns == null)
+            {
+                this.ReplacementPatterns = new Dictionary<string, string>();
+            }
+            this.ReplacementPatterns.Add("<CustomerNumber>","" );
+            this.ReplacementPatterns.Add("<CustomerName>", "");
+            this.ReplacementPatterns.Add("<CustomerAddress>", "" );
+
+            this.ReplacementPatterns.Add("<CustomerContactNumber>", "");
+            this.ReplacementPatterns.Add("<CustomerEmailAddress>", "");
+
+            this.ReplacementPatterns.Add("<QuotationNo>", "");
+
+            this.ReplacementPatterns.Add("<QuotationCreateDate>", "");
+            this.ReplacementPatterns.Add("<QuotationExpiryDate>", "");
+            this.ReplacementPatterns.Add("<QuotationPreparedBy>", "");
+            this.ReplacementPatterns.Add("<QuotationValidDays>", "");
+            this.ReplacementPatterns.Add("<MonthlyPremiumDescription>", "");
+
+            this.ReplacementPatterns.Add("<MonthlyPremiumDescription>", "");
+            this.ReplacementPatterns.Add("<MonthlyPremiumCost>", "");
+            this.ReplacementPatterns.Add("<MonthlyAdminFeeDescription>", "");
+            this.ReplacementPatterns.Add("<MonthlyAdminFeeCost>", "");
+
+            this.ReplacementPatterns.Add("<OnceOffJoiningFeeDescription>", "");
+            this.ReplacementPatterns.Add("<OnceOffJoiningFeeCost>", "");
+
+            this.ReplacementPatterns.Add("<NumMonthlyInstallments>", "");
+            this.ReplacementPatterns.Add("<MonthlyInstallments>", "");
+        }
+
+        private string GetQuotationDocumentResourceName()
+        {
+            string result = string.Empty;
+            result = "SSS.NATTEX.Resources.Templates.NATTEX_QuotationTemplate_AVBOB.docx";
+            return result;
+        }
+
+        private string GetTemplateFilePath()
+        {
+            string result = string.Empty;
+            result = Convert.ToString(this.TemplatesDirectory) + @"NATTEX_QuotationTemplate_AVBOB.docx";
+            return result;
+        }
+
+        private string GenerateOutputWordDocumentName()
+        {
+            string result = string.Empty;
+            result = this.QuotationNumber + "_" + this.QuotationPrintDateTime + ".docx";
+            return result;
+        }
+        private string GenerateOutputXPSDocumentName()
+        {
+            string result = string.Empty;
+            result = this.QuotationNumber + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xps";
+            return result;
+        }
+
+
+        private string GetReplacementValue(string searchValue)
+        {
+            if (this.ReplacementPatterns.ContainsKey(searchValue))
+            {
+                return this.ReplacementPatterns[searchValue];
+            }
+            return searchValue;
+        }
+
+
+        private bool IsFileInUse(string path)
+        {
+            bool result;
+            try
+            {
+                using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+                {
+                    result = false;
+                };
+                return result;
+            }
+            catch (IOException ex)
+            {
+                result = true;
+                return result;
+            }
+        }
+
+        private List<Xceed.Words.NET.CustomProperty> GetDocumentCustomProperties()
+        {
+            List<Xceed.Words.NET.CustomProperty> result = new List<Xceed.Words.NET.CustomProperty>();
+            return result;
+        }
+
+        private XpsDocument ConvertWordDocumentToXPSDocument(string wordDocName, string xpsDocName)
+        {
+            Microsoft.Office.Interop.Word.Application wordApplication = new Microsoft.Office.Interop.Word.Application();
+            wordApplication.Documents.Add(wordDocName);
+
+
+            Document doc = wordApplication.ActiveDocument;
+            try
+            {
+                doc.SaveAs(xpsDocName, WdSaveFormat.wdFormatXPS);
+                wordApplication.Quit();
+
+                XpsDocument xpsDoc = new XpsDocument(xpsDocName, System.IO.FileAccess.Read);
+                return xpsDoc;
+            }
+            catch (Exception exp)
+            {
+                string str = exp.Message;
+            }
+            return null;
+        }
+
+
 
 
 

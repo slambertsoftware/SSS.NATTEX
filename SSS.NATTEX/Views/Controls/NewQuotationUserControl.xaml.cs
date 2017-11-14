@@ -22,15 +22,29 @@ namespace SSS.NATTEX.Views.Controls
     /// <summary>
     /// Interaction logic for QuotationTypeUserControl.xaml
     /// </summary>
-    public partial class QuotationTypeUserControl : UserControl
+    public partial class NewQuotationUserControl : UserControl
     {
 
-        public QuotationTypeUserControl(DockingSetupModel layoutModel)
+        public NewQuotationUserControl(DockingSetupModel layoutModel)
         {
             InitializeComponent();
             var viewModel = new NewQuotationViewModel(layoutModel);
             DataContext = viewModel;
         }
 
+        private void fileDescription_LostFocus(object sender, RoutedEventArgs e)
+        {
+            (this.DataContext as NewQuotationViewModel).UpdateUploadFileDescription();
+        }
+
+        private void InputTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            (this.DataContext as NewQuotationViewModel).UpdateValidationStatus();
+        }
+
+        private void NewQuotationControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            txtCustomerName.Focus();
+        }
     }
 }

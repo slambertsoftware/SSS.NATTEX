@@ -35,7 +35,6 @@ namespace SSS.NATTEX.ViewModel
 
         public ProspectiveMemberSchemeViewModel(ProspectiveMembersViewModel membersViewModel)
         {
-            int index = 0;
             this.MembersViewModel = membersViewModel;
             ProspectiveMemberSchemeTypes schemes = new ProspectiveMemberSchemeTypes();
             MemberSchemeTypes = new ObservableCollection<MemberSchemeType>(schemes.Types);

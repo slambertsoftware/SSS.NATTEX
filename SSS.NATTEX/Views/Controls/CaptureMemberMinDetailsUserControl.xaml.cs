@@ -25,10 +25,10 @@ namespace SSS.NATTEX.Views.Controls
     /// </summary>
     public partial class CaptureMemberMinDetailsUserControl : UserControl
     {
-        public CaptureMemberMinDetailsUserControl(DockingSetupModel layoutModel)
+        public CaptureMemberMinDetailsUserControl(DockingSetupModel layoutModel, NewQuotation quotationModel)
         {
             InitializeComponent();
-            var viewModel = new CaptureMemberMinDetailsViewModel(layoutModel);
+            var viewModel = new CaptureMemberMinDetailsViewModel(layoutModel, quotationModel);
             DataContext = viewModel;
         }
 
@@ -72,6 +72,11 @@ namespace SSS.NATTEX.Views.Controls
         private void BirthMonth_TextChanged(object sender, TextChangedEventArgs e)
         {
             (this.DataContext as CaptureMemberMinDetailsViewModel).ValidateBirthMonth();
+        }
+
+        private void CaptureMemberDetailsControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            idNumber.Focus();
         }
     }
 }

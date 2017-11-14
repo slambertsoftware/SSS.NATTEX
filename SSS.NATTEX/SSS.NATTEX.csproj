@@ -135,14 +135,28 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\AgeGroupModel.cs" />
+    <Compile Include="Models\Agent.cs" />
+    <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\CoverAmount.cs" />
+    <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\DockingSetupModel.cs" />
     <Compile Include="Models\MemberSchemeGroupListModel.cs" />
     <Compile Include="Models\MemberSchemeGroup.cs" />
     <Compile Include="Models\MemberSchemeType.cs" />
+    <Compile Include="Models\NewQuotation.cs" />
     <Compile Include="Models\ProspectiveMemberSchemeTypes.cs" />
     <Compile Include="Models\ProcessedDataModel.cs" />
     <Compile Include="Models\ProspectiveMemberModel.cs" />
-    <Compile Include="Models\QuotationDetailItem.cs" />
+    <Compile Include="Models\QuotationBodyItem.cs" />
+    <Compile Include="Models\QuotationCalculationItem.cs" />
+    <Compile Include="Models\QuotationDocumentDetail.cs" />
+    <Compile Include="Models\QuotationFooterItem.cs" />
+    <Compile Include="Models\QuotationHeaderItem.cs" />
+    <Compile Include="Models\QuotationType.cs" />
+    <Compile Include="Models\QuotationUploadDocument.cs" />
+    <Compile Include="Models\SchemeType.cs" />
+    <Compile Include="Models\UserRole.cs" />
     <Compile Include="ViewModel\ExportDistributeViewModel.cs" />
     <Compile Include="ViewModel\ConfirmQuotationViewModel.cs" />
     <Compile Include="ViewModel\ProspectiveMembersViewModel.cs" />
@@ -167,8 +181,8 @@
     <Compile Include="Views\Controls\ExportDistributeQuotationUserControl.xaml.cs">
       <DependentUpon>ExportDistributeQuotationUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\QuotationTypeUserControl.xaml.cs">
-      <DependentUpon>QuotationTypeUserControl.xaml</DependentUpon>
+    <Compile Include="Views\Controls\NewQuotationUserControl.xaml.cs">
+      <DependentUpon>NewQuotationUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\ProspectiveMemberSchemeUserControl.xaml.cs">
       <DependentUpon>ProspectiveMemberSchemeUserControl.xaml</DependentUpon>
@@ -220,7 +234,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Controls\QuotationTypeUserControl.xaml">
+    <Page Include="Views\Controls\NewQuotationUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

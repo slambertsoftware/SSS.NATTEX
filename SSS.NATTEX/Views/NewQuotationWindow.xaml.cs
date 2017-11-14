@@ -41,7 +41,7 @@ namespace SSS.NATTEX.Views
                 CanClose    = false,
                 CanFloat    = true,
                 IsMaximized = false,
-                IconSource  = new BitmapImage(new Uri(@"../../Resources/Images/quote_3_24.png", UriKind.Relative))
+                IconSource  = new BitmapImage(new Uri(@"../../Resources/Images/quote_4_24.png", UriKind.Relative))
             };
             layoutSetup.DockingManager = dockingManager;
             layoutSetup.DocumentPaneGroup = documentsPaneGroup;
@@ -56,7 +56,7 @@ namespace SSS.NATTEX.Views
             layoutSetup.RightContentGrid = null;
             layoutSetup.LeftAnchorablePane.Parent = layoutPanel;
 
-            document.Content = new QuotationTypeUserControl(layoutSetup);
+            document.Content = new NewQuotationUserControl(layoutSetup);
             documentsPane.Children.Add(document);
             document.PreviousContainerIndex = documentsPane.Children.IndexOf(document);
             document.Parent = documentsPane;

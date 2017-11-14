@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SSS.NATTEX.Models
 {
-    public class QuotationDetailItem
+    public class QuotationCalculationItem
     {
         public string SchemeGroup { get; set; }
         public string NumOfGroups { get; set; }

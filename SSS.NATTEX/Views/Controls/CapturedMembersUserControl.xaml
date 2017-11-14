@@ -9,7 +9,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <wpfToolkit:CheckListBox x:Name="memberCheckListBox" ItemsSource="{Binding  ProspectiveMembers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" 
-                                 FontFamily="Arial"   IsEnabled="{Binding IsMemberCheckListEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                 FontFamily="Arial"   IsEnabled="{Binding IsMemberCheckListEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedMemberPath="IsMemberSelected">
         </wpfToolkit:CheckListBox>
     </Grid>
 </UserControl>

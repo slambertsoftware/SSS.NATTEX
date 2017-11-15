@@ -21,14 +21,14 @@ using Xceed.Wpf.AvalonDock.Layout;
 namespace SSS.NATTEX.Views.Controls
 {
     /// <summary>
-    /// Interaction logic for CaptureMemberUserControl.xaml
+    /// Interaction logic for CaptureNewProspectiveMembersUserControl.xaml
     /// </summary>
-    public partial class CaptureMemberMinDetailsUserControl : UserControl
+    public partial class CaptureNewProspectiveMembersUserControl : UserControl
     {
-        public CaptureMemberMinDetailsUserControl(DockingSetupModel layoutModel, NewQuotation quotationModel)
+        public CaptureNewProspectiveMembersUserControl(DockingSetupModel layoutModel, NewQuotation quotationModel)
         {
             InitializeComponent();
-            var viewModel = new CaptureMemberMinDetailsViewModel(layoutModel, quotationModel);
+            var viewModel = new CaptureNewProspectiveMembersViewModel(layoutModel, quotationModel);
             DataContext = viewModel;
         }
 
@@ -47,31 +47,31 @@ namespace SSS.NATTEX.Views.Controls
 
         private void IdNumber_LostFocus(object sender, RoutedEventArgs e)
         {
-            (this.DataContext as CaptureMemberMinDetailsViewModel).ValidateIDNumber();
-            (this.DataContext as CaptureMemberMinDetailsViewModel).UpdateBirthDateDetails();
+            (this.DataContext as CaptureNewProspectiveMembersViewModel).ValidateIDNumber();
+            (this.DataContext as CaptureNewProspectiveMembersViewModel).UpdateBirthDateDetails();
         }
 
 
         private void NumberOfPrespectiveMembers_LostFocus(object sender, RoutedEventArgs e)
         {
-           (this.DataContext as CaptureMemberMinDetailsViewModel).UpdateRemainingMembers();
+           (this.DataContext as CaptureNewProspectiveMembersViewModel).UpdateRemainingMembers();
         }
 
         private void BirthYear_TextChanged(object sender, TextChangedEventArgs e)
         {
-            (this.DataContext as CaptureMemberMinDetailsViewModel).UpdateCentury();
-            (this.DataContext as CaptureMemberMinDetailsViewModel).ValidateBirthYear();
+            (this.DataContext as CaptureNewProspectiveMembersViewModel).UpdateCentury();
+            (this.DataContext as CaptureNewProspectiveMembersViewModel).ValidateBirthYear();
         }
 
 
         private void BirthDay_TextChanged(object sender, TextChangedEventArgs e)
         {
-            (this.DataContext as CaptureMemberMinDetailsViewModel).ValidateBirthDay();
+            (this.DataContext as CaptureNewProspectiveMembersViewModel).ValidateBirthDay();
         }
 
         private void BirthMonth_TextChanged(object sender, TextChangedEventArgs e)
         {
-            (this.DataContext as CaptureMemberMinDetailsViewModel).ValidateBirthMonth();
+            (this.DataContext as CaptureNewProspectiveMembersViewModel).ValidateBirthMonth();
         }
 
         private void CaptureMemberDetailsControl_Loaded(object sender, RoutedEventArgs e)

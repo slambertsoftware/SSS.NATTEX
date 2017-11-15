@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SSS.NATTEX.Models
 {
-    public class AgeGroupModel
+    public class AgeGroup
     {
         public List<ProspectiveMember> GroupMembers{ get; set; }
         public string GroupDescription { get; set; }

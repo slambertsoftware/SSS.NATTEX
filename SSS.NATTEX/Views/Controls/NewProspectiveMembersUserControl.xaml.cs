@@ -2,7 +2,6 @@
 using SSS.NATTEX.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,19 +18,25 @@ using System.Windows.Shapes;
 namespace SSS.NATTEX.Views.Controls
 {
     /// <summary>
-    /// Interaction logic for ProspectiveMemberSchemeUserControl.xaml
+    /// Interaction logic for NewProspectiveMembersUserControl.xaml
     /// </summary>
-    public partial class ProspectiveMemberSchemeUserControl : UserControl
+    public partial class NewProspectiveMembersUserControl : UserControl
     {
-        public ProspectiveMemberSchemeUserControl(ProspectiveMemberSchemeViewModel viewModel)
+        public NewProspectiveMembersUserControl()
         {
             InitializeComponent();
+            var viewModel = new ProspectiveMembersViewModel();
             DataContext = viewModel;
         }
 
-        public void UpdateMemberSchemes(ObservableCollection<MemberSchemeType> schemeList)
+        public void AddProspectiveMember(ProspectiveMember member)
         {
+            (this.DataContext as ProspectiveMembersViewModel).AddProspectiveMember(member);
+        }
 
+        public void RemoveProspectiveMember(ProspectiveMember member)
+        {
+            (this.DataContext as ProspectiveMembersViewModel).RemoveProspectiveMember(member);
         }
     }
 }

@@ -134,7 +134,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\AgeGroupModel.cs" />
+    <Compile Include="Models\AgeGroup.cs" />
     <Compile Include="Models\Agent.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Client.cs" />
@@ -143,11 +143,12 @@
     <Compile Include="Models\DockingSetupModel.cs" />
     <Compile Include="Models\MemberSchemeGroupListModel.cs" />
     <Compile Include="Models\MemberSchemeGroup.cs" />
-    <Compile Include="Models\MemberSchemeType.cs" />
+    <Compile Include="Models\ProspectiveMemberScheme.cs" />
     <Compile Include="Models\NewQuotation.cs" />
     <Compile Include="Models\ProspectiveMemberSchemeTypes.cs" />
     <Compile Include="Models\ProcessedDataModel.cs" />
-    <Compile Include="Models\ProspectiveMemberModel.cs" />
+    <Compile Include="Models\ProspectiveMember.cs" />
+    <Compile Include="Models\ProspectiveMemberGroup.cs" />
     <Compile Include="Models\QuotationBodyItem.cs" />
     <Compile Include="Models\QuotationCalculationItem.cs" />
     <Compile Include="Models\QuotationDocumentDetail.cs" />
@@ -160,17 +161,17 @@
     <Compile Include="ViewModel\ExportDistributeViewModel.cs" />
     <Compile Include="ViewModel\ConfirmQuotationViewModel.cs" />
     <Compile Include="ViewModel\ProspectiveMembersViewModel.cs" />
-    <Compile Include="ViewModel\CaptureMemberMinDetailsViewModel.cs" />
+    <Compile Include="ViewModel\CaptureNewProspectiveMembersViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\NewQuotationViewModel.cs" />
-    <Compile Include="ViewModel\ProspectiveMemberSchemeViewModel.cs" />
+    <Compile Include="ViewModel\NewProspectiveMemberSchemeViewModel.cs" />
     <Compile Include="ViewModel\ReviewQuotationViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="Views\Controls\CapturedMembersUserControl.xaml.cs">
-      <DependentUpon>CapturedMembersUserControl.xaml</DependentUpon>
+    <Compile Include="Views\Controls\NewProspectiveMembersUserControl.xaml.cs">
+      <DependentUpon>NewProspectiveMembersUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\CaptureMemberMinDetailsUserControl.xaml.cs">
-      <DependentUpon>CaptureMemberMinDetailsUserControl.xaml</DependentUpon>
+    <Compile Include="Views\Controls\CaptureNewProspectiveMembersUserControl.xaml.cs">
+      <DependentUpon>CaptureNewProspectiveMembersUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\ConfirmQuotationUserControl.xaml.cs">
       <DependentUpon>ConfirmQuotationUserControl.xaml</DependentUpon>
@@ -184,8 +185,8 @@
     <Compile Include="Views\Controls\NewQuotationUserControl.xaml.cs">
       <DependentUpon>NewQuotationUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\ProspectiveMemberSchemeUserControl.xaml.cs">
-      <DependentUpon>ProspectiveMemberSchemeUserControl.xaml</DependentUpon>
+    <Compile Include="Views\Controls\NewProspectiveMemberSchemeUserControl.xaml.cs">
+      <DependentUpon>NewProspectiveMemberSchemeUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\ReviewQuotationUserControl.xaml.cs">
       <DependentUpon>ReviewQuotationUserControl.xaml</DependentUpon>
@@ -214,11 +215,11 @@
       <DependentUpon>Home.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\Controls\CapturedMembersUserControl.xaml">
+    <Page Include="Views\Controls\NewProspectiveMembersUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Controls\CaptureMemberMinDetailsUserControl.xaml">
+    <Page Include="Views\Controls\CaptureNewProspectiveMembersUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -238,7 +239,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Controls\ProspectiveMemberSchemeUserControl.xaml">
+    <Page Include="Views\Controls\NewProspectiveMemberSchemeUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

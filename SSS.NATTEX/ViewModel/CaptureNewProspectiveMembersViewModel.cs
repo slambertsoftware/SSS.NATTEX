@@ -15,13 +15,13 @@ using Xceed.Wpf.AvalonDock.Layout;
 
 namespace SSS.NATTEX.ViewModel
 {
-    public class CaptureMemberMinDetailsViewModel : MainViewModel
+    public class CaptureNewProspectiveMembersViewModel : MainViewModel
     {
         private string _controlCaption;
         private string _selectedQuotationType;
-        private int    _numOfMembers;
-        private int    _numOfMembersRemaining;
-        private int    _numberOfMembersCaptured;
+        private int _numOfMembers;
+        private int _numOfMembersRemaining;
+        private int _numberOfMembersCaptured;
         private string _selectedCoverAmount;
         private string _selectedMemberCoverAmount;
         private string _selectedCentury;
@@ -31,10 +31,11 @@ namespace SSS.NATTEX.ViewModel
         private string _quotationHeading;
         private string _quotationNumberHeading;
 
+        private ObservableCollection<string> _quotationTypes;
         private ObservableCollection<string> _coverAmounts;
         private ObservableCollection<string> _memberCoverAmounts;
         private ObservableCollection<string> _centuries;
-        private ObservableCollection<string> _capturedMembers;
+        private ObservableCollection<ProspectiveMember> _capturedProspectiveMembers;
         private ObservableCollection<string> _schemeGroupedMembers;
 
         private bool _isApplyCoverAmountChecked;
@@ -51,19 +52,21 @@ namespace SSS.NATTEX.ViewModel
         private bool _isValidBirthDay;
         private bool _isValidBirthDate;
         private bool _isValidInput;
+        private bool _isDuplicateProspectiveMember;
 
         private string _idNumber;
         private string _validationMessage;
         private string _birthYear;
         private string _birthMonth;
         private string _birthDay;
-        private ProspectiveMembersViewModel _prospectiveMembersViewModel;
-        private ProspectiveMemberSchemeViewModel _schemeGroupedMembersViewModel;
         private ProcessedDataModel _processedData;
         private NewQuotation _quotationModel;
 
-        private ObservableCollection<string> _quotationTypes;
+        private NewProspectiveMembersUserControl _membersUserControl;
+        private NewProspectiveMemberSchemeUserControl _membersSchemeUserControl;
+
         
+
         private Visibility _validationMessageVisibility;
         private Visibility _centuriesVisibility;
         private Visibility _schemeVisibility;
@@ -136,19 +139,6 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
-        public ObservableCollection<string> CoverAmounts
-        {
-            get
-            {
-                return _coverAmounts;
-            }
-            set
-            {
-                _coverAmounts = value;
-                this.RaisePropertyChanged("CoverAmounts");
-            }
-        }
-
         public string SelectedCoverAmount
         {
             get
@@ -163,19 +153,6 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
-        public ObservableCollection<string> MemberCoverAmounts
-        {
-            get
-            {
-                return _memberCoverAmounts;
-            }
-            set
-            {
-                _memberCoverAmounts = value;
-                this.RaisePropertyChanged("MemberCoverAmounts");
-            }
-        }
-        
         public string SelectedMemberCoverAmount
         {
             get
@@ -243,7 +220,33 @@ namespace SSS.NATTEX.ViewModel
                     this.BirthYear = _selectedCentury + this.BirthYear.Substring(2, 2);
                 }
             }
-            
+
+        }
+
+        public ObservableCollection<string> CoverAmounts
+        {
+            get
+            {
+                return _coverAmounts;
+            }
+            set
+            {
+                _coverAmounts = value;
+                this.RaisePropertyChanged("CoverAmounts");
+            }
+        }
+
+        public ObservableCollection<string> MemberCoverAmounts
+        {
+            get
+            {
+                return _memberCoverAmounts;
+            }
+            set
+            {
+                _memberCoverAmounts = value;
+                this.RaisePropertyChanged("MemberCoverAmounts");
+            }
         }
 
         public ObservableCollection<string> Centuries
@@ -350,16 +353,16 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
-        public string ValidationMessage
+        public bool IsDuplicateProspectiveMember
         {
             get
             {
-                return _validationMessage;
+                return _isDuplicateProspectiveMember;
             }
             set
             {
-                _validationMessage = value;
-                this.RaisePropertyChanged("ValidationMessage");
+                _isDuplicateProspectiveMember = value;
+                this.RaisePropertyChanged("IsDuplicateProspectiveMember");
             }
         }
 
@@ -425,6 +428,19 @@ namespace SSS.NATTEX.ViewModel
             {
                 _proceedVisibility = value;
                 this.RaisePropertyChanged("ProceedVisibility");
+            }
+        }
+
+        public string ValidationMessage
+        {
+            get
+            {
+                return _validationMessage;
+            }
+            set
+            {
+                _validationMessage = value;
+                this.RaisePropertyChanged("ValidationMessage");
             }
         }
 
@@ -532,16 +548,16 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
-        public ObservableCollection<string> CapturedMembers
+        public ObservableCollection<ProspectiveMember> CapturedProspectiveMembers
         {
             get
             {
-                return _capturedMembers;
+                return _capturedProspectiveMembers;
             }
             set
             {
-                _capturedMembers = value;
-                this.RaisePropertyChanged("CapturedMembers");
+                _capturedProspectiveMembers = value;
+                this.RaisePropertyChanged("CapturedProspectiveMembers");
             }
         }
 
@@ -623,32 +639,6 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
-        public ProspectiveMemberSchemeViewModel ProspectiveMemberSchemeViewModel
-        {
-            get
-            {
-                return _schemeGroupedMembersViewModel;
-            }
-            set
-            {
-                _schemeGroupedMembersViewModel = value;
-                this.RaisePropertyChanged("ProspectiveMemberSchemeViewModel");
-            }
-        }
-
-        public ProspectiveMembersViewModel ProspectiveMembersViewModel
-        {
-            get
-            {
-                return _prospectiveMembersViewModel;
-            }
-            set
-            {
-                _prospectiveMembersViewModel = value;
-                this.RaisePropertyChanged("ProspectiveMembersViewModel");
-            }
-        }
-
         public ProcessedDataModel ProcessedData
         {
             get
@@ -675,6 +665,32 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
+        public NewProspectiveMembersUserControl MembersUserControl
+        {
+            get
+            {
+                return _membersUserControl;
+            }
+            set
+            {
+                _membersUserControl = value;
+                this.RaisePropertyChanged("MembersUserControl");
+            }
+        }
+
+        public NewProspectiveMemberSchemeUserControl MembersSchemeUserControl
+        {
+            get
+            {
+                return _membersSchemeUserControl;
+            }
+            set
+            {
+                _membersSchemeUserControl = value;
+                this.RaisePropertyChanged("MembersSchemeUserControl");
+            }
+        }
+
         private bool IsValidInput
         {
             get
@@ -695,7 +711,7 @@ namespace SSS.NATTEX.ViewModel
         #endregion
 
         #region constructors
-        public CaptureMemberMinDetailsViewModel(DockingSetupModel layoutModel, NewQuotation quotationModel)
+        public CaptureNewProspectiveMembersViewModel(DockingSetupModel layoutModel, NewQuotation quotationModel)
         {
             this.LayoutModel = layoutModel;
             this.QuotationModel = quotationModel;
@@ -710,7 +726,7 @@ namespace SSS.NATTEX.ViewModel
             this.Centuries = new ObservableCollection<string>(this.GetCenturies());
             this.SelectedCentury = "19";
             this.CenturiesVisibility = Visibility.Collapsed;
-            this.CapturedMembers = new ObservableCollection<string>();
+            this.CapturedProspectiveMembers = new ObservableCollection<ProspectiveMember>();
             this.SchemeGroupedMembers = new ObservableCollection<string>();
 
             this.NumberOfMembers = 1;
@@ -774,6 +790,12 @@ namespace SSS.NATTEX.ViewModel
                 this.ValidationMessageVisibility = Visibility.Visible;
                 this.IsValidInput = false;
             }
+            else if (IsDuplicateProspectiveMember)
+            {
+                this.ValidationMessage = "Duplicate Prospective Member.";
+                this.ValidationMessageVisibility = Visibility.Visible;
+                this.IsValidInput = false;
+            }
             else
             {
                 this.ValidationMessage = "";
@@ -807,23 +829,41 @@ namespace SSS.NATTEX.ViewModel
 
             if (win != null)
             {
+                ProspectiveMember member = new ProspectiveMember()
+                {
+                    IDNumber = this.IDNumber,
+                    IsMemberSelected = true,
+                    Age = Convert.ToInt32(this.CalculatedAge)
+                };
+                if (this.CapturedProspectiveMembers.Contains(member)) {
+                    this.IsDuplicateProspectiveMember = true;
+                }
+                else
+                {
+                    this.IsDuplicateProspectiveMember = false;
+                }
                 Validate();
                 if (IsValidInput)
                 {
-                    this.CapturedMembers.Add(this.IDNumber);
+                    this.CapturedProspectiveMembers.Add(member);
 
-                    if (this.ProspectiveMembersViewModel == null)
+                    if (this.MembersUserControl == null)
                     {
-                        this.ProspectiveMembersViewModel = new ProspectiveMembersViewModel();
-                        this.ProspectiveMembersViewModel.IsMemberCheckListEnabled = false;
+                        this.MembersUserControl = new NewProspectiveMembersUserControl();
                     }
+
+                    if (this.MembersSchemeUserControl == null)
+                    {
+                        this.MembersSchemeUserControl = new NewProspectiveMemberSchemeUserControl();
+                    }
+
 
                     if (this.LayoutModel.RightAnchorablePane.ChildrenCount == 0)
                     {
                         this.LayoutModel.RightAnchorable = new LayoutAnchorable()
                         {
                             Title = "Prospective Members",
-                            Content = new CapturedMembersUserControl(this.ProspectiveMembersViewModel),
+                            Content = this.MembersUserControl,
                             ContentId = "C2",
                             IsActive = true,
                             IsSelected = true,
@@ -841,28 +881,23 @@ namespace SSS.NATTEX.ViewModel
 
                     if (this.RemainingNumberOfMembers > 0)
                     {
-                        this.NumberOfMembersCaptured = this.CapturedMembers.Count;
+                        this.NumberOfMembersCaptured = this.CapturedProspectiveMembers.Count;
                         this.RemainingNumberOfMembers = this.NumberOfMembers - this.NumberOfMembersCaptured;
                         this.LayoutModel.LeftAnchorablePane.Parent = this.LayoutModel.DockingManager.Layout.RootPanel;
-                        this.ProspectiveMembersViewModel.ProspectiveMembers.Add(new ProspectiveMember() { IDNumber = this.IDNumber, IsMemberSelected = true, Age = Convert.ToInt32(this.CalculatedAge) });
+                        this.MembersUserControl.AddProspectiveMember(member);
                     }
 
                     if (this.RemainingNumberOfMembers == 0)
                     {
                         this.IsProceedEnbaled = true;
                         this.ProceedVisibility = Visibility.Visible;
-
-                        if (this.ProspectiveMemberSchemeViewModel == null)
-                        {
-                            this.ProspectiveMemberSchemeViewModel = new ProspectiveMemberSchemeViewModel(this.ProspectiveMembersViewModel);
-                        }
-
+                       
                         if (this.LayoutModel.LeftAnchorablePane.ChildrenCount == 0)
                         {
                             this.LayoutModel.LeftAnchorable = new LayoutAnchorable()
                             {
                                 Title = "Member Scheme Groups",
-                                Content = new ProspectiveMemberSchemeUserControl(this.ProspectiveMemberSchemeViewModel),
+                                Content = this.MembersSchemeUserControl,
                                 ContentId = "C1",
                                 IsActive = true,
                                 IsSelected = true,
@@ -878,6 +913,7 @@ namespace SSS.NATTEX.ViewModel
                             this.LayoutModel.LeftAnchorable.Parent = this.LayoutModel.LeftAnchorablePane;
                             this.LayoutModel.LeftAnchorable.Show();
                         }
+                        this.MembersSchemeUserControl.AddProspectiveMembers(this.CapturedProspectiveMembers.ToList());
                     }
                 }
             }

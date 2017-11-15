@@ -774,7 +774,7 @@ namespace SSS.NATTEX.ViewModel
                          CustomerOtherInfo = this.CustomerOtherInfo,
                          PricingModel = this.SelectedPricingModel,
                          QuotationPreparedBy = "NAMS Administrator",
-                         QuotationDocuments = this.QuotationDocuments.ToList()
+                         QuotationDocuments = this.QuotationDocuments == null ? (this.QuotationDocuments = new ObservableCollection<QuotationUploadDocument>()).ToList() : QuotationDocuments.ToList()
                     };
 
                     this.LayoutModel.DocumentPane.Children.Remove(this.LayoutModel.Document);
@@ -788,7 +788,7 @@ namespace SSS.NATTEX.ViewModel
                         IsMaximized = false,
                         IconSource = new BitmapImage(new Uri(@"../../Resources/Images/quote_4_24.png", UriKind.Relative))
                     };
-                    this.LayoutModel.Document.Content = new CaptureMemberMinDetailsUserControl(this.LayoutModel, newQuotationModel);
+                    this.LayoutModel.Document.Content = new CaptureNewProspectiveMembersUserControl(this.LayoutModel, newQuotationModel);
                     this.LayoutModel.DocumentPane.Children.Add(this.LayoutModel.Document);
                     this.LayoutModel.Document.PreviousContainerIndex = this.LayoutModel.DocumentPane.Children.IndexOf(this.LayoutModel.Document);
                     this.LayoutModel.Document.Parent = this.LayoutModel.DocumentPane;

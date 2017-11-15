@@ -10,9 +10,12 @@ namespace SSS.NATTEX.ViewModel
 {
     public class ProspectiveMembersViewModel: MainViewModel
     {
+        #region fields
         private ObservableCollection<ProspectiveMember> _procespectiveMembers;
         private bool _isMemberCheckListEnabled;
+        #endregion
 
+        #region properties
         public ObservableCollection<ProspectiveMember> ProspectiveMembers
         {
             get
@@ -25,7 +28,7 @@ namespace SSS.NATTEX.ViewModel
                 this.RaisePropertyChanged("ProspectiveMembers");
             }
         }
-
+     
         public bool IsMemberCheckListEnabled
         {
             get
@@ -38,10 +41,30 @@ namespace SSS.NATTEX.ViewModel
                 this.RaisePropertyChanged("IsMemberCheckListEnabled");
             }
         }
+        #endregion
 
+        #region constructors
         public ProspectiveMembersViewModel()
         {
             ProspectiveMembers = new ObservableCollection<ProspectiveMember>();
         }
+        #endregion
+
+        #region methods
+        public void AddProspectiveMember(ProspectiveMember member)
+        {
+            if (this.ProspectiveMembers == null)
+            {
+                this.ProspectiveMembers = new ObservableCollection<ProspectiveMember>();
+            }
+            this.ProspectiveMembers.Add(member);
+        }
+
+        public void RemoveProspectiveMember(ProspectiveMember member)
+        {
+            this.ProspectiveMembers.Remove(member);
+        }
+
+        #endregion
     }
 }

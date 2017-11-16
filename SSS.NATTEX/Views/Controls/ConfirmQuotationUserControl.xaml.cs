@@ -22,17 +22,11 @@ namespace SSS.NATTEX.Views.Controls
     /// </summary>
     public partial class ConfirmQuotationUserControl : UserControl
     {
-        public ConfirmQuotationUserControl(DockingSetupModel dockingSetup)
+        public ConfirmQuotationUserControl(DockingSetupModel dockingSetupModel, NewQuotation quotationModel)
         {
             InitializeComponent();
-            var viewModel = new ConfirmQuotationViewModel(dockingSetup);
+            var viewModel = new ConfirmQuotationViewModel(dockingSetupModel, quotationModel);
             DataContext = viewModel;
-        }
-
-        private void ConfirmQuotationUserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            (this.DataContext as ConfirmQuotationViewModel).LoadQuotationDetail();
-            (this.DataContext as ConfirmQuotationViewModel).LoadGeneratedQuotation();
         }
     }
 }

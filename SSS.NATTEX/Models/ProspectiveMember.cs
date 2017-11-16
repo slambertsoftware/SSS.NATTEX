@@ -16,6 +16,7 @@ namespace SSS.NATTEX.Models
         public int Age { get; set; }
         public decimal Premium { get; set; }
         public string Scheme { get; set; }
+        public string CoverAmount { get; set; }
         public bool IsMemberSelected { get; set; }
         public override string ToString() { return IDNumber; }
 

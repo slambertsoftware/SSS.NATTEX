@@ -134,15 +134,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\AdminFee.cs" />
     <Compile Include="Models\AgeGroup.cs" />
     <Compile Include="Models\Agent.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\BusinessPartner.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\CoverAmount.cs" />
+    <Compile Include="Models\CoverPremium.cs" />
+    <Compile Include="Models\CoverType.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\DockingSetupModel.cs" />
+    <Compile Include="Models\JoiningFee.cs" />
     <Compile Include="Models\MemberSchemeGroupListModel.cs" />
     <Compile Include="Models\MemberSchemeGroup.cs" />
+    <Compile Include="Models\PricingModel.cs" />
     <Compile Include="Models\ProspectiveMemberScheme.cs" />
     <Compile Include="Models\NewQuotation.cs" />
     <Compile Include="Models\ProspectiveMemberSchemeTypes.cs" />
@@ -154,6 +160,7 @@
     <Compile Include="Models\QuotationDocumentDetail.cs" />
     <Compile Include="Models\QuotationFooterItem.cs" />
     <Compile Include="Models\QuotationHeaderItem.cs" />
+    <Compile Include="Models\QuotationItemTemplateSelector.cs" />
     <Compile Include="Models\QuotationType.cs" />
     <Compile Include="Models\QuotationUploadDocument.cs" />
     <Compile Include="Models\SchemeType.cs" />

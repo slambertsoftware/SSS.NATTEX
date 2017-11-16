@@ -38,5 +38,10 @@ namespace SSS.NATTEX.Views.Controls
         {
             (this.DataContext as ProspectiveMembersViewModel).RemoveProspectiveMember(member);
         }
+
+        public List<ProspectiveMember> GetCapturedProspectiveMembers()
+        {
+            return (this.DataContext as ProspectiveMembersViewModel).ProspectiveMembers.ToList();
+        }
     }
 }

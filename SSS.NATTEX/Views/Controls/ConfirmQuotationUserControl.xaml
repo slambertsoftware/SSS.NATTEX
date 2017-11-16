@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SSS.NATTEX.Views.Controls"
-             mc:Ignorable="d" HorizontalAlignment="Stretch" FontFamily="Arial" MinWidth="735" FontSize="11" HorizontalContentAlignment="Stretch" Loaded="ConfirmQuotationUserControl_Loaded" x:Name="generatedQuotationUserControl">
+             xmlns:models="clr-namespace:SSS.NATTEX.Models"
+             mc:Ignorable="d" HorizontalAlignment="Stretch" FontFamily="Arial" MinWidth="735" FontSize="11" HorizontalContentAlignment="Stretch" x:Name="generatedQuotationUserControl">
 
     <UserControl.Resources>
         <Style x:Key="PrimaryRoundButtonTemplate" TargetType="Button">
@@ -52,8 +53,183 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <DataTemplate x:Key="QuotationItemTemplate">
+            <Grid Margin="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Border Background="Gray"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7"  Height="1" Width="Auto" BorderBrush="Gray" Margin="0"></Border>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text ="{Binding SchemeGroup}" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" FontSize="10" ></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text ="{Binding GroupName}" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" FontSize="10" ></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="2" Text ="{Binding GroupNumber}" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" FontSize="10" ></TextBlock>
+
+                <TextBlock Grid.Row="0" Grid.Column="3" Text ="{Binding NumOfMembers}" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" FontSize="10" ></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="4" Text ="{Binding CoverAmount}" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" FontSize="10" ></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="5" Text ="{Binding GroupPremiumAmount}" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" FontSize="10" ></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="6" Text ="{Binding Comment}" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" FontSize="10" ></TextBlock>
+                <Border Background="DarkGray"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="7"  Height="1" Width="Auto" BorderBrush="DarkGray" Margin="0, 0, 0, 1"></Border>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="SubTotalItemTemplate">
+            <Grid Margin="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Border Background="Gray"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7"  Height="1" Width="Auto" BorderBrush="Gray" Margin="0"></Border>
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Content ="Total Number of Members" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" FontSize="14" ></Label>
+                <TextBlock Grid.Row="0" Grid.Column="4" Text ="{Binding TotalMembers}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5, 0, 5, 5" FontWeight="Bold" FontSize="14" ></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="5" Text ="Total Premium" HorizontalAlignment="Right" Margin="5, 0, 5, 5" VerticalAlignment="Center"  FontWeight="Bold" FontSize="14" ></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="6" Text ="{Binding TotalPremium}" HorizontalAlignment="Left" VerticalAlignment="Center"  FontWeight="Bold" FontSize="14" ></TextBlock>
+                <Border Background="DarkGray"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="7"  Height="1" Width="Auto" BorderBrush="DarkGray" Margin="0, 0, 0, 1"></Border>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="AdminHeadingItemTemplate">
+            <Grid Margin="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7" Text ="Administrative Costs" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="14" Foreground="Gray" ></TextBlock>
+                <Border    Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="7"   Background="DarkGray" Height="1" Width="Auto" BorderBrush="DarkGray" Margin="0, 0, 0, 1"></Border>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="AdminFeeItemTemplate">
+            <Grid Margin="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="6" Text ="Admin Fee" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" FontSize="12" Foreground="Gray" ></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="7" Text ="{Binding AdminFee}" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="12" Foreground="Gray" ></TextBlock>
+                <Border    Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="7"   Background="DarkGray" Height="1" Width="Auto" BorderBrush="DarkGray" Margin="0, 0, 0, 1"></Border>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="JoiningFeeHeadingTemplate">
+            <Grid Margin="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7" Text ="Joining Fee" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="14" Foreground="Gray" ></TextBlock>
+                <Border    Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="7"   Background="DarkGray" Height="1" Width="Auto" BorderBrush="DarkGray" Margin="0, 0, 0, 1"></Border>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="JoiningFeeTemplate">
+            <Grid Margin="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="6" Text ="{Binding JoiningFeeDescription}" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="12" Foreground="Gray" ></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="7" Text ="{Binding Joining}" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="14" Foreground="Gray" ></TextBlock>
+                <Border    Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="7"   Background="DarkGray" Height="1" Width="Auto" BorderBrush="DarkGray" Margin="0, 0, 0, 1"></Border>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="MonthlyInstallmentTemplate">
+            <Grid Margin="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="2" Text ="{Binding MonthlyInstallmentDescription}" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" FontSize="12" Foreground="Gray" ></TextBlock>
+                <Border    Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="7"   Background="DarkGray" Height="1" Width="Auto" BorderBrush="DarkGray" Margin="0, 0, 0, 1"></Border>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="TotalQuotationValueTemplate">
+            <Grid Margin="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="2" Text ="Total Quotation" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" FontSize="14"  ></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="2" Text ="{Binding QuotationValue}" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" FontSize="14" ></TextBlock>
+                <Border    Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="7"   Background="DarkGray" Height="1" Width="Auto" BorderBrush="DarkGray" Margin="0, 0, 0, 1"></Border>
+            </Grid>
+        </DataTemplate>
+        <models:QuotationItemTemplateSelector x:Key="TemplateSelector" QuotationItemTemplate ="{StaticResource QuotationItemTemplate}" 
+                                              SubTotalItemTemplate ="{StaticResource SubTotalItemTemplate}" 
+                                              AdminHeadingItemTemplate ="{StaticResource AdminHeadingItemTemplate}" 
+                                              AdminFeeItemTemplate ="{StaticResource AdminFeeItemTemplate}" 
+                                              JoiningFeeHeadingTemplate ="{StaticResource JoiningFeeHeadingTemplate}" 
+                                              JoiningFeeTemplate  ="{StaticResource JoiningFeeTemplate }" 
+                                              MonthlyInstallmentTemplate ="{StaticResource MonthlyInstallmentTemplate}" 
+                                              TotalQuotationValueTemplate ="{StaticResource TotalQuotationValueTemplate}"></models:QuotationItemTemplateSelector>
     </UserControl.Resources>
-    
+
     <Border Margin="10" BorderBrush="Gray" BorderThickness="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Margin="10" >
             <Grid.RowDefinitions>
@@ -65,11 +241,73 @@
                 <RowDefinition Height="30"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Text="{Binding QuotationNumber, UpdateSourceTrigger=PropertyChanged}" FontFamily="Arial" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"></TextBlock>
             <TextBlock Grid.Row="1" Text="{Binding QuotationCustomerName, UpdateSourceTrigger=PropertyChanged}"  FontFamily="Arial" FontSize="14"  VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"></TextBlock>
-            <Expander Grid.Row="2" Header="Quotation Detail" IsExpanded="False" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10, 0, 10, 0">
+           
+            <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Orientation="Vertical" Background="Gray" Margin="10, 10, 10, 0">
+                <TextBlock Text="{Binding QuotationSummaryHeading, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" ></TextBlock>
+                <TextBlock Text="{Binding QuotationHeader, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" ></TextBlock>
+                <Border BorderThickness="0.65" BorderBrush="DarkGray"  VerticalAlignment="Bottom"></Border>
+            </StackPanel>
+            <Grid Grid.Row="3" Background="#FFEAEAEA" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10, 0, 10, 10" >
+                <Grid HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0"></RowDefinition>
+                        <RowDefinition Height="13"/>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Quotation Date:" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.RowSpan="2"></TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding QuotationCreateDate, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.RowSpan="2"></TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="2" Text="The quotation is valid for 30 days and will expire on:" VerticalAlignment="Top" HorizontalAlignment="Left" MinWidth="230"  Margin="10,0,0,0" Grid.RowSpan="2" ></TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="3" Text="{Binding QuotationExpiryDate, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.RowSpan="2"></TextBlock>
+                    <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="To whom it may concern" FontSize="14" FontWeight="Bold" Grid.Column="2" Margin="0"/>
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="ITEM" FontWeight="Bold" VerticalAlignment="Bottom" ></TextBlock>
+                    <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Text="DESCRIPTION" FontWeight="Bold" VerticalAlignment="Bottom"></TextBlock>
+                    <TextBlock Grid.Row="3" Grid.Column="3" Text="COST" FontWeight="Bold"  MinWidth="150" VerticalAlignment="Bottom" ></TextBlock>
+                    <Border    Grid.Row="3" Grid.ColumnSpan="4" BorderThickness="0.65" BorderBrush="DarkGray"  VerticalAlignment="Bottom"></Border>
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Monthly Premium" MinWidth="150" VerticalAlignment="Center" Margin="0,4"></TextBlock>
+                    <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding MonthlyPremiumDescription, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="0"></TextBlock>
+                    <TextBlock Grid.Row="4" Grid.Column="3" Text="{Binding MonthlyPremium, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"></TextBlock>
+                    <Border    Grid.Row="4" Grid.ColumnSpan="4" BorderThickness="0.5" BorderBrush="DarkGray"  VerticalAlignment="Bottom"></Border>
+
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Admin Fee" MinWidth="150" VerticalAlignment="Center" Margin="0,4"></TextBlock>
+                    <TextBlock Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding MonthlyAdminFeeDescription, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" ></TextBlock>
+                    <TextBlock Grid.Row="5" Grid.Column="3" Text="{Binding MonthlyAdminFee, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                    <Border Grid.Row="5" Grid.ColumnSpan="4" BorderThickness="0.5" BorderBrush="DarkGray"  VerticalAlignment="Bottom" Margin="0"></Border>
+
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Joining Fee" MinWidth="150" VerticalAlignment="Center" Margin="0,4"></TextBlock>
+                    <TextBlock Grid.Row="6" Grid.Column="1"  Grid.ColumnSpan="3"  Text="{Binding OnceJoiningFeeDescription, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="0"></TextBlock>
+                    <TextBlock Grid.Row="6" Grid.Column="3" Text="{Binding OnceJoiningFee, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"></TextBlock>
+                    <Border Grid.Row="6" Grid.ColumnSpan="4" BorderThickness="0.65" BorderBrush="DarkGray"  VerticalAlignment="Bottom" Margin="0"></Border>
+
+                    <TextBlock Grid.Row="7" Grid.Column="2" HorizontalAlignment="Right"  Text="Total" VerticalAlignment="Center" FontWeight="Bold" />
+                    <TextBlock Grid.Row="7" Grid.Column="3" HorizontalAlignment="Left"  Text="{Binding QuotationValue, UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Center" FontWeight="Bold" Margin="0"/>
+                    <Border    Grid.Row="7" Grid.ColumnSpan="4" BorderThickness="0.5" BorderBrush="DarkGray"  VerticalAlignment="Bottom"></Border>
+
+                    <TextBlock Grid.Row="8" Grid.Column="2" HorizontalAlignment="Center"  Text="{Binding JoiningFeeInstallmentMessage, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="0"/>
+                    <TextBlock Grid.Row="9" Grid.Column="2" HorizontalAlignment="Center"  Text="Terms and conditions apply." FontSize="7" VerticalAlignment="Center" Margin="1"/>
+                </Grid>
+            </Grid>
+
+            <Expander Grid.Row="4" Header="Quotation Detail" IsExpanded="False" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10, 0, 10, 0">
                 <DataGrid Width="{Binding ElementName=generatedQuotationUserControl, Path=Width}" AutoGenerateColumns="False" IsReadOnly="True" SelectedItem="{Binding SelectedGridRowItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding QuotationDetailResults, UpdateSourceTrigger=PropertyChanged}" Background="#FFEAEAEA" ScrollViewer.CanContentScroll="True" 
                         ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"  MinHeight="200" Height="Auto" VerticalAlignment="Top">
                     <DataGrid.Resources>
@@ -95,92 +333,28 @@
                         </Style>
                     </DataGrid.ColumnHeaderStyle>
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <CheckBox VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" CheckBox.Command="{Binding Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,  RelativeSource={RelativeSource FindAncestor, AncestorType=DataGrid}, Path=DataContext.SetGridRowRowCheckedChangeCommand}"   IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplateSelector>
+                                <models:QuotationItemTemplateSelector  QuotationItemTemplate ="{StaticResource QuotationItemTemplate}" 
+                                              SubTotalItemTemplate ="{StaticResource SubTotalItemTemplate}" 
+                                              AdminHeadingItemTemplate ="{StaticResource AdminHeadingItemTemplate}" 
+                                              AdminFeeItemTemplate ="{StaticResource AdminFeeItemTemplate}" 
+                                              JoiningFeeHeadingTemplate ="{StaticResource JoiningFeeHeadingTemplate}" 
+                                              JoiningFeeTemplate  ="{StaticResource JoiningFeeTemplate }" 
+                                              MonthlyInstallmentTemplate ="{StaticResource MonthlyInstallmentTemplate}" 
+                                              TotalQuotationValueTemplate ="{StaticResource TotalQuotationValueTemplate}"></models:QuotationItemTemplateSelector>
+                            </DataGridTemplateColumn.CellTemplateSelector>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="Scheme Group" Binding="{Binding SchemeGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="190">
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Header="Number of Groups" Binding="{Binding NumOfGroups, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="100">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="TextAlignment" Value="Center" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Header="Number of Members" Binding="{Binding NumOfMembers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTipService.ToolTip="{Binding NumOfGroupsToolTip, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridContentCellElementStyle}" MinWidth="110"/>
-                        <DataGridTextColumn Header="@ Cover Amount (R)" Binding="{Binding CoverAmount, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ToolTipService.ToolTip="{Binding CoverAmountToolTip, UpdateSourceTrigger=PropertyChanged}" MinWidth="110"/>
-                        <DataGridTextColumn Header="Total (R)" Binding="{Binding TotalAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTipService.ToolTip="{Binding TotalAmountToolTip, UpdateSourceTrigger=PropertyChanged}"  MinWidth="70"/>
-                        <DataGridTextColumn Header="Comment" Binding="{Binding Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTipService.ToolTip="{Binding TotalAmountToolTip, UpdateSourceTrigger=PropertyChanged}" MinWidth="70"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Expander>
-            <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Orientation="Vertical" Background="Gray" Margin="10, 10, 10, 0">
-                <TextBlock Text="{Binding QuotationHeader, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" ></TextBlock>
-                <Border BorderThickness="0.65" BorderBrush="DarkGray"  VerticalAlignment="Bottom"></Border>
-            </StackPanel>
-            <Grid Grid.Row="4" Background="#FFEAEAEA" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10, 0, 10, 10" MinHeight="200" MinWidth="200">
-                <Grid HorizontalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Quotation Date:" VerticalAlignment="Top" HorizontalAlignment="Left"></TextBlock>
-                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding QuotationCreateDate, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10, 0, 10, 0"></TextBlock>
-                    <TextBlock Grid.Row="0" Grid.Column="2" Text="The quotation is valid for 30 days and will expire on:" VerticalAlignment="Top" HorizontalAlignment="Left" MinWidth="230"  Margin="10, 0, 10, 0" ></TextBlock>
-                    <TextBlock Grid.Row="0" Grid.Column="3" Text="{Binding QuotationExpiryDate, UpdateSourceTrigger=PropertyChanged}" Margin="10, 0, 10, 0" VerticalAlignment="Top" HorizontalAlignment="Left"></TextBlock>
-                    <TextBlock Grid.Row="1" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Center" Text="To whom it may concern" FontSize="14" FontWeight="Bold"></TextBlock>
-
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="ITEM" FontWeight="Bold" VerticalAlignment="Bottom" ></TextBlock>
-                    <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="DESCRIPTION" FontWeight="Bold" VerticalAlignment="Bottom" ></TextBlock>
-                    <TextBlock Grid.Row="2" Grid.Column="3" Text="COST" FontWeight="Bold"  MinWidth="150" VerticalAlignment="Bottom" ></TextBlock>
-                    <Border    Grid.Row="2" Grid.ColumnSpan="4" BorderThickness="0.65" BorderBrush="DarkGray"  VerticalAlignment="Bottom"></Border>
-
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Monthly Premium" MinWidth="150" VerticalAlignment="Center"></TextBlock>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding MonthlyPremiumDescription, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"></TextBlock>
-                    <TextBlock Grid.Row="3" Grid.Column="3" Text="{Binding MonthlyPremium, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
-                    <Border    Grid.Row="3" Grid.ColumnSpan="4" BorderThickness="0.5" BorderBrush="DarkGray"  VerticalAlignment="Bottom"></Border>
-
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Admin Fee" MinWidth="150" VerticalAlignment="Center"></TextBlock>
-                    <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding MonthlyAdminFeeDescription, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"></TextBlock>
-                    <TextBlock Grid.Row="4" Grid.Column="3" Text="{Binding MonthlyAdminFee, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
-                    <Border Grid.Row="4" Grid.ColumnSpan="4" BorderThickness="0.5" BorderBrush="DarkGray"  VerticalAlignment="Bottom"></Border>
-
-                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Joining Fee" MinWidth="150" VerticalAlignment="Center"></TextBlock>
-                    <TextBlock Grid.Row="5" Grid.Column="1"  Grid.ColumnSpan="2"  Text="{Binding OnceJoiningFeeDescription, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"></TextBlock>
-                    <TextBlock Grid.Row="5" Grid.Column="3" Text="{Binding OnceJoiningFee, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
-                    <Border Grid.Row="5" Grid.ColumnSpan="4" BorderThickness="0.65" BorderBrush="DarkGray"  VerticalAlignment="Bottom"></Border>
-
-                    <TextBlock Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right"  Text="Total" VerticalAlignment="Center" FontWeight="Bold" Margin="10"></TextBlock>
-                    <TextBlock Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2" HorizontalAlignment="Left"  Text="{Binding QuotationValue, UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Center" FontWeight="Bold"></TextBlock>
-                    <Border    Grid.Row="6" Grid.ColumnSpan="4" BorderThickness="0.5" BorderBrush="DarkGray"  VerticalAlignment="Bottom"></Border>
-
-                    <TextBlock Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Center"  Text="{Binding JoiningFeeInstallmentMessage, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"></TextBlock>
-                    <TextBlock Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Center"  Text="Terms and conditions apply." FontSize="7" VerticalAlignment="Center"></TextBlock>
-                </Grid>
-            </Grid>
-
+           
             <Border    Grid.Row="5" BorderThickness="0.65" BorderBrush="DarkGray"  VerticalAlignment="Top"></Border>
             <WrapPanel Grid.Row="5" Grid.ColumnSpan="4" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <Button BorderBrush="#FFF" Name="AcceptButton" FontFamily="Arial" Background="#FF0487F3" Foreground="#FFF3ECEC" Style="{StaticResource PrimaryRoundButtonTemplate}" Content="ACCEPT QUOTATION" Height="22" Width="140" Command="{Binding AcceptCommand}"
-                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip="Accept the generated quotation and proceed to the Print and View activity." />
+                <Button BorderBrush="#FFF" Name="AcceptButton" FontFamily="Arial" Background="#FF0487F3" Foreground="#FFF3ECEC" Style="{StaticResource PrimaryRoundButtonTemplate}" Height="22" Width="140" Command="{Binding ConfirmCommand}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip="Confirm the quotation and proceed to the Generate Quotation activity." >
+                    <TextBlock Text="CONFIRM QUOTATION" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                </Button>
                 <Button BorderBrush="#FFF" Name="ReviewButton" FontFamily="Arial" Background="#FFF38604" Foreground="#FFF3ECEC" Style="{StaticResource PrimaryRoundButtonTemplate}" Content="REVIEW QUOTATION" Height="22" Width="140" Command="{Binding ReviewCommand}"
                 CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip="Click to review quotation in order to make adjustments first." />
                 <Button Content="CANCEL" Height="22" Width="140" Command="{Binding CancelCommand}" Margin="2,2,10,2"  Style="{StaticResource CancelRoundButtonTemplate}" 

@@ -41,5 +41,10 @@ namespace SSS.NATTEX.Views.Controls
         {
             (this.DataContext as NewProspectiveMemberSchemeViewModel).ProcessProspectiveMembers();
         }
+
+        public List<ProspectiveMemberScheme>  GetProspectiveMemberSchemes()
+        {
+           return (this.DataContext as NewProspectiveMemberSchemeViewModel).ProspectiveMemberSchemes.ToList();
+        }
     }
 }

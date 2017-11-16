@@ -1370,6 +1370,10 @@ namespace SSS.NATTEX.ViewModel
                 Validate();
                 if (IsValidInput)
                 {
+                    this.QuotationModel.ProspectiveMembers = this.MembersUserControl.GetCapturedProspectiveMembers();
+                    this.QuotationModel.ProspectiveMemberSchemes = this.MembersSchemeUserControl.GetProspectiveMemberSchemes();
+                    this.QuotationModel.IsCoverAmountAppliedToAll = this.IsApplyCoverAmountChecked;
+                    this.QuotationModel.CoverAmount = this.SelectedCoverAmount;
                     this.LayoutModel.DocumentPane.Children.Remove(this.LayoutModel.Document);
                     this.LayoutModel.LeftAnchorablePane.Children[0].Hide(true);
                     this.LayoutModel.RightAnchorablePane.Children[0].Hide(true);
@@ -1383,7 +1387,7 @@ namespace SSS.NATTEX.ViewModel
                         IsMaximized = false,
                         IconSource = new BitmapImage(new Uri(@"../../Resources/Images/quote_4_24.png", UriKind.Relative))
                     };
-                    this.LayoutModel.Document.Content = new ConfirmQuotationUserControl(this.LayoutModel);
+                    this.LayoutModel.Document.Content = new ConfirmQuotationUserControl(this.LayoutModel, this.QuotationModel);
                     this.LayoutModel.DocumentPane.Children.Add(this.LayoutModel.Document);
                     this.LayoutModel.Document.PreviousContainerIndex = this.LayoutModel.DocumentPane.Children.IndexOf(this.LayoutModel.Document);
                     this.LayoutModel.Document.Parent = this.LayoutModel.DocumentPane;

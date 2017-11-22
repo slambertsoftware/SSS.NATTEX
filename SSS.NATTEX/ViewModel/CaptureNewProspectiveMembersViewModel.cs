@@ -777,20 +777,20 @@ namespace SSS.NATTEX.ViewModel
             ValidateIDNumber();
             ValidateBirthDate();
             UpdateProcceedValidation();
-
-            if (!IsValidIDNumber)
+ 
+            if ((!IsValidIDNumber) && (this.RemainingNumberOfMembers > 0))
             {
                 this.ValidationMessage = "Invalid ID Number.";
                 this.ValidationMessageVisibility = Visibility.Visible;
                 this.IsValidInput = false;
             }
-            else if (!IsValidBirthDate)
+            else if ((!IsValidBirthDate) && (this.RemainingNumberOfMembers > 0))
             {
                 this.ValidationMessage = "Invalid Birth Date.";
                 this.ValidationMessageVisibility = Visibility.Visible;
                 this.IsValidInput = false;
             }
-            else if (IsDuplicateProspectiveMember)
+            else if ((IsDuplicateProspectiveMember) && (this.RemainingNumberOfMembers > 0))
             {
                 this.ValidationMessage = "Duplicate Prospective Member.";
                 this.ValidationMessageVisibility = Visibility.Visible;
@@ -821,102 +821,6 @@ namespace SSS.NATTEX.ViewModel
             ResetCommand = new RelayCommand<Window>(ResetAction);
             ProceedCommand = new RelayCommand<Window>(ProceedAction);
             CancelCommand = new RelayCommand<Window>(CancelAction);
-        }
-
-        private void SaveAction(Window window)
-        {
-            Window win = (Window)window;
-
-            if (win != null)
-            {
-                ProspectiveMember member = new ProspectiveMember()
-                {
-                    IDNumber = this.IDNumber,
-                    IsMemberSelected = true,
-                    Age = Convert.ToInt32(this.CalculatedAge)
-                };
-                if (this.CapturedProspectiveMembers.Contains(member)) {
-                    this.IsDuplicateProspectiveMember = true;
-                }
-                else
-                {
-                    this.IsDuplicateProspectiveMember = false;
-                }
-                Validate();
-                if (IsValidInput)
-                {
-                    this.CapturedProspectiveMembers.Add(member);
-
-                    if (this.MembersUserControl == null)
-                    {
-                        this.MembersUserControl = new NewProspectiveMembersUserControl();
-                    }
-
-                    if (this.MembersSchemeUserControl == null)
-                    {
-                        this.MembersSchemeUserControl = new NewProspectiveMemberSchemeUserControl();
-                    }
-
-
-                    if (this.LayoutModel.RightAnchorablePane.ChildrenCount == 0)
-                    {
-                        this.LayoutModel.RightAnchorable = new LayoutAnchorable()
-                        {
-                            Title = "Prospective Members",
-                            Content = this.MembersUserControl,
-                            ContentId = "C2",
-                            IsActive = true,
-                            IsSelected = true,
-                            CanAutoHide = true,
-                            CanClose = false,
-                            CanFloat = false,
-                            CanHide = false,
-                            IconSource = new BitmapImage(new Uri(@"../../Resources/Images/quote_16.png", UriKind.Relative))
-                        };
-                        this.LayoutModel.RightAnchorablePane.Children.Add(this.LayoutModel.RightAnchorable);
-                        this.LayoutModel.RightAnchorable.PreviousContainerIndex = this.LayoutModel.RightAnchorablePane.Children.IndexOf(this.LayoutModel.RightAnchorable);
-                        this.LayoutModel.RightAnchorable.Parent = this.LayoutModel.RightAnchorablePane;
-                        this.LayoutModel.RightAnchorable.Show();
-                    }
-
-                    if (this.RemainingNumberOfMembers > 0)
-                    {
-                        this.NumberOfMembersCaptured = this.CapturedProspectiveMembers.Count;
-                        this.RemainingNumberOfMembers = this.NumberOfMembers - this.NumberOfMembersCaptured;
-                        this.LayoutModel.LeftAnchorablePane.Parent = this.LayoutModel.DockingManager.Layout.RootPanel;
-                        this.MembersUserControl.AddProspectiveMember(member);
-                    }
-
-                    if (this.RemainingNumberOfMembers == 0)
-                    {
-                        this.IsProceedEnbaled = true;
-                        this.ProceedVisibility = Visibility.Visible;
-                       
-                        if (this.LayoutModel.LeftAnchorablePane.ChildrenCount == 0)
-                        {
-                            this.LayoutModel.LeftAnchorable = new LayoutAnchorable()
-                            {
-                                Title = "Member Scheme Groups",
-                                Content = this.MembersSchemeUserControl,
-                                ContentId = "C1",
-                                IsActive = true,
-                                IsSelected = true,
-                                CanAutoHide = true,
-                                CanClose = false,
-                                CanFloat = false,
-                                CanHide = false,
-                                IconSource = new BitmapImage(new Uri(@"../../Resources/Images/quote_16.png", UriKind.Relative))
-                            };
-
-                            this.LayoutModel.LeftAnchorablePane.Children.Add(this.LayoutModel.LeftAnchorable);
-                            this.LayoutModel.LeftAnchorable.PreviousContainerIndex = this.LayoutModel.LeftAnchorablePane.Children.IndexOf(this.LayoutModel.LeftAnchorable);
-                            this.LayoutModel.LeftAnchorable.Parent = this.LayoutModel.LeftAnchorablePane;
-                            this.LayoutModel.LeftAnchorable.Show();
-                        }
-                        this.MembersSchemeUserControl.AddProspectiveMembers(this.CapturedProspectiveMembers.ToList());
-                    }
-                }
-            }
         }
 
         private void Reset()
@@ -1371,12 +1275,19 @@ namespace SSS.NATTEX.ViewModel
                 if (IsValidInput)
                 {
                     this.QuotationModel.ProspectiveMembers = this.MembersUserControl.GetCapturedProspectiveMembers();
+                    this.QuotationModel.NumberOfProspectiveMembers = Convert.ToString((this.QuotationModel.ProspectiveMembers == null) ? this.QuotationModel.ProspectiveMembers.Count : 0);
                     this.QuotationModel.ProspectiveMemberSchemes = this.MembersSchemeUserControl.GetProspectiveMemberSchemes();
                     this.QuotationModel.IsCoverAmountAppliedToAll = this.IsApplyCoverAmountChecked;
                     this.QuotationModel.CoverAmount = this.SelectedCoverAmount;
                     this.LayoutModel.DocumentPane.Children.Remove(this.LayoutModel.Document);
-                    this.LayoutModel.LeftAnchorablePane.Children[0].Hide(true);
-                    this.LayoutModel.RightAnchorablePane.Children[0].Hide(true);
+                    if (this.LayoutModel.LeftAnchorablePane.Children.Count > 0 )
+                    {
+                        this.LayoutModel.LeftAnchorablePane.Children[0].Hide(true);
+                    }
+                    if (this.LayoutModel.RightAnchorablePane.Children.Count > 0)
+                    {
+                        this.LayoutModel.RightAnchorablePane.Children[0].Hide(true);
+                    }
                     this.LayoutModel.Document = new LayoutDocument()
                     {
                         ContentId = "QM-003",
@@ -1392,6 +1303,103 @@ namespace SSS.NATTEX.ViewModel
                     this.LayoutModel.Document.PreviousContainerIndex = this.LayoutModel.DocumentPane.Children.IndexOf(this.LayoutModel.Document);
                     this.LayoutModel.Document.Parent = this.LayoutModel.DocumentPane;
                     this.LayoutModel.Document.DockAsDocument();
+                }
+            }
+        }
+
+        private void SaveAction(Window window)
+        {
+            Window win = (Window)window;
+
+            if (win != null)
+            {
+                ProspectiveMember member = new ProspectiveMember()
+                {
+                    IDNumber = this.IDNumber,
+                    IsMemberSelected = true,
+                    Age = Convert.ToInt32(this.CalculatedAge),
+                };
+                if (this.CapturedProspectiveMembers.Contains(member))
+                {
+                    this.IsDuplicateProspectiveMember = true;
+                }
+                else
+                {
+                    this.IsDuplicateProspectiveMember = false;
+                }
+                Validate();
+                if (IsValidInput)
+                {
+                    this.CapturedProspectiveMembers.Add(member);
+
+                    if (this.MembersUserControl == null)
+                    {
+                        this.MembersUserControl = new NewProspectiveMembersUserControl();
+                    }
+
+                    if (this.MembersSchemeUserControl == null)
+                    {
+                        this.MembersSchemeUserControl = new NewProspectiveMemberSchemeUserControl(this.SelectedCoverAmount);
+                    }
+
+
+                    if (this.LayoutModel.RightAnchorablePane.ChildrenCount == 0)
+                    {
+                        this.LayoutModel.RightAnchorable = new LayoutAnchorable()
+                        {
+                            Title = "Prospective Members",
+                            Content = this.MembersUserControl,
+                            ContentId = "C2",
+                            IsActive = true,
+                            IsSelected = true,
+                            CanAutoHide = true,
+                            CanClose = false,
+                            CanFloat = false,
+                            CanHide = false,
+                            IconSource = new BitmapImage(new Uri(@"../../Resources/Images/quote_16.png", UriKind.Relative))
+                        };
+                        this.LayoutModel.RightAnchorablePane.Children.Add(this.LayoutModel.RightAnchorable);
+                        this.LayoutModel.RightAnchorable.PreviousContainerIndex = this.LayoutModel.RightAnchorablePane.Children.IndexOf(this.LayoutModel.RightAnchorable);
+                        this.LayoutModel.RightAnchorable.Parent = this.LayoutModel.RightAnchorablePane;
+                        this.LayoutModel.RightAnchorable.Show();
+                    }
+
+                    if (this.RemainingNumberOfMembers > 0)
+                    {
+                        this.NumberOfMembersCaptured = this.CapturedProspectiveMembers.Count;
+                        this.RemainingNumberOfMembers = this.NumberOfMembers - this.NumberOfMembersCaptured;
+                        this.LayoutModel.LeftAnchorablePane.Parent = this.LayoutModel.DockingManager.Layout.RootPanel;
+                        this.MembersUserControl.AddProspectiveMember(member);
+                    }
+
+                    if (this.RemainingNumberOfMembers == 0)
+                    {
+                        this.IsProceedEnbaled = true;
+                        this.ProceedVisibility = Visibility.Visible;
+
+                        if (this.LayoutModel.LeftAnchorablePane.ChildrenCount == 0)
+                        {
+                            this.LayoutModel.LeftAnchorable = new LayoutAnchorable()
+                            {
+                                Title = "Member Scheme Groups",
+                                Content = this.MembersSchemeUserControl,
+                                ContentId = "C1",
+                                IsActive = true,
+                                IsSelected = true,
+                                CanAutoHide = true,
+                                CanClose = false,
+                                CanFloat = false,
+                                CanHide = false,
+                                IconSource = new BitmapImage(new Uri(@"../../Resources/Images/quote_16.png", UriKind.Relative))
+                            };
+
+                            this.LayoutModel.LeftAnchorablePane.Children.Add(this.LayoutModel.LeftAnchorable);
+                            this.LayoutModel.LeftAnchorable.PreviousContainerIndex = this.LayoutModel.LeftAnchorablePane.Children.IndexOf(this.LayoutModel.LeftAnchorable);
+                            this.LayoutModel.LeftAnchorable.Parent = this.LayoutModel.LeftAnchorablePane;
+                            this.LayoutModel.LeftAnchorable.Show();
+                        }
+                        this.MembersSchemeUserControl.AddProspectiveMembers(this.CapturedProspectiveMembers.ToList());
+                    }
                 }
             }
         }

@@ -1,4 +1,5 @@
-﻿using SSS.NATTEX.Models;
+﻿using SSS.NATTEX.DAL;
+using SSS.NATTEX.Models;
 using SSS.NATTEX.ViewModel;
 using SSS.NATTEX.Views.Controls;
 using System;
@@ -26,6 +27,7 @@ namespace SSS.NATTEX.Views
         public NewQuotationWindow()
         {
             InitializeComponent();
+ 
             StartQuotationProcess();
         }
 

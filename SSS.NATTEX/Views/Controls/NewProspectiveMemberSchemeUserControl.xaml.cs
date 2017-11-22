@@ -23,10 +23,10 @@ namespace SSS.NATTEX.Views.Controls
     /// </summary>
     public partial class NewProspectiveMemberSchemeUserControl : UserControl
     {
-        public NewProspectiveMemberSchemeUserControl()
+        public NewProspectiveMemberSchemeUserControl(string coverAmount)
         {
             InitializeComponent();
-            var viewModel = new NewProspectiveMemberSchemeViewModel();
+            var viewModel = new NewProspectiveMemberSchemeViewModel(coverAmount);
             DataContext = viewModel;
         }
 

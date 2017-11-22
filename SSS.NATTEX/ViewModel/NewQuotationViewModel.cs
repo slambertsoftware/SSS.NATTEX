@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using SSS.NATTEX.DAL;
 using SSS.NATTEX.Models;
 using SSS.NATTEX.Views.Controls;
 using System;
@@ -42,7 +43,7 @@ namespace SSS.NATTEX.ViewModel
         private Visibility _uploadFileDescriptionVisibility;
         private Visibility _existingCustomerCheckedVisibility;
 
-        private Customer _selectedCustomerItem;
+        private CustomerItem _selectedCustomerItem;
 
         private ObservableCollection<string> _quotationTypes;
         private ObservableCollection<Customer> _customers;
@@ -235,7 +236,7 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
-        public Customer SelectedCustomerItem
+        public CustomerItem SelectedCustomerItem
         {
             get
             {
@@ -555,9 +556,12 @@ namespace SSS.NATTEX.ViewModel
             {
                 this.PricingModels = new ObservableCollection<string>();
             }
-            this.PricingModels.Add(string.Empty);
-            this.PricingModels.Add("Avbob");
-            this.PricingModels.Add("Liberty");
+            using (var context = new NattexApplicationContext())
+            {
+                foreach (PricingModel model in (context.PricingModels.ToList()).OrderBy(x => x.PricingName)) {
+                    this.PricingModels.Add(model.PricingName);
+                }
+            } 
         }
 
         private void PopulateExistingCustomers()
@@ -675,14 +679,14 @@ namespace SSS.NATTEX.ViewModel
         private void SetExistingCustomerNumber()
         {
             string result = string.Empty;
-            result = "NAT" + "-" + "C" + "-" + DateTime.Now.ToString("yyyyMMdd") + "-" + this.CustomerName.Substring(0, 3).ToUpper() + GetNewCustomerSequenceNumber();
+            result = "C" + "-" + DateTime.Now.ToString("yyyyMMdd") + "-" + this.CustomerName.Substring(0, 3).ToUpper() + GetNewCustomerSequenceNumber();
             this.CustomerNumber = result;
         }
 
         private string GenerateNewCustomerNumber()
         {
             string result = string.Empty;
-            result = result = "NAT" + "-" + "C" + "-" + DateTime.Now.ToString("yyyyMMdd") + "-" + this.CustomerName.Substring(0, 3).ToUpper() + GetNewCustomerSequenceNumber();
+            result = result = "C" + "-" + DateTime.Now.ToString("yyyyMMdd") + "-" + this.CustomerName.Substring(0, 3).ToUpper() + GetNewCustomerSequenceNumber();
             this.CustomerNumber = result;
             return result;
         }
@@ -704,7 +708,7 @@ namespace SSS.NATTEX.ViewModel
         private string GenerateNewQuoationNumber()
         {
             string result = string.Empty;
-            result = "NAT" + "-" + "Q" + "-" + DateTime.Now.ToString("yyyyMMdd") + "-" + this.CustomerNumber.Substring(15, 7) + "-" + GetNewQuotationSequenceNumber();
+            result = "Q" + "-" + DateTime.Now.ToString("yyyyMMdd") + "-" + this.CustomerNumber.Substring(11, 7) + "-" + GetNewQuotationSequenceNumber();
             this.QuotationNumber = result;
             return result;
         }

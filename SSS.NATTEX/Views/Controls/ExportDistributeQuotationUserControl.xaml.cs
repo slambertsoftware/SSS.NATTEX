@@ -22,10 +22,10 @@ namespace SSS.NATTEX.Views.Controls
     /// </summary>
     public partial class ExportDistributeQuotationUserControl : UserControl
     {
-        public ExportDistributeQuotationUserControl(DockingSetupModel dockingSetup)
+        public ExportDistributeQuotationUserControl(DockingSetupModel dockingSetup, NewQuotation quotationModel)
         {
             InitializeComponent();
-            var viewModel = new ExportDistributeViewModel(dockingSetup);
+            var viewModel = new ExportDistributeViewModel(dockingSetup, quotationModel);
             DataContext = viewModel;
         }
 

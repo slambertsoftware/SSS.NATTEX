@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SSS.NATTEX.ViewModel;
+using SSS.NATTEX.Views.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,24 @@ namespace SSS.NATTEX
         public MainWindow()
         {
             InitializeComponent();
+            var viewModel = new HomeViewModel(this);
+            DataContext = viewModel;
+        }
+
+        public void UpdateContent(string action)
+        {
+            if (action == "Logged In")
+            {
+                MainBorder.Background = null;
+                ContentGrid.Children.Add(new MainUserControl());
+            }
+            else
+            {
+                ContentGrid.Children.RemoveAt(0);
+                ImageBrush brush = new ImageBrush();
+                brush.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/home1.jpg", UriKind.Absolute));
+                MainBorder.Background = brush;
+            }
         }
     }
 }

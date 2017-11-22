@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowState="Maximized" 
         SizeToContent="Manual"
-        Title="Home" Height="550" Width="800">
+        Title="Home" Height="550" Width="900" Icon="Resources/Images/nattex_hand5.ico">
     <Window.Resources>
         <Style x:Key="RoundButtonTemplate" TargetType="Button">
             <Setter Property="Background" Value="#FF428BCA" />
@@ -23,37 +23,63 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <DataTemplate x:Key="FooterExpanderHeader">
+            <Grid Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Expander}}, Path=ActualWidth-30}" Height="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <TextBlock Text="Developed by Slambert Software Solutions (Pty) Ltd." Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Stretch"></TextBlock>
+            </Grid>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="45"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0"  Margin="0" BorderBrush="#FF231F1F" BorderThickness="0.5">
+        <Grid Grid.Row="0" Background="LightGray">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Image Grid.Row="0" Grid.Column="0" Source="Resources\Images\nattex_logo_tranparent.png" HorizontalAlignment="Left"></Image>
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Arial" FontWeight="Bold"><Run Text="NATTEX Application Management System (NAMS) (v1.0.0)"/></TextBlock>
+            <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource RoundButtonTemplate}" Width="150" Height="30" Margin="1, 2, 10, 1" HorizontalAlignment="Right" BorderBrush="#FFF" Name="LogoutButton" FontFamily="Arial" Background="#FFEE0E0E" Foreground="#FFF3ECEC" Command="{Binding LogoutCommand}"  Visibility="{Binding LogoutButtonVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip="Click to logout." >
+                <Button.Content>
+                    <TextBlock Text="LOGOUT" FontWeight="Bold" Foreground="#FFFFFF"></TextBlock>
+                </Button.Content>
+            </Button>
+            <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource RoundButtonTemplate}" Width="150" Height="30" Margin="1, 2, 10, 1" HorizontalAlignment="Right" BorderBrush="#FFF" Name="LoginButton" FontFamily="Arial" Background="#FF0487F3" Foreground="#FFF3ECEC" Command="{Binding LoginCommand}"  Visibility="{Binding LoginButtonVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip="Click to login to NATTEX." >
+                <Button.Content>
+                    <TextBlock Text="LOGIN" FontWeight="Bold" Foreground="#FFFFFF"></TextBlock>
+                </Button.Content>
+            </Button>
+        </Grid>
+
+        <Border x:Name="MainBorder" Grid.Row ="1" Margin="1, 1, 1, 1" BorderThickness="0.5" BorderBrush="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Border.Background>
-                <ImageBrush ImageSource="Resources\Images\2f2f2f.png"  TileMode="Tile"/>
+                <ImageBrush ImageSource="Resources\Images\home1.jpg" Opacity="0.9" Stretch="UniformToFill"/>
             </Border.Background>
-            <TextBlock Foreground="#FFF0ECEC" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontFamily="Arial" FontWeight="Bold" Margin="126,10,177,10"><Run Text="NATTEX Application Management System (v1.0.0"/><Run Text="."/><Run Text="0)"/></TextBlock>
-        </Border>
-
-        <Button Grid.Row="0" Style="{StaticResource RoundButtonTemplate}" Width="150" Height="30" Margin="1, 2, 10, 1" HorizontalAlignment="Right" BorderBrush="#FFF" Name="LoginButton" FontFamily="Arial" Background="#FF0487F3" Foreground="#FFF3ECEC">
-            <Button.Content>
-                <TextBlock Text="LOGIN" FontWeight="Bold" Foreground="#FFFFFF"></TextBlock>
-            </Button.Content>
-        </Button>
-
-
-        <Border Grid.Row ="1" Margin="1, 1, 1, 1" BorderThickness="0.5" BorderBrush="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Border.Background>
-                <ImageBrush ImageSource="Resources\Images\sss_logo_main.png" Opacity="0.9" Stretch="Uniform"/>
-            </Border.Background>
+            <Grid x:Name="ContentGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                
+            </Grid>
         </Border>
         <Border Grid.Row="2" x:Name="FooterBorder"  Margin="0" BorderBrush="#FF231F1F" BorderThickness="0.5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <Border.Background>
                 <ImageBrush ImageSource="Resources\Images\2f2f2f.png"  TileMode="Tile"/>
             </Border.Background>
-            <TextBlock Text="Developed by Slambert Software Solutions (Pty) Ltd." Foreground="#FFF0ECEC" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            <Expander HeaderTemplate="{StaticResource FooterExpanderHeader}" IsExpanded="False" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                <Border BorderThickness="1" BorderBrush="White">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1">
+                        <Image Width="70" Height="70" Source="Resources\Images\sss_logo_small.png" Margin="4"></Image>
+                        <TextBlock Text="Please contact us at: slambert.software@gmail.com" Foreground="#FFF0ECEC" Margin="10, 0, 0, 0" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    </StackPanel>
+                </Border>
+            </Expander>
         </Border>
            
     </Grid>

@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wpfToolkit="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
         xmlns:local="clr-namespace:SSS.NATTEX.Views"
         mc:Ignorable="d"
-        Title="Login" Height="220" Width="500" ShowInTaskbar="False" ResizeMode="NoResize">
+        Title="Login" x:Name="LoginControl" Height="220" Width="500" ResizeMode="NoResize" FontFamily="Arial" FontSize="11" WindowStartupLocation="CenterScreen" ShowInTaskbar="True" Loaded="LoginControl_Loaded" Icon="../Resources/Images/nattex_hand5.ico">
     <Window.Resources>
         <Style x:Key="RoundButtonTemplate" TargetType="Button">
             <Setter Property="Background" Value="#FF428BCA" />
@@ -28,47 +29,40 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0"  Margin="0" BorderBrush="#FF231F1F" BorderThickness="0.5">
-            <Border.Background>
-                <ImageBrush ImageSource="../Resources/Images/2f2f2f.png"  TileMode="Tile"/>
-            </Border.Background>
-            <TextBlock Foreground="#FFF0ECEC" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" FontFamily="Arial" FontWeight="Bold" ><Run Text="NATTEX Application Management System (v1.0.0"/><Run Text="."/><Run Text="0)"/></TextBlock>
+        <Border Grid.Row="0"  Margin="0" BorderBrush="Gray" BorderThickness="1" Background="LightGray">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Image Grid.Row="0" Grid.Column="0" Source="..\Resources\Images\nattex_logo_tranparent.png" HorizontalAlignment="Left"></Image>
+                <TextBlock Foreground="Black" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" Margin="3" FontFamily="Arial" FontWeight="Bold" ><Run Text="LOGIN TO NAMS (1.0.0)"/></TextBlock>
+            </StackPanel>
         </Border>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="20"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition Height="30"></RowDefinition>
-                <RowDefinition Height="40"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="200"></ColumnDefinition>
-                <ColumnDefinition Width="125"></ColumnDefinition>
-                <ColumnDefinition Width="125"></ColumnDefinition>
+                <ColumnDefinition Width="180"></ColumnDefinition>
+                <ColumnDefinition Width="165"></ColumnDefinition>
+                <ColumnDefinition Width="165"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="1" Grid.Column="1"  Text="User Name:" VerticalAlignment="Center" HorizontalAlignment="Right" TextAlignment="Center" FontWeight="Bold"></TextBlock>
-            <TextBox Grid.Row="1" Grid.Column="2" Text="" Grid.ColumnSpan="2" Width="200" Height="20" BorderBrush="Gray" BorderThickness="1" VerticalAlignment="Center" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  TextAlignment="Left" FontSize="12" Margin="5, 0,0,0"></TextBox>
-            <TextBlock Grid.Row="2" Grid.Column="1"  Text="Password:" VerticalAlignment="Center" HorizontalAlignment="Right" TextAlignment="Center" FontWeight="Bold"></TextBlock>
-            <TextBox Grid.Row="2" Grid.Column="2" Text=""  Grid.ColumnSpan="2" Width="200" Height="20" BorderBrush="Gray" BorderThickness="1" VerticalAlignment="Center" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  TextAlignment="Left" FontSize="12" Margin="5, 0,0,0"></TextBox>
-
-            <Button Grid.Row="3" Grid.Column="2" Width="120" Height="30" Margin="5,0, 5,0" HorizontalAlignment="Center" BorderBrush="#FFF" Name="LoginButton" FontFamily="Arial" Background="#FF0487F3" Foreground="#FFF3ECEC">
-                <Button.Content>
-                    <TextBlock Text="Login" FontWeight="Bold" Foreground="#FFFFFF" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                </Button.Content>
-            </Button>
-            <Button Grid.Row="3" Grid.Column="3" Width="120" Height="30" Margin="5,0, 5,0" HorizontalAlignment="Center" BorderBrush="#FFF" Name="CancelButton" FontFamily="Arial" Background="#FF969B9E" Foreground="#FFF3ECEC">
-                <Button.Content>
-                    <TextBlock Text="Cancel" FontWeight="Bold" Foreground="#FFFFFF" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                </Button.Content>
-            </Button>
+            <StackPanel Grid.Row="0" Grid.ColumnSpan="5" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="{Binding ValidationMessageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="LightGoldenrodYellow">
+                <Image Source="../Resources/Images/warning_24_2.png" Width="24" Height="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1"></Image>
+                <TextBlock Text="{Binding ValidationMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10"  Foreground="Red"></TextBlock>
+            </StackPanel>
+            <TextBlock Grid.Row="1" Grid.Column="1"  Text="User Name" VerticalAlignment="Center" HorizontalAlignment="Right" TextAlignment="Center" FontWeight="Bold"></TextBlock>
+            <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2"  x:Name="txtUserName" Width="200" Height="20" BorderBrush="Gray" BorderThickness="1" VerticalAlignment="Center" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  TextAlignment="Left" Margin="5, 0,0,0"></TextBox>
+            <TextBlock Grid.Row="2" Grid.Column="1"  Text="Password" VerticalAlignment="Center" HorizontalAlignment="Right" TextAlignment="Center" FontWeight="Bold"></TextBlock>
+            <PasswordBox Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" x:Name="txtPassword" Width="200" Height="20" BorderBrush="Gray" BorderThickness="1" VerticalAlignment="Center" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="5, 0,0,0" LostFocus="txtPassword_LostFocus"></PasswordBox>
         </Grid>
-        <Border Grid.Row="2" x:Name="FooterBorder"  Margin="0" BorderBrush="#FF231F1F" BorderThickness="0.5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <Border.Background>
-                <ImageBrush ImageSource="../Resources\Images\2f2f2f.png"  TileMode="Tile"/>
-            </Border.Background>
-            <TextBlock Text="Developed by Slambert Software Solutions (Pty) Ltd." Foreground="#FFF0ECEC" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="9" FontFamily="Arial"></TextBlock>
-        </Border>
+        <Border    Grid.Row="2" BorderThickness="0.65" BorderBrush="DarkGray"  VerticalAlignment="Top"></Border>
+        <WrapPanel Grid.Row="2"  HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Button BorderBrush="#FFF" Name="LoginButton" FontFamily="Arial" Background="#FF0487F3" Foreground="#FFF3ECEC" Style="{StaticResource RoundButtonTemplate}" Width="120" Content="LOGIN" Height="22" Command="{Binding LoginCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip="Click to proceed to the next step." />
+            <Button Content="CANCEL" Height="22" Width="120" Command="{Binding CancelCommand}" Margin="2,2,10,2"  Style="{StaticResource RoundButtonTemplate}" 
+				CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip ="Cancel any changes made and close the window." Background="#FF8D9195" />
+        </WrapPanel>
     </Grid>
 </Window>

@@ -12,6 +12,32 @@ namespace SSS.NATTEX.Models
         #region fields
         private string _schemeGroup;
         private string _groupName;
+        private string _groupNumber;
+        private string _numOfMembers;
+        private string _coverAmount;
+        private string _groupPremiumAmount;
+        private string _totalMembers;
+        private string _totalPremium;
+        private string _comment;
+        private string _adminHeading;
+        private string _adminFee;
+        private string _joiningFeeHeading;
+        private string _joiningFeeDescription;
+        private string _joiningFee;
+        private string _monthlyInstallmentDescription;
+        private string _quotationValue;
+
+        private bool _isHeadersItem;
+        private bool _isSubTotalItem;
+        private bool _isAdminHeadingItem;
+        private bool _isAdminFeeItem;
+        private bool _isJoiningFeeHeadingItem;
+        private bool _isJoiningFeeItem;
+        private bool _isMonthlyInstallmentItem;
+        private bool _isTotalQuotationValueDescriptionItem;
+        private bool _isTotalQuotationValueItem;
+        private bool _isQuotationItem;
+
         #endregion
         public int ID { get; set; }
         public string SchemeGroup
@@ -38,28 +64,309 @@ namespace SSS.NATTEX.Models
                 this.RaisePropertyChanged("GroupName");
             }
         }
-        public string GroupNumber { get; set; }
-        public string NumOfMembers { get; set; }
-        public string CoverAmount { get; set; }
-        public string GroupPremiumAmount { get; set; }
-        public string TotalMembers { get; set; }
-        public string TotalPremium { get; set; }
-        public string Comment { get; set; }
-        public string AdminHeading { get; set; }
-        public string AdminFee { get; set; }
-        public string JoiningFeeHeading { get; set; }
-        public string JoiningFeeDescription { get; set; }
-        public string JoiningFee { get; set; }
-        public string MonthlyInstallmentDescription { get; set; }
-        public string QuotationValueDescription { get; set; }
-        public string QuotationValue { get; set; }
-        public bool   IsSubTotalItem { get; set; }
-        public bool   IsAdminHeadingItem { get; set; }
-        public bool   IsAdminFeeItem { get; set; }
-        public bool   IsJoiningFeeHeadingItem { get; set; }
-        public bool   IsJoiningFeeItem { get; set; }
-        public bool   IsMonthlyInstallmentItem { get; set; }
-        public bool   IsTotalQuotationValueDescriptionItem { get; set; }
-        public bool   IsTotalQuotationValueItem { get; set; }
+        public string GroupNumber
+        {
+            get
+            {
+                return _groupNumber;
+            }
+            set
+            {
+                _groupNumber = value;
+                this.RaisePropertyChanged("GroupNumber");
+            }
+        }
+        public string NumOfMembers
+        {
+            get
+            {
+                return _numOfMembers;
+            }
+            set
+            {
+                _numOfMembers = value;
+                this.RaisePropertyChanged("GroupNumber");
+            }
+        }
+        public string CoverAmount
+        {
+            get
+            {
+                return _coverAmount;
+            }
+            set
+            {
+                _coverAmount = value;
+                this.RaisePropertyChanged("CoverAmount");
+            }
+        }
+        public string GroupPremiumAmount
+        {
+            get
+            {
+                return _groupPremiumAmount;
+            }
+            set
+            {
+                _groupPremiumAmount = value;
+                this.RaisePropertyChanged("GroupPremiumAmount");
+            }
+        }
+        public string TotalMembers
+        {
+            get
+            {
+                return _totalMembers;
+            }
+            set
+            {
+                _totalMembers = value;
+                this.RaisePropertyChanged("TotalMembers");
+            }
+        }
+
+        public string TotalPremium
+        {
+            get
+            {
+                return _totalPremium;
+            }
+            set
+            {
+                _totalPremium = value;
+                this.RaisePropertyChanged("TotalPremium");
+            }
+        }
+        public string Comment
+        {
+            get
+            {
+                return _comment;
+            }
+            set
+            {
+                _comment = value;
+                this.RaisePropertyChanged("Comment");
+            }
+        }
+        public string AdminHeading
+        {
+            get
+            {
+                return _adminHeading;
+            }
+            set
+            {
+                _adminHeading = value;
+                this.RaisePropertyChanged("AdminHeading");
+            }
+        }
+        public string AdminFee
+        {
+            get
+            {
+                return _adminFee;
+            }
+            set
+            {
+                _adminFee = value;
+                this.RaisePropertyChanged("AdminFee");
+            }
+        }
+
+        public string JoiningFeeHeading
+        {
+            get
+            {
+                return _joiningFeeHeading;
+            }
+            set
+            {
+                _joiningFeeHeading = value;
+                this.RaisePropertyChanged("JoiningFeeHeading");
+            }
+        }
+        public string JoiningFeeDescription
+        {
+            get
+            {
+                return _joiningFeeDescription;
+            }
+            set
+            {
+                _joiningFeeDescription = value;
+                this.RaisePropertyChanged("JoiningFeeDescription");
+            }
+        }
+
+
+        public string JoiningFee
+        {
+            get
+            {
+                return _joiningFee;
+            }
+            set
+            {
+                _joiningFee = value;
+                this.RaisePropertyChanged("JoiningFee");
+            }
+        }
+        public string MonthlyInstallmentDescription
+        {
+            get
+            {
+                return _monthlyInstallmentDescription;
+            }
+            set
+            {
+                _monthlyInstallmentDescription = value;
+                this.RaisePropertyChanged("MonthlyInstallmentDescription");
+            }
+        }
+        public string QuotationValueDescription
+        {
+            get
+            {
+                return _monthlyInstallmentDescription;
+            }
+            set
+            {
+                _monthlyInstallmentDescription = value;
+                this.RaisePropertyChanged("QuotationValueDescription");
+            }
+        }
+        public string QuotationValue
+        {
+            get
+            {
+                return _quotationValue;
+            }
+            set
+            {
+                _quotationValue = value;
+                this.RaisePropertyChanged("QuotationValue");
+            }
+        }
+        public bool   IsQuotationItem
+        {
+            get
+            {
+                return _isQuotationItem;
+            }
+            set
+            {
+                _isQuotationItem = value;
+                this.RaisePropertyChanged("IsQuotationItem");
+            }
+        }
+        public bool   IsHeadersItem
+        {
+            get
+            {
+                return _isHeadersItem;
+            }
+            set
+            {
+                _isHeadersItem = value;
+                this.RaisePropertyChanged("IsHeadersItem");
+            }
+        }
+        public bool   IsSubTotalItem
+        {
+            get
+            {
+                return _isSubTotalItem;
+            }
+            set
+            {
+                _isSubTotalItem = value;
+                this.RaisePropertyChanged("IsSubTotalItem");
+            }
+        }
+        public bool   IsAdminHeadingItem
+        {
+            get
+            {
+                return _isAdminHeadingItem;
+            }
+            set
+            {
+                _isAdminHeadingItem = value;
+                this.RaisePropertyChanged("IsAdminHeadingItem");
+            }
+        }
+        public bool   IsAdminFeeItem
+        {
+            get
+            {
+                return _isAdminFeeItem;
+            }
+            set
+            {
+                _isAdminFeeItem = value;
+                this.RaisePropertyChanged("IsAdminFeeItem");
+            }
+        }
+        public bool   IsJoiningFeeHeadingItem
+        {
+            get
+            {
+                return _isJoiningFeeHeadingItem;
+            }
+            set
+            {
+                _isJoiningFeeHeadingItem = value;
+                this.RaisePropertyChanged("IsJoiningFeeHeadingItem");
+            }
+        }
+        public bool   IsJoiningFeeItem
+        {
+            get
+            {
+                return _isJoiningFeeItem;
+            }
+            set
+            {
+                _isJoiningFeeItem = value;
+                this.RaisePropertyChanged("IsJoiningFeeItem");
+            }
+        }
+        public bool   IsMonthlyInstallmentItem
+        {
+            get
+            {
+                return _isMonthlyInstallmentItem;
+            }
+            set
+            {
+                _isMonthlyInstallmentItem = value;
+                this.RaisePropertyChanged("IsMonthlyInstallmentItem");
+            }
+        }
+        public bool   IsTotalQuotationValueDescriptionItem
+        {
+            get
+            {
+                return _isTotalQuotationValueDescriptionItem;
+            }
+            set
+            {
+                _isTotalQuotationValueDescriptionItem = value;
+                this.RaisePropertyChanged("IsTotalQuotationValueDescriptionItem");
+            }
+        }
+        public bool   IsTotalQuotationValueItem
+        {
+            get
+            {
+                return _isTotalQuotationValueItem;
+            }
+            set
+            {
+                _isTotalQuotationValueItem = value;
+                this.RaisePropertyChanged("IsTotalQuotationValueItem");
+            }
+        }
     }
 }

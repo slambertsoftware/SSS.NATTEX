@@ -260,10 +260,11 @@ namespace SSS.NATTEX.ViewModel
         {
             this.LayoutModel = layoutModel;
             this.QuotationModel = quotationModel;
+
             this.ControlCaption = "Confirm or Review Quotation Details";
             this.QuotationSummaryHeading = "QUOTATION SUMMARY";
             this.QuotationNumberHeading = "Quotation No: " + this.QuotationModel.QuotationNumber;
-            this.QuotationCustomerNameHeading = this.QuotationModel.CustomerName + "( for " + this.QuotationModel.CoverAmount + " cover )";
+            this.QuotationCustomerNameHeading = this.QuotationModel.CustomerName + " ( for " + this.QuotationModel.CoverAmount + " cover )";
             DoQuotationDetail();
             DoQuotationSummary();
             WireUpEvents();
@@ -273,29 +274,46 @@ namespace SSS.NATTEX.ViewModel
         #region methods
         public void DoQuotationSummary()
         {
-            this.QuotationHeader = "Quotation" + this.QuotationModel.QuotationNumber + " for " + this.QuotationModel.CustomerNumber + " at @ " + this.QuotationModel.CoverAmount + " cover";
-            this.QuotationCreateDate = DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-            this.QuotationExpiryDate = DateTime.Now.AddDays(30).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            this.QuotationHeader = "Quotation No. " + this.QuotationModel.QuotationNumber + " for " + this.QuotationModel.CustomerName + " at @ " + this.QuotationModel.CoverAmount + " cover";
+            this.QuotationModel.QuotationHeader = this.QuotationHeader;
+            this.QuotationCreateDate = DateTime.Now.ToString("D", CultureInfo.InvariantCulture);
+            this.QuotationModel.QuotationCreateDate = Convert.ToString(this.QuotationCreateDate);
+            this.QuotationModel.QuotatationValidDays = GetQuotationValidDays();
+            this.QuotationExpiryDate = DateTime.Now.AddDays(this.QuotationModel.QuotatationValidDays).ToString("D", CultureInfo.InvariantCulture);
+            this.QuotationModel.QuotationExpiryDate = Convert.ToString(this.QuotationExpiryDate);
+
             this.MonthlyPremiumDescription = this.QuotationModel.NumberOfProspectiveMembers + " Members @ " + this.QuotationModel.CoverAmount + " cover each";
-            this.MonthlyPremium = Convert.ToString(this.QuotationModel.TotalMonthlyPremium);
+            this.QuotationModel.MonthlyPremiumDescription = this.MonthlyPremiumDescription;
+            this.MonthlyPremium = "R " +  Convert.ToString(Math.Round(this.QuotationModel.TotalMonthlyPremium, 2));
+            this.QuotationModel.TotalMonthlyPremium = Math.Round(this.QuotationModel.TotalMonthlyPremium, 2);
             this.MonthlyAdminFeeDescription = "Monthly";
-            this.MonthlyAdminFee  = Convert.ToString(this.QuotationModel.AdminFee);
+            this.QuotationModel.MonthlyAdminFeeDescription = this.MonthlyAdminFeeDescription;
+            this.MonthlyAdminFee  = "R " + Convert.ToString(Math.Round(this.QuotationModel.AdminFee));
+            this.QuotationModel.AdminFee = Math.Round(this.QuotationModel.AdminFee);
             this.OnceJoiningFeeDescription = "Once off";
-            this.OnceJoiningFee = Convert.ToString(this.QuotationModel.JoiningFee);
-            this.QuotationValue = Convert.ToString(this.QuotationModel.QuotationValue);
-            this.JoiningFeeInstallmentMessage = "(The joining fee can be paid in 3 easy installments of " + Convert.ToString(this.QuotationModel.MonthlyJoiningFee) + " per month)";
+            this.QuotationModel.JoiningFeeDescription = this.OnceJoiningFeeDescription;
+            this.OnceJoiningFee = "R " + Convert.ToString(Math.Round(this.QuotationModel.JoiningFee));
+            this.QuotationModel.JoiningFee = Math.Round(this.QuotationModel.JoiningFee);
+            this.QuotationValue = "R " + Convert.ToString(Math.Round(this.QuotationModel.QuotationValue));
+            this.QuotationModel.QuotationValue = Math.Round(this.QuotationModel.QuotationValue);
+            this.JoiningFeeInstallmentMessage = "(The joining fee can be paid in " + Convert.ToString(this.QuotationModel.NumOfMonthlyInstallments) +  " easy installments of " 
+                + "R " +  Convert.ToString(Math.Round(this.QuotationModel.MonthlyJoiningFee)) + " per month)";
         }
 
         private void DoQuotationDetail()
         {
             int totalMembers = 0;
             decimal totalPremium = 0;
-            if ((this.QuotationModel == null) && (this.QuotationModel.ProspectiveMemberSchemes != null) && (this.QuotationModel.ProspectiveMemberSchemes.Count > 0))
+            if ((this.QuotationModel != null) && (this.QuotationModel.ProspectiveMemberSchemes != null) && (this.QuotationModel.ProspectiveMemberSchemes.Count > 0))
             {
                 if (this.QuotationDetailResults == null)
                 {
                     this.QuotationDetailResults = new ObservableCollection<QuotationCalculationItem>();
                 }
+                this.QuotationDetailResults.Add(new QuotationCalculationItem()
+                {
+                    IsHeadersItem = true
+                });
                 foreach (ProspectiveMemberScheme scheme in this.QuotationModel.ProspectiveMemberSchemes)
                 {
                     if ((scheme.ProspectiveMemberGroup != null) && (scheme.ProspectiveMemberGroup.Count > 0))
@@ -306,33 +324,38 @@ namespace SSS.NATTEX.ViewModel
                             var groupCoverAmount = Convert.ToDecimal(group.GroupCoverAmount.Replace("R ", "").Replace(" ", ""));
                             var calculationItem = new QuotationCalculationItem()
                             {
+                                IsQuotationItem = true,
                                 SchemeGroup = group.GroupSchemeName,
                                 GroupName = group.GroupName,
-                                GroupNumber = group.GroupName.Substring(6, group.GroupName.Length),
+                                GroupNumber = group.GroupName.Substring(6, group.GroupName.Length-6),
                                 NumOfMembers = Convert.ToString(group.ProspectiveMembers.Count),
                                 CoverAmount = (groupCoverAmount > maxCoveramount) ? GetMaximumAllowableCoverAmount(group.GroupSchemeName) : group.GroupCoverAmount,
-                                GroupPremiumAmount = "R " + Convert.ToString(GetGroupSchemePremiumAmount(scheme.SchemeName, group.GroupCoverAmount))
+                                GroupPremiumAmount = "R " + Convert.ToString(Math.Round(GetGroupSchemePremiumAmount(scheme.SchemeName, group.GroupCoverAmount)))
                             };
                             totalMembers = totalMembers + group.ProspectiveMembers.Count;
-                            totalPremium = totalPremium + GetGroupSchemePremiumAmount(scheme.SchemeName, group.GroupCoverAmount);
+                            totalPremium = Math.Round(totalPremium + GetGroupSchemePremiumAmount(scheme.SchemeName, group.GroupCoverAmount), 2);
 
                             this.QuotationDetailResults.Add(calculationItem);
                         }
                     }
                 }
-
-                this.QuotationModel.TotalMonthlyPremium = totalPremium;
-                this.QuotationModel.AdminFee = GetAdminFee();
-                this.QuotationModel.JoiningFee = GetTotalJoiningFee(totalMembers);
-                this.QuotationModel.JoiningFeePerMember = GetJoiningFeePerMember();
-                this.QuotationModel.MonthlyJoiningFee = Math.Round(GetTotalJoiningFee(totalMembers) / 3, 2);
+                this.QuotationModel.NumberOfProspectiveMembers = Convert.ToString(totalMembers);
+                this.QuotationModel.NumOfMonthlyInstallments = GetJoiningFeeNumOfMonthInstallments();
+                this.QuotationModel.TotalMonthlyPremium = Math.Round(totalPremium, 2);
+                this.QuotationModel.AdminFee = Math.Round(GetAdminFee(), 2);
+                this.QuotationModel.JoiningFee = Math.Round(GetTotalJoiningFee(totalMembers), 2);
+                this.QuotationModel.JoiningFeePerMember = Math.Round(GetJoiningFeePerMember(), 2);
+                if (this.QuotationModel.NumOfMonthlyInstallments > 0)
+                {
+                    this.QuotationModel.MonthlyJoiningFee = Math.Round(GetTotalJoiningFee(totalMembers) / this.QuotationModel.NumOfMonthlyInstallments, 2);
+                }
                 this.QuotationModel.QuotationValue = Math.Round(totalPremium + GetAdminFee() + GetTotalJoiningFee(totalMembers), 2);
 
                 var totals = new QuotationCalculationItem()
                 {
                     IsSubTotalItem = true,
                     TotalMembers = Convert.ToString(totalMembers),
-                    TotalPremium = Convert.ToString(totalPremium)
+                    TotalPremium = "R " + Convert.ToString(totalPremium)
                 };
                 this.QuotationDetailResults.Add(totals);
 
@@ -346,7 +369,7 @@ namespace SSS.NATTEX.ViewModel
                 var adminFee = new QuotationCalculationItem()
                 {
                     IsAdminFeeItem = true,
-                    AdminFee = Convert.ToString(GetAdminFee())
+                    AdminFee = "R " + Convert.ToString(GetAdminFee())
                 };
                 this.QuotationDetailResults.Add(adminFee);
 
@@ -360,23 +383,24 @@ namespace SSS.NATTEX.ViewModel
                 var joiningFee = new QuotationCalculationItem()
                 {
                     IsJoiningFeeItem = true,
-                    JoiningFee = Convert.ToString(GetTotalJoiningFee(totalMembers))
+                    JoiningFee = "R " + Convert.ToString(GetTotalJoiningFee(totalMembers))
                 };
 
                 this.QuotationDetailResults.Add(joiningFee);
-                this.QuotationModel.NumOfMonthlInstallments = GetJoiningFeeNumOfMonthInstallments();
+
+                this.QuotationModel.NumOfMonthlyInstallments = GetJoiningFeeNumOfMonthInstallments();
                 decimal monthly = 0;
-                if (this.QuotationModel.NumOfMonthlInstallments > 0)
+                if (this.QuotationModel.NumOfMonthlyInstallments > 0)
                 {
-                    monthly = Math.Round(GetTotalJoiningFee(totalMembers) / this.QuotationModel.NumOfMonthlInstallments, 2);
+                    monthly = Math.Round(GetTotalJoiningFee(totalMembers) / this.QuotationModel.NumOfMonthlyInstallments, 2);
                 }
                 
                 var installment = new QuotationCalculationItem()
                 {
                     IsMonthlyInstallmentItem = true,
-                    MonthlyInstallmentDescription = "(or " + Convert.ToString(this.QuotationModel.NumOfMonthlInstallments) + " monthly installments of R " + Convert.ToString(monthly) + ")"
+                    MonthlyInstallmentDescription = "(or " + Convert.ToString(this.QuotationModel.NumOfMonthlyInstallments) + " monthly installments of R " + Convert.ToString(monthly) + ")"
                 };
-                this.QuotationDetailResults.Add(joiningFee);
+                this.QuotationDetailResults.Add(installment);
 
 
                 var quotationValueDescription = new QuotationCalculationItem()
@@ -390,11 +414,17 @@ namespace SSS.NATTEX.ViewModel
                 var quotation = new QuotationCalculationItem()
                 {
                     IsTotalQuotationValueItem = true,
-                    QuotationValue = Convert.ToString(this.QuotationModel.QuotationValue)
+                    QuotationValue = "R " + Convert.ToString(this.QuotationModel.QuotationValue)
                 };
                 this.QuotationDetailResults.Add(quotation);
               
             }
+        }
+
+        private int GetQuotationValidDays()
+        {
+            int result = 30;
+            return result;
         }
 
         private int GetJoiningFeeNumOfMonthInstallments()
@@ -853,7 +883,7 @@ namespace SSS.NATTEX.ViewModel
                         IsMaximized = false,
                         IconSource = new BitmapImage(new Uri(@"../../Resources/Images/quote_4_24.png", UriKind.Relative))
                     };
-                    this.LayoutModel.Document.Content = new ExportDistributeQuotationUserControl(this.LayoutModel);
+                    this.LayoutModel.Document.Content = new ExportDistributeQuotationUserControl(this.LayoutModel, this.QuotationModel);
                     this.LayoutModel.DocumentPane.Children.Add(this.LayoutModel.Document);
                     this.LayoutModel.Document.PreviousContainerIndex = this.LayoutModel.DocumentPane.Children.IndexOf(this.LayoutModel.Document);
                     this.LayoutModel.Document.Parent = this.LayoutModel.DocumentPane;

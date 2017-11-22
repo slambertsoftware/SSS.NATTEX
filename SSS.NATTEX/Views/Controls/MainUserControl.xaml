@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="SSS.NATTEX.Views.Controls.MainUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SSS.NATTEX.Views.Controls"
+             xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="22"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="22"></RowDefinition>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="Quotations" FontFamily="Arial" VerticalAlignment="Center">
+                    <MenuItem x:Name="mnuNewQuotation" Header="New Quotation" Click="mnuNewQuotation_Click"/>
+                    <MenuItem x:Name="mnuModifyQuotation"  Header="Modify Quoation"/>
+                    <MenuItem x:Name="mnuRemoveQuotation"  Header="Remove Quoation"/>
+                    <MenuItem x:Name="mnuViewQuotation" Header="View Quoation"/>
+                </MenuItem>
+
+                <MenuItem Header="Applications">
+                    <MenuItem Header="New Application" IsCheckable="true"/>
+                    <MenuItem Header="Update Application" IsCheckable="true"/>
+                    <MenuItem Header="Remove Application" IsCheckable="true"/>
+                    <MenuItem Header="View Application" IsCheckable="true"/>
+                </MenuItem>
+                <MenuItem Header="Schedules">
+                    <MenuItem Header="New Schedule" IsCheckable="true"/>
+                </MenuItem>
+                <MenuItem Header="Reports" />
+                <MenuItem Header="Administration">
+                    <MenuItem Header="Application Setup" IsCheckable="true"/>
+                    <MenuItem Header="User Management" IsCheckable="true"/>
+                </MenuItem>
+                <MenuItem Header="Help">
+                    <MenuItem Header="Abouts NAMS" IsCheckable="true"/>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <avalonDock:DockingManager Grid.Row="1" x:Name="dockingManager" Margin="0">
+            <avalonDock:DockingManager.Background>
+                <ImageBrush ImageSource="/SSS.NATTEX;component/Resources/Images/map.png" Stretch="None" Opacity="0.7"/>
+            </avalonDock:DockingManager.Background>
+            <avalonDock:LayoutRoot>
+                <avalonDock:LayoutPanel Orientation="Horizontal">
+                </avalonDock:LayoutPanel>
+            </avalonDock:LayoutRoot>
+        </avalonDock:DockingManager>
+        <StatusBar Grid.Row="2">
+            <StatusBarItem Content="Please select one of the menu options."/>
+        </StatusBar>
+    </Grid>
+</UserControl>

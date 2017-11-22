@@ -90,13 +90,14 @@
             </StackPanel>
 
             <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5"  BorderBrush="DarkGray" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" Visibility="{Binding ValidationMessageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="0,2,2,0" >
-                    <Image Source="../../Resources/Images/warning-icon_32.png" Width="24" Height="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,1,5,0"></Image>
-                    <TextBlock Text="{Binding ValidationMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center" Visibility="{Binding ValidationMessageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="LightGoldenrodYellow">
+                    <Image Source="../../Resources/Images/warning_24_2.png" Width="24" Height="24" VerticalAlignment="Center" HorizontalAlignment="Center"></Image>
+                    <TextBlock Text="{Binding ValidationMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10"  Foreground="Red"></TextBlock>
                 </StackPanel>
             </Border>
             <TextBlock Grid.Row="2" Grid.Column="0"  Text="Generate quotation document with contract:" HorizontalAlignment="Center" VerticalAlignment="Center"  Margin="0,0,10,0" FontWeight="Bold"></TextBlock>
-            <CheckBox  Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2"></CheckBox>
+            <CheckBox  Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2" IsChecked="{Binding IsGeneratWithContractChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
+
             <TextBlock Grid.Row="3" Grid.Column="0" Text="Export To:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0" FontWeight="Bold" ></TextBlock>
             <ComboBox Grid.Row="3" Grid.Column="1" Height="22" Width="120" ItemsSource="{Binding ExportOptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  SelectedItem="{Binding SelectedExportOption, UpdateSourceTrigger=PropertyChanged}" Margin="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"></ComboBox>
 

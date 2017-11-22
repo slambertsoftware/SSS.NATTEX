@@ -8,6 +8,8 @@ namespace SSS.NATTEX.Models
 {
     public class NewQuotation
     {
+
+        public string QuotationHeader { get; set; }
         public string QuotationNumber { get; set; }
         public string QuotationType { get; set; }
         public bool   IsExistingCustomer { get; set; }
@@ -27,9 +29,16 @@ namespace SSS.NATTEX.Models
         public decimal AdminFee { get; set; }
         public decimal JoiningFeePerMember { get; set; }
         public decimal JoiningFee { get; set; }
-        public int NumOfMonthlInstallments { get; set; }
+        public string JoiningFeeDescription { get; set; }
+        public int NumOfMonthlyInstallments { get; set; }
         public decimal MonthlyJoiningFee { get; set; }
         public decimal QuotationValue { get; set; }
+        public string QuotationCreateDate { get; set; }
+        public string QuotationExpiryDate { get; set; }
+
+        public int    QuotatationValidDays { get; set; }
+        public string MonthlyPremiumDescription { get; set; }
+        public string MonthlyAdminFeeDescription { get; set; }
         public List<QuotationUploadDocument> QuotationDocuments { get; set; }
         public List<ProspectiveMember> ProspectiveMembers { get; set; }
         public List<ProspectiveMemberScheme> ProspectiveMemberSchemes { get; set; }

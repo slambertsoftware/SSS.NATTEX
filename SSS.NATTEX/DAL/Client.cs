@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SSS.NATTEX.Models
+namespace SSS.NATTEX.DAL
 {
     public class Client
     {
-        public int ID { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ClientID { get; set; }
         public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -18,12 +22,12 @@ namespace SSS.NATTEX.Models
         public int IsCompany { get; set; }
         public int IsIndividual { get; set; }
         public bool IsActive { get; set; }
-        
-        public DateTime CreateDate { get; set; }
-        public DateTime RemoveDate { get; set; }
-        public DateTime ModifyDate { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? CreateDate { get; set; }
+        public DateTime? RemoveDate { get; set; }
+        public DateTime? ModifyDate { get; set; }
         public int CreateUserID { get; set; }
-        public int ModifyUserID { get; set; }
-        public int RemoveUserID { get; set; }
+        public Nullable<int> ModifyUserID { get; set; }
+        public Nullable<int> RemoveUserID { get; set; }
     }
 }

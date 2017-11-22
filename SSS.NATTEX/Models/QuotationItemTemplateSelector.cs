@@ -10,6 +10,7 @@ namespace SSS.NATTEX.Models
 {
     public class QuotationItemTemplateSelector : DataTemplateSelector
     {
+        public DataTemplate HeaderColumnsDataTemplate { get; set; }
         public DataTemplate QuotationItemTemplate { get; set; }
         public DataTemplate SubTotalItemTemplate { get; set; }
         public DataTemplate AdminHeadingItemTemplate { get; set; }
@@ -27,7 +28,11 @@ namespace SSS.NATTEX.Models
                 return base.SelectTemplate(item, container);
             }
 
-            if (result.IsAdminHeadingItem == true)
+            if (result.IsHeadersItem == true)
+            {
+                return HeaderColumnsDataTemplate;
+            }
+            else if (result.IsAdminHeadingItem == true)
             {
                 return AdminHeadingItemTemplate;
             }
@@ -54,6 +59,10 @@ namespace SSS.NATTEX.Models
             else if (result.IsTotalQuotationValueItem == true)
             {
                 return TotalQuotationValueTemplate;
+            }
+            else if (result.IsQuotationItem == true)
+            {
+                return QuotationItemTemplate;
             }
             else
             {

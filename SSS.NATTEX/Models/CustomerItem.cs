@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SSS.NATTEX.Models
 {
-    public class Customer
+    public class CustomerItem
     {
         public int ID { get; set; }
         public string FirstName { get; set; }

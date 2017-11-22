@@ -11,6 +11,7 @@ namespace SSS.NATTEX.ViewModel
     public class NewProspectiveMemberSchemeViewModel : MainViewModel
     {
         #region fields
+        private string _coverAmount;
         private ObservableCollection<ProspectiveMemberScheme> _prospectiveMemberSchemes;
         private ObservableCollection<ProspectiveMemberScheme> _memberSchemeTypes;
 
@@ -50,8 +51,22 @@ namespace SSS.NATTEX.ViewModel
         #endregion
 
         #region constructors
-        public NewProspectiveMemberSchemeViewModel()
+        public string CoverAmount
         {
+            get
+            {
+                return _coverAmount;
+            }
+            set
+            {
+                _coverAmount = value;
+                this.RaisePropertyChanged("CoverAmount");
+            }
+        }
+
+        public NewProspectiveMemberSchemeViewModel(string coverAmount)
+        {
+            this.CoverAmount = coverAmount;
             PopulateSchemeTypes();
         }
         #endregion
@@ -315,11 +330,10 @@ namespace SSS.NATTEX.ViewModel
                     {
                         list.Add(this.AgeGroups[ageGroupIndex].GroupMembers[k]);
                     }
-                    this.ProspectiveMemberSchemes[index].ProspectiveMemberGroup.Add(new ProspectiveMemberGroup() { GroupName = "Group " + Convert.ToString(j + 1), ProspectiveMembers = list });
+                    this.ProspectiveMemberSchemes[index].ProspectiveMemberGroup.Add(new ProspectiveMemberGroup() { GroupSchemeName = schemeName, GroupCoverAmount = this.CoverAmount , GroupName = "Group " + Convert.ToString(j + 1), ProspectiveMembers = list });
                 }
                 this.AgeGroups[ageGroupIndex].GroupMembers.RemoveRange(0, (groups * groupCount1));
             }
-
         }
 
         private void ProcessMemberSchemeMiddleGroup(int ageGroupIndex, string schemeName, int groupCount1, int groupCount2)
@@ -344,7 +358,7 @@ namespace SSS.NATTEX.ViewModel
                     {
                         list.Add(this.AgeGroups[ageGroupIndex].GroupMembers[k]);
                     }
-                    this.ProspectiveMemberSchemes[index].ProspectiveMemberGroup.Add(new ProspectiveMemberGroup() { GroupName = "Group " + Convert.ToString(j + 1), ProspectiveMembers = list });
+                    this.ProspectiveMemberSchemes[index].ProspectiveMemberGroup.Add(new ProspectiveMemberGroup() { GroupSchemeName = schemeName, GroupCoverAmount = this.CoverAmount, GroupName = "Group " + Convert.ToString(j + 1), ProspectiveMembers = list });
                 }
                 this.AgeGroups[ageGroupIndex].GroupMembers.RemoveRange(0, (groups * groupCount2) - 1);
             }
@@ -369,7 +383,7 @@ namespace SSS.NATTEX.ViewModel
                 {
                     list.Add(this.AgeGroups[ageGroupIndex].GroupMembers[k]);
                 }
-                this.ProspectiveMemberSchemes[index].ProspectiveMemberGroup.Add(new ProspectiveMemberGroup() { GroupName = "Group " + Convert.ToString(1), ProspectiveMembers = list });
+                this.ProspectiveMemberSchemes[index].ProspectiveMemberGroup.Add(new ProspectiveMemberGroup() { GroupSchemeName = schemeName, GroupCoverAmount = this.CoverAmount, GroupName = "Group " + Convert.ToString(1), ProspectiveMembers = list });
                 this.AgeGroups[ageGroupIndex].GroupMembers.RemoveRange(0, (this.AgeGroups[ageGroupIndex].GroupMembers.Count));
             }
         }
@@ -390,7 +404,7 @@ namespace SSS.NATTEX.ViewModel
             {
                 list.Add(this.AgeGroups[ageGroupIndex].GroupMembers[k]);
             }
-            this.ProspectiveMemberSchemes[index].ProspectiveMemberGroup.Add(new ProspectiveMemberGroup() { GroupName = "Group " + Convert.ToString(1), ProspectiveMembers = list });
+            this.ProspectiveMemberSchemes[index].ProspectiveMemberGroup.Add(new ProspectiveMemberGroup() { GroupSchemeName = schemeName, GroupCoverAmount = this.CoverAmount, GroupName = "Group " + Convert.ToString(1), ProspectiveMembers = list });
             this.AgeGroups[ageGroupIndex].GroupMembers.RemoveRange(0, (this.AgeGroups[ageGroupIndex].GroupMembers.Count));
         }
         #endregion

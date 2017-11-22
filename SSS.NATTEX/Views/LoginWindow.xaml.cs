@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SSS.NATTEX.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,21 @@ namespace SSS.NATTEX.Views
     /// </summary>
     public partial class LoginWindow : Window
     {
-        public LoginWindow()
+        public LoginWindow(System.Windows.Window window)
         {
             InitializeComponent();
+            var viewModel = new LoginViewModel(window);
+            DataContext = viewModel;
+        }
+
+        private void txtPassword_LostFocus(object sender, RoutedEventArgs e)
+        {
+            (this.DataContext as LoginViewModel).Password = txtPassword.Password;
+        }
+
+        private void LoginControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            txtUserName.Focus();
         }
     }
 }

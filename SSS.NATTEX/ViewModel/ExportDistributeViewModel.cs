@@ -17,6 +17,7 @@ using Xceed.Wpf.AvalonDock.Layout;
 using Microsoft.Office.Interop.Word;
 using Microsoft.Win32;
 using System.Windows.Xps.Packaging;
+using SSS.NATTEX.Views;
 
 namespace SSS.NATTEX.ViewModel
 {
@@ -372,23 +373,29 @@ namespace SSS.NATTEX.ViewModel
 
         public DockingSetupModel LayoutModel { get; set; }
 
+        public NewQuotation QuotationModel { get; set; }
+
         public RelayCommand<System.Windows.Window> FinaliseCommand { get; set; }
 
         public RelayCommand<System.Windows.Window> CancelCommand { get; set; }
         #endregion
 
         #region constructors
-        public ExportDistributeViewModel(DockingSetupModel layoutModel)
+        public ExportDistributeViewModel(DockingSetupModel layoutModel, NewQuotation quotationModel)
         {
             this.LayoutModel = layoutModel;
+            this.QuotationModel = quotationModel;
+
             this.ControlCaption = "Export and Distribute Quotation";
             this.TemplatesDirectory = @"Templates\";
-            this.DocumentOutputDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\NATTEX\NAMS\";
+            this.DocumentOutputDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\NATTEX\NAMS\Quotations\" + DateTime.Now.ToString("yyyy-MM-dd") + @"\";
             if (!Directory.Exists(this.DocumentOutputDirectory))
             {
                 Directory.CreateDirectory(this.DocumentOutputDirectory);
             }
             this.QuotationHeading = GenerateQuotationHeading();
+            this.ValidationMessageVisibility = Visibility.Collapsed;
+            this.ValidationMessage = "";
             WireUpEvents();
         }
         #endregion
@@ -415,6 +422,11 @@ namespace SSS.NATTEX.ViewModel
                         this.ValidationMessageVisibility = Visibility.Collapsed;
                         this.IsValidInput = false;
                         GenerateExportQuotationDocument();
+                        ConfirmedQuotationWindow redirecion = new ConfirmedQuotationWindow(this.QuotationXPSDocument);
+                        win.Close();
+                        redirecion.ShowDialog();
+
+                        
                     }
                     catch(Exception e)
                     {
@@ -423,6 +435,7 @@ namespace SSS.NATTEX.ViewModel
                         this.IsValidInput = false;
                     }
                 }
+                
             }
 
         }
@@ -450,7 +463,7 @@ namespace SSS.NATTEX.ViewModel
 
         private string GetQuotationNumber()
         {
-            string result = "QUO-NAT-20171020-0001";
+            string result = this.QuotationModel.QuotationNumber;
             return result;
         }
 
@@ -546,43 +559,46 @@ namespace SSS.NATTEX.ViewModel
             string resourceName = GetQuotationDocumentResourceName();
             Stream docStream = _assembly.GetManifestResourceStream(resourceName);
             Validate();
-         
-            if ((docStream != null) && (IsValidInput))
+            if (this.QuotationModel != null)
             {
                 PopulateReplacementPatterns();
-                using (DocX document = DocX.Load(docStream))
+                if ((docStream != null) && (IsValidInput))
                 {
-                    document.AddCustomProperty(new Xceed.Words.NET.CustomProperty("CompanyName", "Nattex Funeral Schemes"));
-                    document.AddCustomProperty(new Xceed.Words.NET.CustomProperty("Product", "NATTEX Application Management System (NAMS)"));
-                    document.AddCustomProperty(new Xceed.Words.NET.CustomProperty("Address", "Kimberley, Northern Cape, South Africa"));
 
-                    document.AddCustomProperty(new Xceed.Words.NET.CustomProperty("Date", DateTime.Now));
-                    document.AddCoreProperty("dc:title", "Quotation document - " + "QUO-NAT-20171113-0001.docx");
-                    document.AddCoreProperty("dc:subject", "Quotation document");
-                    document.AddCoreProperty("dc:creator", "NAMS");
-
-                    var searchValueList = document.FindUniqueByPattern(@"<[\w \=]{4,}>", RegexOptions.IgnoreCase);
-                    if (document.FindUniqueByPattern(@"<[\w \=]{4,}>", RegexOptions.IgnoreCase).Count == this.ReplacementPatterns.Count)
+                    using (DocX document = DocX.Load(docStream))
                     {
-                        for (int i = 0; i < searchValueList.Count; ++i)
-                        {
-                            document.ReplaceText(searchValueList[i], GetReplacementValue(searchValueList[i]), false, RegexOptions.IgnoreCase);
-                        }
+                        document.AddCustomProperty(new Xceed.Words.NET.CustomProperty("CompanyName", "Nattex Funeral Schemes"));
+                        document.AddCustomProperty(new Xceed.Words.NET.CustomProperty("Product", "NATTEX Application Management System (NAMS)"));
+                        document.AddCustomProperty(new Xceed.Words.NET.CustomProperty("Address", "Kimberley, Northern Cape, South Africa"));
 
-                        try
-                        {
-                            this.QuotationWordDocumentFilePath = this.DocumentOutputDirectory + GenerateOutputWordDocumentName();
-                            this.QuotationXPSDocumentFilePath  = this.DocumentOutputDirectory + GenerateOutputXPSDocumentName();
-                            this.QuotationPrintDateTime = DateTime.Now.ToString("yyyyMMddHHmmss");
-                            document.SaveAs(this.QuotationWordDocumentFilePath);
-                            this.QuotationXPSDocument = ConvertWordDocumentToXPSDocument(this.QuotationWordDocumentFilePath, this.QuotationXPSDocumentFilePath);
+                        document.AddCustomProperty(new Xceed.Words.NET.CustomProperty("Date", DateTime.Now));
+                        document.AddCoreProperty("dc:title", "Quotation document - " + this.QuotationNumber + "docx");
+                        document.AddCoreProperty("dc:subject", "Quotation document");
+                        document.AddCoreProperty("dc:creator", "NAMS");
 
-                        }
-                        catch (IOException exp)
+                        var searchValueList = document.FindUniqueByPattern(@"<[\w \=]{4,}>", RegexOptions.IgnoreCase);
+                        if (document.FindUniqueByPattern(@"<[\w \=]{4,}>", RegexOptions.IgnoreCase).Count == this.ReplacementPatterns.Count)
                         {
-                            this.ValidationMessage = "Please contact the system administrator if the problem persists. " + "Note the following: " + exp.Message;
-                            this.ValidationMessageVisibility = Visibility.Visible;
-                            this.IsValidInput = false;
+                            for (int i = 0; i < searchValueList.Count; ++i)
+                            {
+                                document.ReplaceText(searchValueList[i], GetReplacementValue(searchValueList[i]), false, RegexOptions.IgnoreCase);
+                            }
+
+                            try
+                            {
+                                this.QuotationWordDocumentFilePath = this.DocumentOutputDirectory + GenerateOutputWordDocumentName();
+                                this.QuotationXPSDocumentFilePath = this.DocumentOutputDirectory + GenerateOutputXPSDocumentName();
+                                this.QuotationPrintDateTime = DateTime.Now.ToString("yyyyMMddHHmmss");
+                                document.SaveAs(this.QuotationWordDocumentFilePath);
+                                this.QuotationXPSDocument = ConvertWordDocumentToXPSDocument(this.QuotationWordDocumentFilePath, this.QuotationXPSDocumentFilePath);
+
+                            }
+                            catch (IOException exp)
+                            {
+                                this.ValidationMessage = "Please contact the system administrator if the problem persists. " + "Note the following: " + exp.Message;
+                                this.ValidationMessageVisibility = Visibility.Visible;
+                                this.IsValidInput = false;
+                            }
                         }
                     }
                 }
@@ -611,58 +627,53 @@ namespace SSS.NATTEX.ViewModel
             return result;
         }
 
-        /// <summary>
-        /// Populate Quotation details
-        /// </summary>
-        private void PopulateQuotationDetails()
-        {
-
-        }
-        /// <summary>
-        /// Populate Quotation Summary
-        /// </summary>
-        private void PopulateQuotationSummary()
-        {
-
-        }
-
         private void PopulateReplacementPatterns()
         {
             if (this.ReplacementPatterns == null)
             {
                 this.ReplacementPatterns = new Dictionary<string, string>();
             }
-            this.ReplacementPatterns.Add("<CustomerNumber>","" );
-            this.ReplacementPatterns.Add("<CustomerName>", "");
-            this.ReplacementPatterns.Add("<CustomerAddress>", "" );
+                this.ReplacementPatterns.Add("<QuotationHeader>", this.QuotationModel.QuotationHeader);
+                this.ReplacementPatterns.Add("<CustomerNumber>", this.QuotationModel.CustomerNumber);
+                this.ReplacementPatterns.Add("<CustomerName>", this.QuotationModel.CustomerName);
+                this.ReplacementPatterns.Add("<CustomerAddress>", this.QuotationModel.CustomerAddress);
 
-            this.ReplacementPatterns.Add("<CustomerContactNumber>", "");
-            this.ReplacementPatterns.Add("<CustomerEmailAddress>", "");
+                this.ReplacementPatterns.Add("<CustomerContactNumber>", this.QuotationModel.CustomerContactNumber);
+                this.ReplacementPatterns.Add("<CustomerEmailAddress>", this.QuotationModel.CustomerEmailAddress);
 
-            this.ReplacementPatterns.Add("<QuotationNo>", "");
+                this.ReplacementPatterns.Add("<QuotationNo>", this.QuotationModel.QuotationNumber);
 
-            this.ReplacementPatterns.Add("<QuotationCreateDate>", "");
-            this.ReplacementPatterns.Add("<QuotationExpiryDate>", "");
-            this.ReplacementPatterns.Add("<QuotationPreparedBy>", "");
-            this.ReplacementPatterns.Add("<QuotationValidDays>", "");
-            this.ReplacementPatterns.Add("<MonthlyPremiumDescription>", "");
+                this.ReplacementPatterns.Add("<QuotationCreateDate>", this.QuotationModel.QuotationCreateDate);
+                this.ReplacementPatterns.Add("<QuotationExpiryDate>", this.QuotationModel.QuotationExpiryDate);
+                this.ReplacementPatterns.Add("<QuotationPreparedBy>", this.QuotationModel.QuotationPreparedBy);
+                this.ReplacementPatterns.Add("<QuotationValidDays>", Convert.ToString(this.QuotationModel.QuotatationValidDays));
+                this.ReplacementPatterns.Add("<MonthlyPremiumDescription>", this.QuotationModel.MonthlyPremiumDescription);
 
-            this.ReplacementPatterns.Add("<MonthlyPremiumDescription>", "");
-            this.ReplacementPatterns.Add("<MonthlyPremiumCost>", "");
-            this.ReplacementPatterns.Add("<MonthlyAdminFeeDescription>", "");
-            this.ReplacementPatterns.Add("<MonthlyAdminFeeCost>", "");
+                this.ReplacementPatterns.Add("<MonthlyPremiumCost>", "R " + Convert.ToString(this.QuotationModel.TotalMonthlyPremium));
+                this.ReplacementPatterns.Add("<MonthlyAdminFeeDescription>", Convert.ToString(this.QuotationModel.MonthlyAdminFeeDescription));
+                this.ReplacementPatterns.Add("<MonthlyAdminFeeCost>", "R " + Convert.ToString(this.QuotationModel.AdminFee));
 
-            this.ReplacementPatterns.Add("<OnceOffJoiningFeeDescription>", "");
-            this.ReplacementPatterns.Add("<OnceOffJoiningFeeCost>", "");
+                this.ReplacementPatterns.Add("<OnceOffJoiningFeeDescription>", this.QuotationModel.JoiningFeeDescription);
+                this.ReplacementPatterns.Add("<OnceOffJoiningFeeCost>", "R " + Convert.ToString(this.QuotationModel.JoiningFee));
 
-            this.ReplacementPatterns.Add("<NumMonthlyInstallments>", "");
-            this.ReplacementPatterns.Add("<MonthlyInstallments>", "");
+                this.ReplacementPatterns.Add("<NumMonthlyInstallments>", Convert.ToString(this.QuotationModel.NumOfMonthlyInstallments));
+                this.ReplacementPatterns.Add("<MonthlyInstallment>", "R " + Convert.ToString(this.QuotationModel.MonthlyJoiningFee));
+                this.ReplacementPatterns.Add("<TotalQuotationValue>", "R " + Convert.ToString(this.QuotationModel.QuotationValue));
+            
         }
 
         private string GetQuotationDocumentResourceName()
         {
             string result = string.Empty;
-            result = "SSS.NATTEX.Resources.Templates.NATTEX_QuotationTemplate_AVBOB.docx";
+            if (this.QuotationModel.PricingModel == "Avbob")
+            {
+                result = "SSS.NATTEX.Resources.Templates.NATTEX_QuotationTemplate_AVBOB.docx";
+            }
+            else if (this.QuotationModel.PricingModel == "Liberty")
+            {
+                result = "SSS.NATTEX.Resources.Templates.NATTEX_QuotationTemplate_LIBERTY.docx";
+
+            }
             return result;
         }
 
@@ -676,13 +687,13 @@ namespace SSS.NATTEX.ViewModel
         private string GenerateOutputWordDocumentName()
         {
             string result = string.Empty;
-            result = this.QuotationNumber + "_" + this.QuotationPrintDateTime + ".docx";
+            result = this.QuotationModel.QuotationNumber + "_" + this.QuotationPrintDateTime + ".docx";
             return result;
         }
         private string GenerateOutputXPSDocumentName()
         {
             string result = string.Empty;
-            result = this.QuotationNumber + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xps";
+            result = this.QuotationModel.QuotationNumber + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xps";
             return result;
         }
 
@@ -708,7 +719,7 @@ namespace SSS.NATTEX.ViewModel
                 };
                 return result;
             }
-            catch (IOException ex)
+            catch
             {
                 result = true;
                 return result;

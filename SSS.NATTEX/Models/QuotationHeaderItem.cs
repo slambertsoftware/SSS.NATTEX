@@ -8,7 +8,7 @@ namespace SSS.NATTEX.Models
 {
     public class QuotationHeaderItem
     {
-        public Customer QuotationCustomer { get; set; }
+        public CustomerItem QuotationCustomer { get; set; }
         public string QuotationHeading { get; set; }
         public string QuotationNumber { get; set; }
         public string QuotationCreateDate { get; set; }

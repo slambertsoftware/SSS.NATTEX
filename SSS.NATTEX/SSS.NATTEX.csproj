@@ -62,6 +62,9 @@
   <PropertyGroup>
     <SignManifests>true</SignManifests>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>nattex_hand2_CMW_icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ControlzEx, Version=2.2.0.4, Culture=neutral, PublicKeyToken=f08b075e934b7045, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.2.2.0.4\lib\net45\ControlzEx.dll</HintPath>
@@ -134,21 +137,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\AdminFee.cs" />
+    <Compile Include="DAL\AdminFee.cs" />
+    <Compile Include="DAL\ApplicationSecurity.cs" />
+    <Compile Include="DAL\Company.cs" />
+    <Compile Include="DAL\NattexApplicationContext.cs" />
+    <Compile Include="DAL\NattexApplicationInitializer.cs" />
+    <Compile Include="DAL\PolicyScheme.cs" />
+    <Compile Include="DAL\PolicySchemeType.cs" />
     <Compile Include="Models\AgeGroup.cs" />
-    <Compile Include="Models\Agent.cs" />
-    <Compile Include="Models\ApplicationUser.cs" />
-    <Compile Include="Models\BusinessPartner.cs" />
-    <Compile Include="Models\Client.cs" />
-    <Compile Include="Models\CoverAmount.cs" />
-    <Compile Include="Models\CoverPremium.cs" />
-    <Compile Include="Models\CoverType.cs" />
-    <Compile Include="Models\Customer.cs" />
+    <Compile Include="DAL\Agent.cs" />
+    <Compile Include="DAL\ApplicationUser.cs" />
+    <Compile Include="DAL\BusinessPartner.cs" />
+    <Compile Include="DAL\Client.cs" />
+    <Compile Include="DAL\PolicyCover.cs" />
+    <Compile Include="DAL\PolicyPremium.cs" />
+    <Compile Include="DAL\CoverType.cs" />
+    <Compile Include="DAL\Customer.cs" />
+    <Compile Include="Models\CustomerItem.cs" />
     <Compile Include="Models\DockingSetupModel.cs" />
-    <Compile Include="Models\JoiningFee.cs" />
+    <Compile Include="DAL\JoiningFee.cs" />
+    <Compile Include="Models\LoginMessage.cs" />
     <Compile Include="Models\MemberSchemeGroupListModel.cs" />
     <Compile Include="Models\MemberSchemeGroup.cs" />
-    <Compile Include="Models\PricingModel.cs" />
+    <Compile Include="Models\MonthlyInstallmmentPeriod.cs" />
+    <Compile Include="DAL\PricingModel.cs" />
     <Compile Include="Models\ProspectiveMemberScheme.cs" />
     <Compile Include="Models\NewQuotation.cs" />
     <Compile Include="Models\ProspectiveMemberSchemeTypes.cs" />
@@ -161,12 +173,16 @@
     <Compile Include="Models\QuotationFooterItem.cs" />
     <Compile Include="Models\QuotationHeaderItem.cs" />
     <Compile Include="Models\QuotationItemTemplateSelector.cs" />
+    <Compile Include="Models\QuotationParameter.cs" />
     <Compile Include="Models\QuotationType.cs" />
     <Compile Include="Models\QuotationUploadDocument.cs" />
     <Compile Include="Models\SchemeType.cs" />
-    <Compile Include="Models\UserRole.cs" />
+    <Compile Include="DAL\ApplicationRole.cs" />
+    <Compile Include="ViewModel\DocumentViewerViewModel.cs" />
     <Compile Include="ViewModel\ExportDistributeViewModel.cs" />
     <Compile Include="ViewModel\ConfirmQuotationViewModel.cs" />
+    <Compile Include="ViewModel\HomeViewModel.cs" />
+    <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\ProspectiveMembersViewModel.cs" />
     <Compile Include="ViewModel\CaptureNewProspectiveMembersViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -174,6 +190,12 @@
     <Compile Include="ViewModel\NewProspectiveMemberSchemeViewModel.cs" />
     <Compile Include="ViewModel\ReviewQuotationViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="Views\ConfirmedQuotationWindow.xaml.cs">
+      <DependentUpon>ConfirmedQuotationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\MainUserControl.xaml.cs">
+      <DependentUpon>MainUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\NewProspectiveMembersUserControl.xaml.cs">
       <DependentUpon>NewProspectiveMembersUserControl.xaml</DependentUpon>
     </Compile>
@@ -197,6 +219,9 @@
     </Compile>
     <Compile Include="Views\Controls\ReviewQuotationUserControl.xaml.cs">
       <DependentUpon>ReviewQuotationUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HomeUserControl.xaml.cs">
+      <DependentUpon>HomeUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
@@ -222,6 +247,14 @@
       <DependentUpon>Home.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ConfirmedQuotationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\MainUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Controls\NewProspectiveMembersUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -251,6 +284,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\ReviewQuotationUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HomeUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -294,7 +331,18 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Resources\Templates\NATTEX_QuotationTemplate_AVBOB.docx" />
+    <EmbeddedResource Include="Resources\Templates\NATTEX_QuotationTemplate_AVBOB.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Templates\NATTEX_QuotationTemplate_LIBERTY.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Templates\Salary Slip Template_NATTEX_AVBOB.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Templates\Salary Slip Template_NATTEX_LIBERTY.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <None Include="SSS.NATTEX_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -386,6 +434,48 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\home4.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\home1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\sss_logo_small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\sss_logo_small2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\nattex_logo2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\nattex_logo_tranparent.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\nattex_hand_icon_32.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\nattex_hand2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\nattex_hand3.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\nattex_hand4.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\nattex_hand5.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="nattex_hand5.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="nattex_hand6.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="nattex_hand2_CMW_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

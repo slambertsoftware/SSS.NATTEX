@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace SSS.NATTEX.Models
 {
-    public class Agent
+    public class MonthlyInstallmmentPeriod
     {
         public int ID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public int YearPeriod { get; set; }
+        public int MonthPeriod { get; set; }
+        public int DayPeriod { get; set; }
+        public string ItemName{ get; set; }
         public bool IsActive { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime RemoveDate { get; set; }

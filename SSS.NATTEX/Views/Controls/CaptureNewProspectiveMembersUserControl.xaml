@@ -101,7 +101,7 @@
             <TextBlock Grid.Row="2" Grid.Column="2" Text="Remaining prospective members to capture" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
             <TextBox Grid.Row="2" Grid.Column="4" Height="22" Width="45" Text="{Binding RemainingNumberOfMembers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="LightYellow" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsEnabled="False"></TextBox>
             <TextBlock Grid.Row="3" Grid.Column="0" Text="Cover Amount" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,15,0" ></TextBlock>
-            <ComboBox Grid.Row="3" Grid.Column="1" Height="22" Width="80" ItemsSource="{Binding CoverAmounts, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  SelectedItem="{Binding SelectedCoverAmount}" Margin="2"></ComboBox>
+            <ComboBox Grid.Row="3" Grid.Column="1" Height="22" Width="80" ItemsSource="{Binding PolicyCovers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  SelectedItem="{Binding SelectedCoverAmount}" Margin="2"></ComboBox>
             <TextBlock  Grid.Row="3" Grid.Column="2" Text="Apply cover amount to each prospective member" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0,0,0"></TextBlock>
             <CheckBox Grid.Row="3" Grid.Column="3"  IsChecked="{Binding IsApplyCoverAmountChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0" ></CheckBox>
             <StackPanel Grid.Row="4" Orientation="Vertical"  Margin="0" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Stretch">
@@ -147,7 +147,7 @@
                 <TextBlock Grid.Row="0" Grid.Column="10"  Text=")" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"  ></TextBlock>
 
                 <TextBlock  Grid.Row="1"  Text="Cover Amount" VerticalAlignment="Center" Margin="10, 0, 10,0"></TextBlock>
-                <ComboBox Grid.Row="1" Grid.Column="1"   Height="22" Width="80" HorizontalAlignment="Left" ItemsSource="{Binding MemberCoverAmounts, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedMemberCoverAmount, Mode=TwoWay}"></ComboBox>
+                <ComboBox Grid.Row="1" Grid.Column="1"   Height="22" Width="80" HorizontalAlignment="Left" ItemsSource="{Binding MemberPolicyCovers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedMemberCoverAmount, Mode=TwoWay}"></ComboBox>
                 <CheckBox  Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" IsChecked="{Binding IsMemberCoverAmountOverrideChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Override" ToolTip="Override the current prospective member's cover amount."></CheckBox>
                 <TextBlock Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="3" Text="Calculated Age" VerticalAlignment="Center" Margin="0,0,10,0"></TextBlock>
                 <TextBox Grid.Row="1" Grid.Column="7" Text="{Binding CalculatedAge, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Left"  Width="50" Height="22" FontWeight="Bold" VerticalAlignment="Top" Background="#FFFFF7DD" IsEnabled="False" Margin="0,2,0,0"/>

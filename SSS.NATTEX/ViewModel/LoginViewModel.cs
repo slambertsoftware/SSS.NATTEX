@@ -14,6 +14,7 @@ namespace SSS.NATTEX.ViewModel
     public class LoginViewModel: MainViewModel
     {
         #region fields
+        private int    _userID;
         private string _userName;
         private string _password;
         private string _userFirstName;
@@ -28,6 +29,19 @@ namespace SSS.NATTEX.ViewModel
         #endregion
 
         #region properties
+        public int UserID
+        {
+            get
+            {
+                return _userID;
+            }
+            set
+            {
+                _userID = value;
+                this.RaisePropertyChanged("UserID");
+            }
+        }
+
         public string UserName
         {
             get
@@ -213,16 +227,17 @@ namespace SSS.NATTEX.ViewModel
                     {
                         if (IsvalidUserCredentials())
                         {
-                            LoginMessage message = new LoginMessage()
+                            CurrentLogin message = new CurrentLogin()
                             {
                                 LoginStatus = "Logged In",
+                                UserID  = this.UserID,
                                 UserName = this.UserName,
                                 UserFirstName = this.UserFirstName,
                                 UserLastName = this.UserLastName,
                                 UserRole = this.UserRole,
                                 Message = ""
                             };
-                            Messenger.Default.Send<LoginMessage>(message);
+                            Messenger.Default.Send<CurrentLogin>(message);
                             win.DialogResult = true;
                             win.Close();
                         }
@@ -265,6 +280,7 @@ namespace SSS.NATTEX.ViewModel
                 ApplicationUser user = context.ApplicationUsers.Where(x => x.UserName == this.UserName && x.Password == this.Password && x.IsActive == true).FirstOrDefault();
                 if (user != null)
                 {
+                    this.UserID   = user.ApplicationUserID;
                     this.UserRole = user.ApplicationRole.Description;
                     this.UserName = user.UserName;
                     this.UserFirstName = user.FirstName;

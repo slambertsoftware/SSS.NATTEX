@@ -50,7 +50,7 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Row="0" Grid.ColumnSpan="5" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="{Binding ValidationMessageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="LightGoldenrodYellow">
                 <Image Source="../Resources/Images/warning_24_2.png" Width="24" Height="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1"></Image>
-                <TextBlock Text="{Binding ValidationMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10"  Foreground="Red"></TextBlock>
+                <TextBlock Text="{Binding ValidationMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"  Foreground="Red" TextWrapping="Wrap"></TextBlock>
             </StackPanel>
             <TextBlock Grid.Row="1" Grid.Column="1"  Text="User Name" VerticalAlignment="Center" HorizontalAlignment="Right" TextAlignment="Center" FontWeight="Bold"></TextBlock>
             <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2"  x:Name="txtUserName" Width="200" Height="20" BorderBrush="Gray" BorderThickness="1" VerticalAlignment="Center" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  TextAlignment="Left" Margin="5, 0,0,0"></TextBox>
@@ -60,9 +60,9 @@
         <Border    Grid.Row="2" BorderThickness="0.65" BorderBrush="DarkGray"  VerticalAlignment="Top"></Border>
         <WrapPanel Grid.Row="2"  HorizontalAlignment="Right" VerticalAlignment="Center">
             <Button BorderBrush="#FFF" Name="LoginButton" FontFamily="Arial" Background="#FF0487F3" Foreground="#FFF3ECEC" Style="{StaticResource RoundButtonTemplate}" Width="120" Content="LOGIN" Height="22" Command="{Binding LoginCommand}"
-                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip="Click to proceed to the next step." />
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip="Click to proceed to the next step." IsDefault="True" />
             <Button Content="CANCEL" Height="22" Width="120" Command="{Binding CancelCommand}" Margin="2,2,10,2"  Style="{StaticResource RoundButtonTemplate}" 
-				CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip ="Cancel any changes made and close the window." Background="#FF8D9195" />
+				CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip ="Cancel any changes made and close the window." Background="#FF8D9195" IsCancel="True" />
         </WrapPanel>
     </Grid>
 </Window>

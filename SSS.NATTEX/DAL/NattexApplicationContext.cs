@@ -22,7 +22,7 @@ namespace SSS.NATTEX.DAL
         public DbSet<BusinessPartner> BusinessPartners { get; set; }
         public DbSet<Client> Clients { get; set; }
 
-
+        public DbSet<Century> Centuries { get; set; }
         public DbSet<CoverType> CoverTypes { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<JoiningFee> JoiningFees { get; set; }
@@ -31,6 +31,14 @@ namespace SSS.NATTEX.DAL
         public DbSet<PolicyPremium> PolicyPremiums { get; set; }
         public DbSet<PolicyScheme> PolicySchemes { get; set; }
         public DbSet<PolicySchemeType> PolicySchemeTypes { get; set; }
+        public DbSet<QuotationType> QuotationTypes { get; set; }
+        public DbSet<PendingQuotation> PendingQuotations { get; set; }
+        public DbSet<PendingQuotationMember> PendingQuotationMembers { get; set; }
+        public DbSet<PendingQuotationMemberScheme> PendingQuotationMemberSchemes { get; set; }
+        public DbSet<PendingQuotationDocument> PendingQuotationDocuments { get; set; }
+        public DbSet<PendingQuotationMemberGroup> PendingQuotationMemberGroups { get; set; }
+        public DbSet<PendingQuotationMemberGroupMember> PendingQuotationMemberGroupMembers { get; set; }
+        
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

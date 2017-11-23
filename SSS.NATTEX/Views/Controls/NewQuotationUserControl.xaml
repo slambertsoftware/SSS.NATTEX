@@ -95,28 +95,28 @@
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="Existing Customer:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10, 2, 10,2" FontWeight="Bold" Visibility="{Binding ExistingCustomerCheckedVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Existing Customer" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10, 2, 10,2" FontWeight="Bold" Visibility="{Binding ExistingCustomerCheckedVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
                 <CheckBox Grid.Row="0" Grid.Column="1"  IsChecked="{Binding IsExistingCustomerChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Visibility="{Binding ExistingCustomerCheckedVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
 
                 <StackPanel Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4"  Orientation="Horizontal" Visibility="{Binding CustomerSelectionVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                    <TextBlock Text="Select Customer:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10, 2, 10,2" IsEnabled="False" FontWeight="Bold" ></TextBlock>
-                    <ComboBox Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" ItemsSource="{Binding Customers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding SelectedCustomerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Margin="5, 0, 10, 0" ToolTip="Select an existing customer" Width="180" ></ComboBox>
+                    <TextBlock Text="Select Customer" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10, 2, 10,2" IsEnabled="False" FontWeight="Bold" ></TextBlock>
+                    <ComboBox Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Center" ItemsSource="{Binding Customers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding SelectedCustomerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Margin="5, 0, 10, 0" ToolTip="Select an existing customer" Width="180" ></ComboBox>
                     <TextBlock Grid.Row="0" Grid.Column="4" Text="Customer Number:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10, 2, 10,2" IsEnabled="False" ></TextBlock>
                     <TextBox Grid.Row="0" Grid.Column="5"  x:Name="custumerNumber" Height="22" Width="100"  Text="{Binding CustomerNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 10, 0"  VerticalAlignment="Bottom" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" IsEnabled="False"></TextBox>
                 </StackPanel>
 
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="Name:" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Margin="10,0,10,0"></TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Name" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Margin="10,0,5,0"></TextBlock>
                 <TextBox   Grid.Row="1" Grid.Column="1" x:Name="txtCustomerName"   Text="{Binding CustomerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="LightYellow"  Width="180" Height="22"  Margin="0 0 2, 0" HorizontalAlignment="Right" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" MaxLength="100" LostFocus="InputTextBox_LostFocus"></TextBox>
 
-                <TextBlock Grid.Row="1" Grid.Column="2"  Text="Address:" FontWeight="Bold" VerticalAlignment="Center" Margin="47, 2, 10,2" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="2"  Text="Address:" FontWeight="Bold" VerticalAlignment="Center" Margin="0, 2, 5,2" HorizontalAlignment="Right"></TextBlock>
                 <TextBox   Grid.Row="1" Grid.Column="3"  Grid.ColumnSpan="2"   Text="{Binding CustomerAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Background="LightYellow" Width="250" Height="50" TextWrapping="Wrap"
                 AcceptsReturn="True" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"  Margin="10, 2, 10,2" VerticalContentAlignment="Top" HorizontalContentAlignment="Left" MaxLength="250"  LostFocus="InputTextBox_LostFocus"></TextBox>
 
-                <TextBlock Grid.Row="2" Grid.Column="0"  Text="Contact No:" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="40,0,0,0"></TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="0"  Text="Contact No" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0"></TextBlock>
                 <TextBox   Grid.Row="2" Grid.Column="1" x:Name="ContactNo"   Text="{Binding CustomerContactNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="LightYellow" Width="100" Height="22"  Margin="0 0 2, 0"  VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Left" MaxLength="100"  LostFocus="InputTextBox_LostFocus"></TextBox>
-                <TextBlock Grid.Row="2" Grid.Column="2"  Text="Email:" FontWeight="Bold" VerticalAlignment="Center"  Margin="10, 2, 10,2" HorizontalAlignment="Right" LostFocus="InputTextBox_LostFocus"></TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="2"  Text="Email" FontWeight="Bold" VerticalAlignment="Center"  Margin="0, 2, 5,2" HorizontalAlignment="Right" LostFocus="InputTextBox_LostFocus"></TextBlock>
                 <TextBox   Grid.Row="2" Grid.Column="3"  Grid.ColumnSpan="2"   Text="{Binding CustomerEmail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="LightYellow"  Width="250" Height="22"  Margin="10, 2, 10,2" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" MaxLength="250" LostFocus="InputTextBox_LostFocus"></TextBox>
-                <TextBlock Grid.Row="3" Grid.Column="0"  Text="Other info:" FontWeight="Bold" VerticalAlignment="Center" Margin="10, 2, 10,2" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Grid.Row="3" Grid.Column="0"  Text="Other info" FontWeight="Bold" VerticalAlignment="Center" Margin="0, 2, 5,2" HorizontalAlignment="Right"></TextBlock>
                 <TextBox   Grid.Row="3" Grid.Column="1"  Grid.ColumnSpan="5"   Text="{Binding CustomerOtherInfo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Background="LightYellow"  Height="22"  Margin="0 0 10, 0"  VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch"  LostFocus="InputTextBox_LostFocus"></TextBox>
 
 
@@ -129,7 +129,7 @@
             </StackPanel>
 
             <StackPanel Grid.Row="6"  Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock Text="Select a pricing model:" FontWeight="Bold" Margin="2,1, 10, 1" VerticalAlignment="Center" FontFamily="Arial" ></TextBlock>
+                <TextBlock Text="Select a pricing model" FontWeight="Bold" Margin="2,1, 10, 1" VerticalAlignment="Center" FontFamily="Arial" ></TextBlock>
                 <ComboBox Width="200" Height="22" ItemsSource="{Binding Path=PricingModels, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding SelectedPricingModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="4">
                 </ComboBox>
             </StackPanel>
@@ -157,11 +157,11 @@
                            FontFamily="Arial">
                     </wpfToolkit:CheckListBox>
                 </StackPanel>
-                <TextBlock  Grid.Row="1" Grid.Column="0"  Text="Upload" VerticalAlignment="Bottom"  Margin="0,0,10,10"  HorizontalAlignment="Right" FontWeight="Bold"></TextBlock>
+                <TextBlock  Grid.Row="1" Grid.Column="0"  Text="Upload" VerticalAlignment="Bottom"  Margin="0,0,5,10"  HorizontalAlignment="Right" FontWeight="Bold"></TextBlock>
                 <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding UploadFileName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,10,0" Name="FileNameTextBox" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" Height="22"  Background="LightYellow" LostFocus="InputTextBox_LostFocus"/>
                 <Button Grid.Row="1"  Grid.Column="3"  BorderBrush="#FFF" Height="22" Name="FileBrowseButton" FontFamily="Arial"  Foreground="#FFF3ECEC" Style="{StaticResource PrimaryRoundButtonTemplate}" Content="Browse..." Width="120" Margin="10" Command="{Binding FileBrowseCommand}" IsEnabled="{Binding IsFileBrowseButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip="Click to upload a document."  LostFocus="InputTextBox_LostFocus" />
-                <TextBlock  Grid.Row="2" Grid.Column="0"  Text="Description" VerticalAlignment="Center"  Margin="10,0,10,0"  HorizontalAlignment="Right" FontWeight="Bold"></TextBlock>
+                <TextBlock  Grid.Row="2" Grid.Column="0"  Text="Description" VerticalAlignment="Center"  Margin="10,0,5,0"  HorizontalAlignment="Right" FontWeight="Bold"></TextBlock>
                 <wpfToolkit:WatermarkTextBox Text="{Binding UploadFileDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Watermark="Enter a description for the uploaded file." Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Height="22" Background="LightYellow"  Margin="10,0,10,0" 
                                              Name="fileDescription" Visibility="{Binding UploadFileDescriptionVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" LostFocus="fileDescription_LostFocus" ToolTip="Enter a description for the uploaded file. The Browse... button will be disabled if no description is provided."
                                              VerticalAlignment="Center" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>

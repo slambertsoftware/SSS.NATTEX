@@ -24,10 +24,11 @@ namespace SSS.NATTEX.Views
     /// </summary>
     public partial class NewQuotationWindow : Window
     {
-        public NewQuotationWindow()
+        public CurrentLogin CurrentLogin { get; set; }
+        public NewQuotationWindow(CurrentLogin currentLogin)
         {
             InitializeComponent();
- 
+            this.CurrentLogin = currentLogin;
             StartQuotationProcess();
         }
 
@@ -39,7 +40,7 @@ namespace SSS.NATTEX.Views
             {
                 ContentId   = "QM-001",
                 IsActive    = true,
-                Title       = "1. QUOTATION TYPE",
+                Title       = "1. NEW QUOTATION SETUP",
                 CanClose    = false,
                 CanFloat    = true,
                 IsMaximized = false,
@@ -58,7 +59,7 @@ namespace SSS.NATTEX.Views
             layoutSetup.RightContentGrid = null;
             layoutSetup.LeftAnchorablePane.Parent = layoutPanel;
 
-            document.Content = new NewQuotationUserControl(layoutSetup);
+            document.Content = new NewQuotationUserControl(layoutSetup, this.CurrentLogin);
             documentsPane.Children.Add(document);
             document.PreviousContainerIndex = documentsPane.Children.IndexOf(document);
             document.Parent = documentsPane;

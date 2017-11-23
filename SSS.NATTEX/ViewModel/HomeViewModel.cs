@@ -118,7 +118,7 @@ namespace SSS.NATTEX.ViewModel
 
         public MainWindow MainWindow { get; set; }
 
-        public LoginMessage CurrentLogin { get; set; }
+        public CurrentLogin CurrentLogin { get; set; }
 
         public RelayCommand<System.Windows.Window> LoginCommand { get; set; }
         public RelayCommand<System.Windows.Window> LogoutCommand { get; set; }
@@ -139,10 +139,10 @@ namespace SSS.NATTEX.ViewModel
         {
             LoginCommand = new RelayCommand<System.Windows.Window>(LoginAction);
             LogoutCommand = new RelayCommand<System.Windows.Window>(LogoutAction);
-            Messenger.Default.Register<LoginMessage>(this, LoginMessageAction);
+            Messenger.Default.Register<CurrentLogin>(this, LoginMessageAction);
         }
 
-        private void LoginMessageAction(LoginMessage message)
+        private void LoginMessageAction(CurrentLogin message)
         {
             if (message != null)
             {

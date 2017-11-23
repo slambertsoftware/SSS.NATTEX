@@ -1,4 +1,5 @@
-﻿using SSS.NATTEX.Models;
+﻿using SSS.NATTEX.DAL;
+using SSS.NATTEX.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,6 +13,9 @@ namespace SSS.NATTEX.ViewModel
     {
         #region fields
         private string _coverAmount;
+        private CurrentLogin _currentLogin;
+        private int _pendingQuotationID;
+
         private ObservableCollection<ProspectiveMemberScheme> _prospectiveMemberSchemes;
         private ObservableCollection<ProspectiveMemberScheme> _memberSchemeTypes;
 
@@ -48,6 +52,32 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
+        public CurrentLogin CurrentLogin
+        {
+            get
+            {
+                return _currentLogin;
+            }
+            set
+            {
+                _currentLogin = value;
+                this.RaisePropertyChanged("CurrentLogin");
+            }
+        }
+
+        public int PendingQuotationID
+        {
+            get
+            {
+                return _pendingQuotationID;
+            }
+            set
+            {
+                _pendingQuotationID = value;
+                this.RaisePropertyChanged("PendingQuotationID");
+            }
+        }
+
         #endregion
 
         #region constructors
@@ -64,8 +94,10 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
-        public NewProspectiveMemberSchemeViewModel(string coverAmount)
+        public NewProspectiveMemberSchemeViewModel(string coverAmount, CurrentLogin currentLogin, int pendingQuotatinID)
         {
+            this.CurrentLogin = currentLogin;
+            this.PendingQuotationID = pendingQuotatinID;
             this.CoverAmount = coverAmount;
             PopulateSchemeTypes();
         }
@@ -97,6 +129,7 @@ namespace SSS.NATTEX.ViewModel
             DoMemberAgeGrouping();
             DoMemberSchemeGrouping();
         }
+
 
         private void DoMemberAgeGrouping()
         {
@@ -307,7 +340,6 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
-
         private void ProcessMemberSchemeTopGroup(int ageGroupIndex, string schemeName, int groupCount1)
         {
             int index = 0;
@@ -330,7 +362,7 @@ namespace SSS.NATTEX.ViewModel
                     {
                         list.Add(this.AgeGroups[ageGroupIndex].GroupMembers[k]);
                     }
-                    this.ProspectiveMemberSchemes[index].ProspectiveMemberGroup.Add(new ProspectiveMemberGroup() { GroupSchemeName = schemeName, GroupCoverAmount = this.CoverAmount , GroupName = "Group " + Convert.ToString(j + 1), ProspectiveMembers = list });
+                    this.ProspectiveMemberSchemes[index].ProspectiveMemberGroups.Add(new ProspectiveMemberGroup() { GroupSchemeName = schemeName, GroupCoverAmount = this.CoverAmount , GroupName = "Group " + Convert.ToString(j + 1), ProspectiveMembers = list });
                 }
                 this.AgeGroups[ageGroupIndex].GroupMembers.RemoveRange(0, (groups * groupCount1));
             }
@@ -358,7 +390,7 @@ namespace SSS.NATTEX.ViewModel
                     {
                         list.Add(this.AgeGroups[ageGroupIndex].GroupMembers[k]);
                     }
-                    this.ProspectiveMemberSchemes[index].ProspectiveMemberGroup.Add(new ProspectiveMemberGroup() { GroupSchemeName = schemeName, GroupCoverAmount = this.CoverAmount, GroupName = "Group " + Convert.ToString(j + 1), ProspectiveMembers = list });
+                    this.ProspectiveMemberSchemes[index].ProspectiveMemberGroups.Add(new ProspectiveMemberGroup() { GroupSchemeName = schemeName, GroupCoverAmount = this.CoverAmount, GroupName = "Group " + Convert.ToString(j + 1), ProspectiveMembers = list });
                 }
                 this.AgeGroups[ageGroupIndex].GroupMembers.RemoveRange(0, (groups * groupCount2) - 1);
             }
@@ -383,7 +415,7 @@ namespace SSS.NATTEX.ViewModel
                 {
                     list.Add(this.AgeGroups[ageGroupIndex].GroupMembers[k]);
                 }
-                this.ProspectiveMemberSchemes[index].ProspectiveMemberGroup.Add(new ProspectiveMemberGroup() { GroupSchemeName = schemeName, GroupCoverAmount = this.CoverAmount, GroupName = "Group " + Convert.ToString(1), ProspectiveMembers = list });
+                this.ProspectiveMemberSchemes[index].ProspectiveMemberGroups.Add(new ProspectiveMemberGroup() { GroupSchemeName = schemeName, GroupCoverAmount = this.CoverAmount, GroupName = "Group " + Convert.ToString(1), ProspectiveMembers = list });
                 this.AgeGroups[ageGroupIndex].GroupMembers.RemoveRange(0, (this.AgeGroups[ageGroupIndex].GroupMembers.Count));
             }
         }
@@ -404,9 +436,10 @@ namespace SSS.NATTEX.ViewModel
             {
                 list.Add(this.AgeGroups[ageGroupIndex].GroupMembers[k]);
             }
-            this.ProspectiveMemberSchemes[index].ProspectiveMemberGroup.Add(new ProspectiveMemberGroup() { GroupSchemeName = schemeName, GroupCoverAmount = this.CoverAmount, GroupName = "Group " + Convert.ToString(1), ProspectiveMembers = list });
+            this.ProspectiveMemberSchemes[index].ProspectiveMemberGroups.Add(new ProspectiveMemberGroup() { GroupSchemeName = schemeName, GroupCoverAmount = this.CoverAmount, GroupName = "Group " + Convert.ToString(1), ProspectiveMembers = list });
             this.AgeGroups[ageGroupIndex].GroupMembers.RemoveRange(0, (this.AgeGroups[ageGroupIndex].GroupMembers.Count));
         }
+
         #endregion
     }
 }

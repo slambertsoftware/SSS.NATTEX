@@ -25,10 +25,10 @@ namespace SSS.NATTEX.Views.Controls
     public partial class NewQuotationUserControl : UserControl
     {
 
-        public NewQuotationUserControl(DockingSetupModel layoutModel)
+        public NewQuotationUserControl(DockingSetupModel layoutModel, CurrentLogin currentLogin)
         {
             InitializeComponent();
-            var viewModel = new NewQuotationViewModel(layoutModel);
+            var viewModel = new NewQuotationViewModel(layoutModel, currentLogin);
             DataContext = viewModel;
         }
 

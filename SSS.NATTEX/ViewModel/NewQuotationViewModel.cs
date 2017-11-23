@@ -36,6 +36,8 @@ namespace SSS.NATTEX.ViewModel
         private bool   _isValidInput;
         private bool   _isExistingCustomerChecked;
         private bool   _isFileBrowseButtonEnabled;
+        private int    _customerID;
+        private int    _pendingQuotationID;
 
         private Visibility _validationMessageVisibility;
         private Visibility _customerSelectionVisibility;
@@ -44,7 +46,7 @@ namespace SSS.NATTEX.ViewModel
         private Visibility _existingCustomerCheckedVisibility;
 
         private CustomerItem _selectedCustomerItem;
-
+        private CurrentLogin _currentLogin;
         private ObservableCollection<string> _quotationTypes;
         private ObservableCollection<Customer> _customers;
         private ObservableCollection<string> _pricingModels;
@@ -419,6 +421,45 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
+        public int CustomerID
+        {
+            get
+            {
+                return _customerID;
+            }
+            set
+            {
+                _customerID = value;
+                this.RaisePropertyChanged("CustomerID");
+            }
+        }
+
+        public int PendingQuotationID
+        {
+            get
+            {
+                return _pendingQuotationID;
+            }
+            set
+            {
+                _pendingQuotationID = value;
+                this.RaisePropertyChanged("PendingQuotationID");
+            }
+        }
+
+        public CurrentLogin CurrentLogin
+        {
+            get
+            {
+                return _currentLogin;
+            }
+            set
+            {
+                _currentLogin = value;
+                this.RaisePropertyChanged("CurrentLogin");
+            }
+        }
+
         public DockingSetupModel LayoutModel { get; set; }
 
         public RelayCommand<Window> ProceedCommand { get; set; }
@@ -432,9 +473,11 @@ namespace SSS.NATTEX.ViewModel
         #endregion
 
         #region constructors
-        public NewQuotationViewModel(DockingSetupModel layoutModel)
+        public NewQuotationViewModel(DockingSetupModel layoutModel, CurrentLogin currentLogin)
         { 
             this.LayoutModel = layoutModel;
+            this.CurrentLogin = currentLogin;
+
             this.ControlCaption = "CREATE A NEW QUOTATION";
             PopulateQuotationTypes();
             PopulateExistingCustomers();
@@ -545,9 +588,13 @@ namespace SSS.NATTEX.ViewModel
                 this.QuotationTypes = new ObservableCollection<string>();
             }
 
-            this.QuotationTypes.Add(string.Empty);
-            this.QuotationTypes.Add("Society Scheme Quotation");
-            this.QuotationTypes.Add("Single Member Quotation");
+            using (var context = new NattexApplicationContext())
+            {
+                foreach (QuotationType model in (context.QuotationTypes.ToList()).OrderBy(x => x.TypeName))
+                {
+                    this.QuotationTypes.Add(model.TypeName);
+                }
+            }
         }
 
         private void PopulatePricingModels()
@@ -569,6 +616,10 @@ namespace SSS.NATTEX.ViewModel
             if (this.Customers == null)
             {
                 this.Customers = new ObservableCollection<Customer>();
+            }
+            using (var context = new NattexApplicationContext())
+            {
+                this.Customers = new ObservableCollection<Customer>(context.Customers.ToList());
             }
         }
 
@@ -679,36 +730,116 @@ namespace SSS.NATTEX.ViewModel
         private void SetExistingCustomerNumber()
         {
             string result = string.Empty;
-            result = "C" + "-" + DateTime.Now.ToString("yyyyMMdd") + "-" + this.CustomerName.Substring(0, 3).ToUpper() + GetNewCustomerSequenceNumber();
+            using (var context = new NattexApplicationContext())
+            {
+                var customers = context.Customers.ToList();
+                if ((customers != null) && (customers.Count > 0))
+                {
+                    var customer = context.Customers.ToList().Where(x => x.CompanyName == this.SelectedCustomerName && x.IsActive == true).FirstOrDefault();
+                    if (customer != null)
+                    {
+                        result = customer.CustomerNumber;
+                    }
+                }
+            }
             this.CustomerNumber = result;
         }
 
         private string GenerateNewCustomerNumber()
         {
             string result = string.Empty;
-            result = result = "C" + "-" + DateTime.Now.ToString("yyyyMMdd") + "-" + this.CustomerName.Substring(0, 3).ToUpper() + GetNewCustomerSequenceNumber();
+            string customerPreFix = this.CustomerName.Substring(0, 3).ToUpper();
+            int customerPreFixCount = 0;
+            using (var context = new NattexApplicationContext())
+            {
+                var customers = context.Customers.ToList();
+                if ((customers != null) && (customers.Count > 0))
+                {
+                    foreach(Customer customer in customers)
+                    {
+                        if (customer.CustomerNumber.Length >= 14)
+                        {
+                            if (customerPreFix == customer.CustomerNumber.Substring(11, 3).ToUpper())
+                            {
+                                customerPreFixCount = customerPreFixCount + 1;
+                            }
+                        }
+                    }
+                }
+            }
+            if (customerPreFixCount == 0)
+            {
+                result = "C" + "-" + DateTime.Now.ToString("yyyyMMdd") + "-" + this.CustomerName.Substring(0, 3).ToUpper() + "000" + Convert.ToString(customerPreFixCount + 1);
+            }
+            else
+            {
+                if (Convert.ToString(customerPreFixCount).Length == 1)
+                {
+                    result = "C" + "-" + DateTime.Now.ToString("yyyyMMdd") + "-" + this.CustomerName.Substring(0, 3).ToUpper() + "000" + Convert.ToString(customerPreFixCount + 1);
+                }
+                else if (Convert.ToString(customerPreFixCount).Length == 2)
+                {
+                    result = "C" + "-" + DateTime.Now.ToString("yyyyMMdd") + "-" + this.CustomerName.Substring(0, 3).ToUpper() + "00" + Convert.ToString(customerPreFixCount + 1);
+                }
+                else if (Convert.ToString(customerPreFixCount).Length == 3)
+                {
+                    result = "C" + "-" + DateTime.Now.ToString("yyyyMMdd") + "-" + this.CustomerName.Substring(0, 3).ToUpper() + "0" + Convert.ToString(customerPreFixCount + 1);
+                }
+                else if (Convert.ToString(customerPreFixCount).Length == 4)
+                {
+                    result = "C" + "-" + DateTime.Now.ToString("yyyyMMdd") + "-" + this.CustomerName.Substring(0, 3).ToUpper() + Convert.ToString(customerPreFixCount + 1);
+                }
+                else
+                {
+                    result = "C" + "-" + DateTime.Now.ToString("yyyyMMdd") + "-" + this.CustomerName.Substring(0, 3).ToUpper() + "E" + Convert.ToString(customerPreFixCount + 1);
+                }
+            }
+
             this.CustomerNumber = result;
-            return result;
-        }
-
-        private string GetNewCustomerSequenceNumber()
-        {
-            string result = string.Empty;
-            result = "0001";
-            return result;
-        }
-
-        private string GetNewQuotationSequenceNumber()
-        {
-            string result = string.Empty;
-            result = "0001";
             return result;
         }
 
         private string GenerateNewQuoationNumber()
         {
             string result = string.Empty;
-            result = "Q" + "-" + DateTime.Now.ToString("yyyyMMdd") + "-" + this.CustomerNumber.Substring(11, 7) + "-" + GetNewQuotationSequenceNumber();
+            int quotationCount = 0;
+            if ((!string.IsNullOrEmpty(this.CustomerNumber)) && (this.CustomerNumber.Length == 18))
+            {
+                using (var context = new NattexApplicationContext())
+                {
+                    var quotations = context.PendingQuotations.ToList();
+                    if ((quotations != null) && (quotations.Count > 0))
+                    {
+                        foreach (PendingQuotation quotation in quotations)
+                        {
+                            if ((quotation.QuotationNumber.StartsWith("Q" + "-" + DateTime.Now.ToString("yyyyMMdd") + "-" + this.CustomerNumber.Substring(11, 7))) && (quotation.IsActive == true))
+                            {
+                                quotationCount = quotationCount + 1;
+                            }
+                        }
+                    }
+                }
+                if (quotationCount == 0)
+                {
+                    result = "Q" + "-" + DateTime.Now.ToString("yyyyMMdd") + "-" + this.CustomerNumber.Substring(11, 7) + "-" + "01";
+                }
+                else
+                {
+                    if (Convert.ToString(quotationCount).Length == 1)
+                    {
+                        result = "Q" + "-" + DateTime.Now.ToString("yyyyMMdd") + "-" + this.CustomerNumber.Substring(11, 7) + "-" + "0" + Convert.ToString(quotationCount + 1);
+                    }
+                    else if (Convert.ToString(quotationCount).Length == 2)
+                    {
+                        result = "Q" + "-" + DateTime.Now.ToString("yyyyMMdd") + "-" + this.CustomerNumber.Substring(11, 7) + "-" + Convert.ToString(quotationCount + 1);
+                    }
+                    else
+                    {
+                        result = "Q" + "-" + DateTime.Now.ToString("yyyyMMdd") + "-" + this.CustomerNumber.Substring(11, 7) + "-" + "E" + Convert.ToString(quotationCount + 1);
+                    }
+                }
+            }
+
             this.QuotationNumber = result;
             return result;
         }
@@ -716,13 +847,29 @@ namespace SSS.NATTEX.ViewModel
         private bool IsDuplicateCustomerName()
         {
             bool result = false;
-
+            using (var context = new NattexApplicationContext())
+            {
+                var customers = context.Customers.ToList();
+                if ((customers != null) && (customers.Count > 0))
+                {
+                    var customer = context.Customers.ToList().Where(x => x.CompanyName == this.CustomerName && x.IsActive == true).FirstOrDefault();
+                    if (customer != null)
+                    {
+                        result = true;
+                    }
+                }
+            }
             return result;
         }
 
         private ObservableCollection<Customer> GetCustomers()
         {
-            ObservableCollection<Customer> result = new ObservableCollection<Customer>();
+            ObservableCollection<Customer> result = null;
+            using (var context = new NattexApplicationContext())
+            {
+                var customers = context.Customers.ToList();
+                result = new ObservableCollection<Customer>(customers);
+            }
             return result;
         }
 
@@ -745,6 +892,9 @@ namespace SSS.NATTEX.ViewModel
                     }
 
                     this.GenerateNewQuoationNumber();
+                    SaveNewCustomer();
+                    SaveNewQuotation();
+           
                     this.DocumentOutputDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\NATTEX\NAMS\Quotations\" + this.QuotationNumber + @"\";
                     if (!Directory.Exists(this.DocumentOutputDirectory))
                     {
@@ -763,9 +913,11 @@ namespace SSS.NATTEX.ViewModel
                             }
                         }
                     }
+                    SaveNewQuotationDocuments();
 
                     NewQuotation newQuotationModel = new NewQuotation()
                     {
+                         PendingQuotationID = this.PendingQuotationID,
                          QuotationNumber = this.QuotationNumber,
                          QuotationType = this.SelectedQuotationType,
                          IsExistingCustomer = this.IsExistingCustomerChecked,
@@ -792,11 +944,101 @@ namespace SSS.NATTEX.ViewModel
                         IsMaximized = false,
                         IconSource = new BitmapImage(new Uri(@"../../Resources/Images/quote_4_24.png", UriKind.Relative))
                     };
-                    this.LayoutModel.Document.Content = new CaptureNewProspectiveMembersUserControl(this.LayoutModel, newQuotationModel);
+                    this.LayoutModel.Document.Content = new CaptureNewProspectiveMembersUserControl(this.LayoutModel, newQuotationModel, this.CurrentLogin);
                     this.LayoutModel.DocumentPane.Children.Add(this.LayoutModel.Document);
                     this.LayoutModel.Document.PreviousContainerIndex = this.LayoutModel.DocumentPane.Children.IndexOf(this.LayoutModel.Document);
                     this.LayoutModel.Document.Parent = this.LayoutModel.DocumentPane;
                     this.LayoutModel.Document.DockAsDocument();
+                }
+            }
+        }
+
+        private void SaveNewCustomer()
+        {
+            if (!IsDuplicateCustomerName())
+            {
+                Customer customer = new Customer()
+                {
+                    FirstName = "",
+                    LastName = "",
+                    CompanyName = this.CustomerName,
+                    Address = this.CustomerAddress,
+                    ContactNumber = this.CustomerContactNumber,
+                    EmailAddress = this.CustomerEmail,
+                    OtherInfo = this.CustomerOtherInfo,
+                    CustomerNumber = this.CustomerNumber,
+                    CreateDate = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")),
+                    CreateUserID = this.CurrentLogin.UserID,
+                    IsActive = true
+                };
+
+                using (var context = new NattexApplicationContext())
+                {
+                    context.Customers.Add(customer);
+                    context.SaveChanges();
+                    this.CustomerID = customer.CustomerID;
+                }
+            }
+        }
+
+        private void SaveNewQuotation()
+        {
+            PendingQuotation pendingQuotation = new PendingQuotation()
+            {
+                QuotationHeader = "",
+                QuotationType = this.SelectedQuotationType,
+                QuotationNumber = this.QuotationNumber,
+                IsExistingCustomer = this.IsExistingCustomerChecked,
+                SelectedCustomer = this.SelectedCustomerName,
+                CustomerID = this.CustomerID,
+                CustomerNumber = this.CustomerNumber,
+                CustomerName = this.CustomerName,
+                CustomerAddress = this.CustomerAddress,
+                CustomerContactNumber = this.CustomerContactNumber,
+                CustomerEmailAddress = this.CustomerEmail,
+                CustomerOtherInfo = this.CustomerOtherInfo,
+                PricingModel = this.SelectedPricingModel,
+                QuotationPreparedBy = this.CurrentLogin.UserFirstName + " " + this.CurrentLogin.UserLastName,
+                CreateDate = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")),
+                CreateUserID = this.CurrentLogin.UserID,
+                IsActive = true
+            };
+
+            using (var context = new NattexApplicationContext())
+            {
+                context.PendingQuotations.Add(pendingQuotation);
+                context.SaveChanges();
+                this.PendingQuotationID = pendingQuotation.PendingQuotationID;
+            }
+        }
+
+        private void SaveNewQuotationDocuments()
+        {
+            if ((this.QuotationDocuments != null) && (this.QuotationDocuments.Count > 0))
+            {
+                List<PendingQuotationDocument> pendingDocuments = new List<PendingQuotationDocument>();
+                foreach(QuotationUploadDocument document in this.QuotationDocuments)
+                {
+                    PendingQuotationDocument pendingDocument = new PendingQuotationDocument()
+                    {
+                        PendingQuotationID = this.PendingQuotationID,
+                        FileName = document.FileName,
+                        FilePath = document.FilePath,
+                        CopyToFilePath = document.CopyToFilePath,
+                        FileDescription = document.FileDescription,
+                        FileExtension = document.FileExtension,
+                        IsFileSelected = document.IsFileSelected,
+                        IsActive = document.IsFileSelected ? true : false,
+                        CreateDate = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")),
+                        CreateUserID = this.CurrentLogin.UserID
+                    };
+                    pendingDocuments.Add(pendingDocument);
+                }
+
+                using (var context = new NattexApplicationContext())
+                {
+                    pendingDocuments.ForEach(pendingDocument => context.PendingQuotationDocuments.Add(pendingDocument));
+                    context.SaveChanges();
                 }
             }
         }

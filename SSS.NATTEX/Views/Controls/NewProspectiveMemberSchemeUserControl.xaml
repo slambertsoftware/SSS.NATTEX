@@ -15,7 +15,7 @@
         <HierarchicalDataTemplate x:Key="Level2"  ItemsSource="{Binding ProspectiveMembers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource Level3}">
             <TextBlock Text="{Binding GroupName}" />
         </HierarchicalDataTemplate>
-        <HierarchicalDataTemplate x:Key="Level1"  ItemsSource="{Binding ProspectiveMemberGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource Level2}">
+        <HierarchicalDataTemplate x:Key="Level1"  ItemsSource="{Binding ProspectiveMemberGroups, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource Level2}">
             <TextBlock Text="{Binding SchemeName}" />
         </HierarchicalDataTemplate>
     </UserControl.Resources>

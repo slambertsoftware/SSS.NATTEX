@@ -34,7 +34,7 @@ namespace SSS.NATTEX
             if (action == "Logged In")
             {
                 MainBorder.Background = null;
-                ContentGrid.Children.Add(new MainUserControl());
+                ContentGrid.Children.Add(new MainViewUserControl((this.DataContext as HomeViewModel).CurrentLogin));
             }
             else
             {

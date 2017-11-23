@@ -316,9 +316,9 @@ namespace SSS.NATTEX.ViewModel
                 });
                 foreach (ProspectiveMemberScheme scheme in this.QuotationModel.ProspectiveMemberSchemes)
                 {
-                    if ((scheme.ProspectiveMemberGroup != null) && (scheme.ProspectiveMemberGroup.Count > 0))
+                    if ((scheme.ProspectiveMemberGroups != null) && (scheme.ProspectiveMemberGroups.Count > 0))
                     {
-                        foreach (ProspectiveMemberGroup group in scheme.ProspectiveMemberGroup)
+                        foreach (ProspectiveMemberGroup group in scheme.ProspectiveMemberGroups)
                         {
                             var maxCoveramount = Convert.ToDecimal((GetMaximumAllowableCoverAmount(group.GroupSchemeName).Replace("R ", "").Replace(" ", "")));
                             var groupCoverAmount = Convert.ToDecimal(group.GroupCoverAmount.Replace("R ", "").Replace(" ", ""));

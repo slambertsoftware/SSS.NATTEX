@@ -420,6 +420,23 @@ namespace SSS.NATTEX.DAL
             };
             premiums.ForEach(premium => context.PolicyPremiums.Add(premium));
             context.SaveChanges();
+
+            var quotationTypes = new List<QuotationType>
+            {
+                new QuotationType {TypeName = "Society Scheme Quotation", IsActive = true, CreateDate = DateTime.Parse( DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")), CreateUserID = 1},
+                new QuotationType {TypeName = "Single Member Quotation", IsActive = true, CreateDate = DateTime.Parse( DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")), CreateUserID = 1},
+                new QuotationType {TypeName = "Burial Book Quotation", IsActive = true, CreateDate = DateTime.Parse( DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")), CreateUserID = 1}
+            };
+            quotationTypes.ForEach(quotationType => context.QuotationTypes.Add(quotationType));
+            context.SaveChanges();
+
+            var centuries = new List<Century>
+            {
+                new Century {Year = "19", IsActive = true, CreateDate = DateTime.Parse( DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")), CreateUserID = 1},
+                new Century {Year = "20", IsActive = true, CreateDate = DateTime.Parse( DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")), CreateUserID = 1}
+            };
+            centuries.ForEach(century => context.Centuries.Add(century));
+            context.SaveChanges();
         }
     }
 }

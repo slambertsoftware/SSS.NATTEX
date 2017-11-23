@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace SSS.NATTEX.Models
 {
-    public class LoginMessage
+    public class CurrentLogin
     {
+        public int UserID { get; set; }
         public string Message { get; set; }
         public string LoginStatus { get; set; }
         public string UserName { get; set; }

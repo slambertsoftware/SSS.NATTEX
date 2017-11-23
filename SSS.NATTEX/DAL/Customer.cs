@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace SSS.NATTEX.DAL
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CustomerID { get; set; }
+        public string CustomerNumber { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string CompanyName { get; set; }
@@ -21,13 +23,14 @@ namespace SSS.NATTEX.DAL
         public string EmailAddress { get; set; }
         public string OtherInfo { get; set; }
         public bool IsActive { get; set; }
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime CreateDate { get; set; }
+        [DefaultValue("getdate()")]
+        public DateTime? CreateDate { get; set; }
         [Required]
         public int CreateUserID { get; set; }
         public DateTime? RemoveDate { get; set; }
         public DateTime? ModifyDate { get; set; }
         public Nullable<int> ModifyUserID { get; set; }
         public Nullable<int> RemoveUserID { get; set; }
+        public override string ToString() { return CompanyName; }
     }
 }

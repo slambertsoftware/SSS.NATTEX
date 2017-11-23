@@ -8,27 +8,21 @@ using System.Threading.Tasks;
 
 namespace SSS.NATTEX.DAL
 {
-    public class ApplicationSecurity
+    public class QuotationType
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ApplicationUserID { get; set; }
+        public int QuotationTypeID { get; set; }
+        public string TypeName { get; set; }
         [Required]
-        public string UserName { get; set; }
-        [Required]
-        public string FirstName { get; set; }
-        [Required]
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public int ApplicationRoleID { get; set; }
         public bool IsActive { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime? CreateDate { get; set; }
         public DateTime? RemoveDate { get; set; }
         public DateTime? ModifyDate { get; set; }
+        [Required]
         public int CreateUserID { get; set; }
         public Nullable<int> ModifyUserID { get; set; }
         public Nullable<int> RemoveUserID { get; set; }
-        public virtual ApplicationRole ApplicationRole { get; set; }
     }
 }

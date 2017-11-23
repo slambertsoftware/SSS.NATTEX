@@ -17,7 +17,7 @@ namespace SSS.NATTEX.DAL
         public string Description{ get; set; }
         public bool IsActive { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
         public DateTime? RemoveDate { get; set; }
         public DateTime? ModifyDate { get; set; }
         public int CreateUserID { get; set; }

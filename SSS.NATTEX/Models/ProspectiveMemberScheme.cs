@@ -29,7 +29,7 @@ namespace SSS.NATTEX.Models
                 this.RaisePropertyChanged("SchemeName");
             }
         }
-        public ObservableCollection<ProspectiveMemberGroup> ProspectiveMemberGroup
+        public ObservableCollection<ProspectiveMemberGroup> ProspectiveMemberGroups
         {
             get
             {
@@ -47,16 +47,16 @@ namespace SSS.NATTEX.Models
         public ProspectiveMemberScheme(string schemeName)
         {
             SchemeName = schemeName;
-            if (this.ProspectiveMemberGroup == null)
+            if (this.ProspectiveMemberGroups == null)
             {
-                this.ProspectiveMemberGroup = new ObservableCollection<ProspectiveMemberGroup>();
+                this.ProspectiveMemberGroups = new ObservableCollection<ProspectiveMemberGroup>();
             }
         }
         #endregion
 
         public void AddProspectiveMemberGroup(ProspectiveMemberGroup memberGroup)
         {
-            this.ProspectiveMemberGroup.Add(memberGroup);
+            this.ProspectiveMemberGroups.Add(memberGroup);
         }
 
         public override bool Equals(object obj)

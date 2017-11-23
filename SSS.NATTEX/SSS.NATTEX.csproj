@@ -63,7 +63,7 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>nattex_hand2_CMW_icon.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Images\nattex_hand2_CMW_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ControlzEx, Version=2.2.0.4, Culture=neutral, PublicKeyToken=f08b075e934b7045, processorArchitecture=MSIL">
@@ -138,10 +138,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DAL\AdminFee.cs" />
-    <Compile Include="DAL\ApplicationSecurity.cs" />
+    <Compile Include="DAL\Century.cs" />
     <Compile Include="DAL\Company.cs" />
     <Compile Include="DAL\NattexApplicationContext.cs" />
     <Compile Include="DAL\NattexApplicationInitializer.cs" />
+    <Compile Include="DAL\PendingQuotation.cs" />
+    <Compile Include="DAL\PendingQuotationDocument.cs" />
+    <Compile Include="DAL\PendingQuotationMember.cs" />
+    <Compile Include="DAL\PendingQuotationMemberGroup.cs" />
+    <Compile Include="DAL\PendingQuotationMemberGroupMember.cs" />
+    <Compile Include="DAL\PendingQuotationMemberScheme.cs" />
     <Compile Include="DAL\PolicyScheme.cs" />
     <Compile Include="DAL\PolicySchemeType.cs" />
     <Compile Include="Models\AgeGroup.cs" />
@@ -156,7 +162,7 @@
     <Compile Include="Models\CustomerItem.cs" />
     <Compile Include="Models\DockingSetupModel.cs" />
     <Compile Include="DAL\JoiningFee.cs" />
-    <Compile Include="Models\LoginMessage.cs" />
+    <Compile Include="Models\CurrentLogin.cs" />
     <Compile Include="Models\MemberSchemeGroupListModel.cs" />
     <Compile Include="Models\MemberSchemeGroup.cs" />
     <Compile Include="Models\MonthlyInstallmmentPeriod.cs" />
@@ -167,14 +173,10 @@
     <Compile Include="Models\ProcessedDataModel.cs" />
     <Compile Include="Models\ProspectiveMember.cs" />
     <Compile Include="Models\ProspectiveMemberGroup.cs" />
-    <Compile Include="Models\QuotationBodyItem.cs" />
     <Compile Include="Models\QuotationCalculationItem.cs" />
-    <Compile Include="Models\QuotationDocumentDetail.cs" />
-    <Compile Include="Models\QuotationFooterItem.cs" />
-    <Compile Include="Models\QuotationHeaderItem.cs" />
     <Compile Include="Models\QuotationItemTemplateSelector.cs" />
     <Compile Include="Models\QuotationParameter.cs" />
-    <Compile Include="Models\QuotationType.cs" />
+    <Compile Include="DAL\QuotationType.cs" />
     <Compile Include="Models\QuotationUploadDocument.cs" />
     <Compile Include="Models\SchemeType.cs" />
     <Compile Include="DAL\ApplicationRole.cs" />
@@ -193,8 +195,8 @@
     <Compile Include="Views\ConfirmedQuotationWindow.xaml.cs">
       <DependentUpon>ConfirmedQuotationWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\MainUserControl.xaml.cs">
-      <DependentUpon>MainUserControl.xaml</DependentUpon>
+    <Compile Include="Views\Controls\MainViewUserControl.xaml.cs">
+      <DependentUpon>MainViewUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\NewProspectiveMembersUserControl.xaml.cs">
       <DependentUpon>NewProspectiveMembersUserControl.xaml</DependentUpon>
@@ -251,7 +253,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Controls\MainUserControl.xaml">
+    <Page Include="Views\Controls\MainViewUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -469,13 +471,10 @@
     <Resource Include="Resources\Images\nattex_hand5.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="nattex_hand5.ico" />
+    <Resource Include="Resources\Images\nattex_hand6.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="nattex_hand6.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="nattex_hand2_CMW_icon.ico" />
+    <Resource Include="Resources\Images\nattex_hand2_CMW_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

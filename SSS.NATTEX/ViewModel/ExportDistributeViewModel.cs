@@ -51,7 +51,6 @@ namespace SSS.NATTEX.ViewModel
         private ObservableCollection<string> _distributionOptions;
         private ObservableCollection<string> _exportOptions;
         private ObservableCollection<QuotationCalculationItem> _quotationDetails;
-        private QuotationHeaderItem _quotationHeaderItem;
 
         #endregion
 
@@ -133,19 +132,6 @@ namespace SSS.NATTEX.ViewModel
             {
                 _quotationCustomerNumber = value;
                 this.RaisePropertyChanged("QuotationCustomerNumber");
-            }
-        }
-
-        public QuotationHeaderItem QuotationHeaderDetail
-        {
-            get
-            {
-                return _quotationHeaderItem;
-            }
-            set
-            {
-                _quotationHeaderItem = value;
-                this.RaisePropertyChanged("QuotationHeaderDetail");
             }
         }
 

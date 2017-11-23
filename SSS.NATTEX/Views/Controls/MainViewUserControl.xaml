@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="SSS.NATTEX.Views.Controls.MainUserControl"
+﻿<UserControl x:Class="SSS.NATTEX.Views.Controls.MainViewUserControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -15,7 +15,7 @@
             <RowDefinition Height="22"></RowDefinition>
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0">
-            <Menu DockPanel.Dock="Top">
+            <Menu DockPanel.Dock="Top" Background="LightGray">
                 <MenuItem Header="Quotations" FontFamily="Arial" VerticalAlignment="Center">
                     <MenuItem x:Name="mnuNewQuotation" Header="New Quotation" Click="mnuNewQuotation_Click"/>
                     <MenuItem x:Name="mnuModifyQuotation"  Header="Modify Quoation"/>
@@ -51,7 +51,7 @@
                 </avalonDock:LayoutPanel>
             </avalonDock:LayoutRoot>
         </avalonDock:DockingManager>
-        <StatusBar Grid.Row="2">
+        <StatusBar Grid.Row="2" Background="LightGray">
             <StatusBarItem Content="Please select one of the menu options."/>
         </StatusBar>
     </Grid>

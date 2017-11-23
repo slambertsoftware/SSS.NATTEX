@@ -1,4 +1,4 @@
-﻿using SSS.NATTEX.ViewModel;
+﻿using SSS.NATTEX.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,29 +11,32 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SSS.NATTEX.Views
+namespace SSS.NATTEX.Views.Controls
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainUserControl.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainViewUserControl : UserControl
     {
-        public MainWindow()
+        public CurrentLogin CurrentLogin { get; set; }
+        public MainViewUserControl(CurrentLogin currentLogin)
         {
             InitializeComponent();
+            this.CurrentLogin = currentLogin;
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void mnuNewQuotation_Click(object sender, RoutedEventArgs e)
         {
-            //NewQuotationWindow window = new NewQuotationWindow();
-            //window.Owner = Application.Current.MainWindow;
-            //Point point = GetWindowPosition();
+            NewQuotationWindow window = new NewQuotationWindow(this.CurrentLogin);
+            window.Owner = Application.Current.MainWindow;
+            Point point = GetWindowPosition();
 
-            //window.Left = point.X;
-            //window.Top  = point.Y;
-            //window.ShowDialog();
+            window.Left = point.X;
+            window.Top = point.Y;
+            window.ShowDialog();
         }
 
         private Point GetWindowPosition()

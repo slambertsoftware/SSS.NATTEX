@@ -53,7 +53,7 @@
                     <TextBlock Text="LOGOUT" FontWeight="Bold" Foreground="#FFFFFF"></TextBlock>
                 </Button.Content>
             </Button>
-            <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource RoundButtonTemplate}" Width="150" Height="30" Margin="1, 2, 10, 1" HorizontalAlignment="Right" BorderBrush="#FFF" Name="LoginButton" FontFamily="Arial" Background="#FF0487F3" Foreground="#FFF3ECEC" Command="{Binding LoginCommand}"  Visibility="{Binding LoginButtonVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip="Click to login to NATTEX." >
+            <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource RoundButtonTemplate}" Width="150" Height="30" Margin="1, 2, 10, 1" HorizontalAlignment="Right" BorderBrush="#FFF" Name="LoginButton" FontFamily="Arial" Background="#FF0487F3" Foreground="#FFF3ECEC" Command="{Binding LoginCommand}"  Visibility="{Binding LoginButtonVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip="Click to login to NATTEX." IsDefault="True" >
                 <Button.Content>
                     <TextBlock Text="LOGIN" FontWeight="Bold" Foreground="#FFFFFF"></TextBlock>
                 </Button.Content>

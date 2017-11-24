@@ -8,21 +8,23 @@ using System.Threading.Tasks;
 
 namespace SSS.NATTEX.DAL
 {
-    public class PolicyCover
+    public class AvbobPlan
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int PolicyCoverID { get; set; }
-        public decimal Amount { get; set; }
+        public int AvbobPlanID { get; set; }
+        public int AvbobAgeGroupID { get; set; }
+        [Required]
+        public string PlanName { get; set; }
+        public string PlanDescription { get; set; }
+        [Required]
         public bool IsActive { get; set; }
         [Required]
         public int CreateUserID { get; set; }
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime? CreateDate { get; set; }
- 
+        public Nullable<int> RemoveUserID { get; set; }
         public DateTime? RemoveDate { get; set; }
         public DateTime? ModifyDate { get; set; }
         public Nullable<int> ModifyUserID { get; set; }
-        public Nullable<int> RemoveUserID { get; set; }
     }
 }

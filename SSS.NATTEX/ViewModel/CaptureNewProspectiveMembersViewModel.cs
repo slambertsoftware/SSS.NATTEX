@@ -60,8 +60,8 @@ namespace SSS.NATTEX.ViewModel
         private string _birthYear;
         private string _birthMonth;
         private string _birthDay;
-        private NewQuotation _quotationModel;
-        private PendingQuotation _pendingQuotation;
+        private LibertyNewQuotation _quotationModel;
+        private LibertyPendingQuotation _pendingQuotation;
         private CurrentLogin _currentLogin;
 
         private NewProspectiveMembersUserControl _membersUserControl;
@@ -641,7 +641,7 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
-        public NewQuotation QuotationModel
+        public LibertyNewQuotation QuotationModel
         {
             get
             {
@@ -654,7 +654,7 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
-        public PendingQuotation PendingQuotation
+        public LibertyPendingQuotation PendingQuotation
         {
             get
             {
@@ -726,7 +726,7 @@ namespace SSS.NATTEX.ViewModel
         #endregion
 
         #region constructors
-        public CaptureNewProspectiveMembersViewModel(DockingSetupModel layoutModel, NewQuotation quotationModel, CurrentLogin currentLogin)
+        public CaptureNewProspectiveMembersViewModel(DockingSetupModel layoutModel, LibertyNewQuotation quotationModel, CurrentLogin currentLogin)
         {
             this.LayoutModel = layoutModel;
             this.QuotationModel = quotationModel;
@@ -750,8 +750,8 @@ namespace SSS.NATTEX.ViewModel
             this.NumberOfMembers = 1;
             this.NumberOfMembersCaptured = 0;
             this.RemainingNumberOfMembers = this.NumberOfMembers - this.NumberOfMembersCaptured;
-            this.SelectedCoverAmount = "R 3 000";
-            this.SelectedMemberCoverAmount = "R 3 000";
+            this.SelectedCoverAmount = "R 3 000.00";
+            this.SelectedMemberCoverAmount = "R 3 000.00";
             this.IsApplyCoverAmountChecked = true;
             this.IsBirthYearEnabled = true;
             this.IsBirthMonthEnabled = true;
@@ -781,7 +781,7 @@ namespace SSS.NATTEX.ViewModel
         {
             using (var context = new NattexApplicationContext())
             {
-                PendingQuotation quotation = context.PendingQuotations.Where(x => x.PendingQuotationID == this.QuotationModel.PendingQuotationID).FirstOrDefault<PendingQuotation>();
+                LibertyPendingQuotation quotation = context.LibertyPendingQuotations.Where(x => x.LibertyPendingQuotationID == this.QuotationModel.QuotationID).FirstOrDefault<LibertyPendingQuotation>();
                 if (quotation != null)
                 {
                     this.PendingQuotation = quotation;
@@ -872,10 +872,10 @@ namespace SSS.NATTEX.ViewModel
 
             using (var context = new NattexApplicationContext())
             {
-                var covers = context.PolicyCovers.ToList();
+                var covers = context.LibertyPolicyCovers.ToList();
                 if ((covers != null) && (covers.Count > 0))
                 {
-                    foreach(PolicyCover cover in covers)
+                    foreach(LibertyPolicyCover cover in covers)
                     {
                         this.PolicyCovers.Add("R " + Convert.ToString(cover.Amount));
                     }
@@ -892,10 +892,10 @@ namespace SSS.NATTEX.ViewModel
 
             using (var context = new NattexApplicationContext())
             {
-                var covers = context.PolicyCovers.ToList();
+                var covers = context.LibertyPolicyCovers.ToList();
                 if ((covers != null) && (covers.Count > 0))
                 {
-                    foreach (PolicyCover cover in covers)
+                    foreach (LibertyPolicyCover cover in covers)
                     {
                         this.MemberPolicyCovers.Add("R " + Convert.ToString(cover.Amount));
                     }
@@ -1331,6 +1331,7 @@ namespace SSS.NATTEX.ViewModel
                     this.QuotationModel.ProspectiveMembers = this.MembersUserControl.GetCapturedProspectiveMembers();
                     this.QuotationModel.NumberOfProspectiveMembers = Convert.ToString((this.QuotationModel.ProspectiveMembers == null) ? this.QuotationModel.ProspectiveMembers.Count : 0);
                     this.QuotationModel.ProspectiveMemberSchemes = this.MembersSchemeUserControl.GetProspectiveMemberSchemes();
+                    SavePendingQuotation();
                     SaveProcessedProspectiveMemberSchemes();
 
                     this.QuotationModel.IsCoverAmountAppliedToAll = this.IsApplyCoverAmountChecked;
@@ -1354,7 +1355,7 @@ namespace SSS.NATTEX.ViewModel
                         IsMaximized = false,
                         IconSource = new BitmapImage(new Uri(@"../../Resources/Images/quote_4_24.png", UriKind.Relative))
                     };
-                    this.LayoutModel.Document.Content = new ConfirmQuotationUserControl(this.LayoutModel, this.QuotationModel);
+                    this.LayoutModel.Document.Content = new LibertyPendingQuotationConfirmationUserControl(this.LayoutModel, this.QuotationModel);
                     this.LayoutModel.DocumentPane.Children.Add(this.LayoutModel.Document);
                     this.LayoutModel.Document.PreviousContainerIndex = this.LayoutModel.DocumentPane.Children.IndexOf(this.LayoutModel.Document);
                     this.LayoutModel.Document.Parent = this.LayoutModel.DocumentPane;
@@ -1363,11 +1364,25 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
+        private void SavePendingQuotation()
+        {
+            using (var context = new NattexApplicationContext())
+            {
+                LibertyPendingQuotation quotation = context.LibertyPendingQuotations.Where(x => x.LibertyPendingQuotationID == this.QuotationModel.QuotationID).FirstOrDefault<LibertyPendingQuotation>();
+                if (quotation != null)
+                {
+                    quotation.NumberOfProspectiveMembers = Convert.ToString(this.NumberOfMembers);
+                    context.Entry(quotation).State = System.Data.Entity.EntityState.Modified;
+                    context.SaveChanges();
+                }
+            };
+        }
+
         private void SaveProspectiveMember(ProspectiveMember member)
         {
-            PendingQuotationMember quotationMember = new PendingQuotationMember()
+            LibertyPendingQuotationMember quotationMember = new LibertyPendingQuotationMember()
             {
-                PendingQuotationID = this.PendingQuotation.PendingQuotationID,
+                LibertyPendingQuotationID = this.PendingQuotation.LibertyPendingQuotationID,
                 Initial   = member.Initial,
                 FirstName = member.FirstName,
                 LastName  = member.LastName,
@@ -1384,10 +1399,8 @@ namespace SSS.NATTEX.ViewModel
 
                 using (var context = new NattexApplicationContext())
                 {
-                    context.PendingQuotationMembers.Add(quotationMember);
+                    context.LibertyPendingQuotationMembers.Add(quotationMember);
                     context.SaveChanges();
-                    
-                    // = customer.CustomerID;
                 }
         }
 
@@ -1415,10 +1428,10 @@ namespace SSS.NATTEX.ViewModel
             int result = 0;
             using (var context = new NattexApplicationContext())
             {
-                PendingQuotationMemberScheme scheme = new PendingQuotationMemberScheme() { PendingQuotationID = this.QuotationModel.PendingQuotationID, SchemeName = schemeName, IsActive = true, CreateDate = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd")), CreateUserID = this.CurrentLogin.UserID };
-                context.PendingQuotationMemberSchemes.Add(scheme);
+                LibertyPendingQuotationMemberScheme scheme = new LibertyPendingQuotationMemberScheme() { LibertyPendingQuotationID = this.QuotationModel.QuotationID, SchemeName = schemeName, IsActive = true, CreateDate = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd")), CreateUserID = this.CurrentLogin.UserID };
+                context.LibertyPendingQuotationMemberSchemes.Add(scheme);
                 context.SaveChanges();
-                result = scheme.PendingQuotationMemberSchemeID;
+                result = scheme.LibertyPendingQuotationMemberSchemeID;
             }
             return result;
         }
@@ -1428,9 +1441,9 @@ namespace SSS.NATTEX.ViewModel
             int result = 0;
             using (var context = new NattexApplicationContext())
             {
-                PendingQuotationMemberGroup memberGroup = new PendingQuotationMemberGroup()
+                LibertyPendingQuotationMemberGroup memberGroup = new LibertyPendingQuotationMemberGroup()
                 {
-                    PendingQuotationID = this.QuotationModel.PendingQuotationID,
+                    PendingQuotationID = this.QuotationModel.QuotationID,
                     PendingQuotationMemberSchemeID = schemeID,
                     GroupSchemeName = schemeName,
                     GroupName = groupName,
@@ -1439,7 +1452,7 @@ namespace SSS.NATTEX.ViewModel
                     CreateDate = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd")),
                     CreateUserID = this.CurrentLogin.UserID
                 };
-                context.PendingQuotationMemberGroups.Add(memberGroup);
+                context.LibertyPendingQuotationMemberGroups.Add(memberGroup);
                 context.SaveChanges();
                 result = memberGroup.PendingQuotationMemberGroupID;
             }
@@ -1448,13 +1461,13 @@ namespace SSS.NATTEX.ViewModel
 
         private void SaveQuotationMemberGroupMembers(int membergroupID, ObservableCollection<ProspectiveMember> members)
         {
-            List<PendingQuotationMemberGroupMember> groupMembers = new List<PendingQuotationMemberGroupMember>();
+            List<LibertyPendingQuotationMemberGroupMember> groupMembers = new List<LibertyPendingQuotationMemberGroupMember>();
             foreach (ProspectiveMember member in members)
             {
-                PendingQuotationMemberGroupMember groupMember = new PendingQuotationMemberGroupMember()
+                LibertyPendingQuotationMemberGroupMember groupMember = new LibertyPendingQuotationMemberGroupMember()
                 {
-                    PendingQuotationID = this.QuotationModel.PendingQuotationID,
-                    PendingQuotationMemberGroupID = membergroupID,
+                    LibertyPendingQuotationID = this.QuotationModel.QuotationID,
+                    LibertyPendingQuotationMemberGroupID = membergroupID,
                     Initial = member.Initial,
                     FirstName = member.FirstName,
                     LastName = member.LastName,
@@ -1472,7 +1485,7 @@ namespace SSS.NATTEX.ViewModel
             }
             using (var context = new NattexApplicationContext())
             {
-                groupMembers.ForEach(groupMember => context.PendingQuotationMemberGroupMembers.Add(groupMember));
+                groupMembers.ForEach(groupMember => context.LibertyPendingQuotationMemberGroupMembers.Add(groupMember));
                 context.SaveChanges();
             }
         }
@@ -1510,7 +1523,7 @@ namespace SSS.NATTEX.ViewModel
 
                     if (this.MembersSchemeUserControl == null)
                     {
-                        this.MembersSchemeUserControl = new NewProspectiveMemberSchemeUserControl(this.SelectedCoverAmount, this.CurrentLogin, this.PendingQuotation.PendingQuotationID);
+                        this.MembersSchemeUserControl = new NewProspectiveMemberSchemeUserControl(this.SelectedCoverAmount, this.CurrentLogin, this.PendingQuotation.LibertyPendingQuotationID);
                     }
 
                     if (this.LayoutModel.RightAnchorablePane.ChildrenCount == 0)

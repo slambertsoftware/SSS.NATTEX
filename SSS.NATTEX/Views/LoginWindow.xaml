@@ -6,7 +6,7 @@
         xmlns:wpfToolkit="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
         xmlns:local="clr-namespace:SSS.NATTEX.Views"
         mc:Ignorable="d"
-        Title="Login" x:Name="LoginControl" Height="220" Width="500" ResizeMode="NoResize" FontFamily="Arial" FontSize="11" WindowStartupLocation="CenterScreen" ShowInTaskbar="True" Loaded="LoginControl_Loaded" Icon="../Resources/Images/nattex_hand5.ico">
+        Title="Login" x:Name="LoginControl" Height="220" Width="500" ResizeMode="NoResize" FontFamily="Arial" FontSize="11" WindowStartupLocation="CenterScreen" ShowInTaskbar="True" Loaded="LoginControl_Loaded" Icon="../Resources/Images/nams_logo.ico">
     <Window.Resources>
         <Style x:Key="RoundButtonTemplate" TargetType="Button">
             <Setter Property="Background" Value="#FF428BCA" />

@@ -63,7 +63,7 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\Images\nattex_hand2_CMW_icon.ico</ApplicationIcon>
+    <ApplicationIcon>nams_logo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ControlzEx, Version=2.2.0.4, Culture=neutral, PublicKeyToken=f08b075e934b7045, processorArchitecture=MSIL">
@@ -138,25 +138,32 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DAL\AdminFee.cs" />
+    <Compile Include="DAL\AvbobAgeGroup.cs" />
+    <Compile Include="DAL\AvbobPlan.cs" />
+    <Compile Include="DAL\AvbobPolicyPremium.cs" />
+    <Compile Include="DAL\AvbobPolicyScheme.cs" />
+    <Compile Include="DAL\AvbobPolicySchemeType.cs" />
     <Compile Include="DAL\Century.cs" />
     <Compile Include="DAL\Company.cs" />
+    <Compile Include="DAL\LibertyPendingQuotationParameter.cs" />
+    <Compile Include="DAL\LibertyPendingQuotationHeader.cs" />
     <Compile Include="DAL\NattexApplicationContext.cs" />
     <Compile Include="DAL\NattexApplicationInitializer.cs" />
-    <Compile Include="DAL\PendingQuotation.cs" />
-    <Compile Include="DAL\PendingQuotationDocument.cs" />
-    <Compile Include="DAL\PendingQuotationMember.cs" />
-    <Compile Include="DAL\PendingQuotationMemberGroup.cs" />
-    <Compile Include="DAL\PendingQuotationMemberGroupMember.cs" />
-    <Compile Include="DAL\PendingQuotationMemberScheme.cs" />
-    <Compile Include="DAL\PolicyScheme.cs" />
-    <Compile Include="DAL\PolicySchemeType.cs" />
+    <Compile Include="DAL\LibertyPendingQuotation.cs" />
+    <Compile Include="DAL\LibertyPendingQuotationDocument.cs" />
+    <Compile Include="DAL\LibertyPendingQuotationMember.cs" />
+    <Compile Include="DAL\LibertyPendingQuotationMemberGroup.cs" />
+    <Compile Include="DAL\LibertyPendingQuotationMemberGroupMember.cs" />
+    <Compile Include="DAL\LibertyPendingQuotationMemberScheme.cs" />
+    <Compile Include="DAL\LibertyPolicyScheme.cs" />
+    <Compile Include="DAL\LibertyPolicySchemeType.cs" />
     <Compile Include="Models\AgeGroup.cs" />
     <Compile Include="DAL\Agent.cs" />
     <Compile Include="DAL\ApplicationUser.cs" />
     <Compile Include="DAL\BusinessPartner.cs" />
     <Compile Include="DAL\Client.cs" />
-    <Compile Include="DAL\PolicyCover.cs" />
-    <Compile Include="DAL\PolicyPremium.cs" />
+    <Compile Include="DAL\LibertyPolicyCover.cs" />
+    <Compile Include="DAL\LibertyPolicyPremium.cs" />
     <Compile Include="DAL\CoverType.cs" />
     <Compile Include="DAL\Customer.cs" />
     <Compile Include="Models\CustomerItem.cs" />
@@ -168,7 +175,7 @@
     <Compile Include="Models\MonthlyInstallmmentPeriod.cs" />
     <Compile Include="DAL\PricingModel.cs" />
     <Compile Include="Models\ProspectiveMemberScheme.cs" />
-    <Compile Include="Models\NewQuotation.cs" />
+    <Compile Include="Models\LibertyNewQuotation.cs" />
     <Compile Include="Models\ProspectiveMemberSchemeTypes.cs" />
     <Compile Include="Models\ProcessedDataModel.cs" />
     <Compile Include="Models\ProspectiveMember.cs" />
@@ -181,14 +188,14 @@
     <Compile Include="Models\SchemeType.cs" />
     <Compile Include="DAL\ApplicationRole.cs" />
     <Compile Include="ViewModel\DocumentViewerViewModel.cs" />
-    <Compile Include="ViewModel\ExportDistributeViewModel.cs" />
-    <Compile Include="ViewModel\ConfirmQuotationViewModel.cs" />
+    <Compile Include="ViewModel\LibertyPendingQuotationDistributionViewModel.cs" />
+    <Compile Include="ViewModel\LibertyPendingQuotationConfirmationViewModel.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\ProspectiveMembersViewModel.cs" />
     <Compile Include="ViewModel\CaptureNewProspectiveMembersViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\NewQuotationViewModel.cs" />
+    <Compile Include="ViewModel\LibertyNewQuotationViewModel.cs" />
     <Compile Include="ViewModel\NewProspectiveMemberSchemeViewModel.cs" />
     <Compile Include="ViewModel\ReviewQuotationViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -204,26 +211,23 @@
     <Compile Include="Views\Controls\CaptureNewProspectiveMembersUserControl.xaml.cs">
       <DependentUpon>CaptureNewProspectiveMembersUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\ConfirmQuotationUserControl.xaml.cs">
-      <DependentUpon>ConfirmQuotationUserControl.xaml</DependentUpon>
+    <Compile Include="Views\Controls\LibertyPendingQuotationConfirmationUserControl.xaml.cs">
+      <DependentUpon>LibertyPendingQuotationConfirmationUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\DocumentViewerUserControl.xaml.cs">
       <DependentUpon>DocumentViewerUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\ExportDistributeQuotationUserControl.xaml.cs">
-      <DependentUpon>ExportDistributeQuotationUserControl.xaml</DependentUpon>
+    <Compile Include="Views\Controls\LibertyPendingQuotationDistributionUserControl.xaml.cs">
+      <DependentUpon>LibertyPendingQuotationDistributionUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\NewQuotationUserControl.xaml.cs">
-      <DependentUpon>NewQuotationUserControl.xaml</DependentUpon>
+    <Compile Include="Views\Controls\LibertyNewQuotationUserControl.xaml.cs">
+      <DependentUpon>LibertyNewQuotationUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\NewProspectiveMemberSchemeUserControl.xaml.cs">
       <DependentUpon>NewProspectiveMemberSchemeUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\ReviewQuotationUserControl.xaml.cs">
       <DependentUpon>ReviewQuotationUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\HomeUserControl.xaml.cs">
-      <DependentUpon>HomeUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
@@ -265,7 +269,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Controls\ConfirmQuotationUserControl.xaml">
+    <Page Include="Views\Controls\LibertyPendingQuotationConfirmationUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -273,11 +277,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Controls\ExportDistributeQuotationUserControl.xaml">
+    <Page Include="Views\Controls\LibertyPendingQuotationDistributionUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Controls\NewQuotationUserControl.xaml">
+    <Page Include="Views\Controls\LibertyNewQuotationUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -286,10 +290,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\ReviewQuotationUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\HomeUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -475,6 +475,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\nattex_hand2_CMW_icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\nams_logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="nams_logo.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

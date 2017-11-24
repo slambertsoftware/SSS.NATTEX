@@ -20,19 +20,19 @@ namespace SSS.NATTEX.Views.Controls
     /// <summary>
     /// Interaction logic for PrintQuotationUserControl.xaml
     /// </summary>
-    public partial class ExportDistributeQuotationUserControl : UserControl
+    public partial class LibertyPendingQuotationDistributionUserControl : UserControl
     {
-        public ExportDistributeQuotationUserControl(DockingSetupModel dockingSetup, NewQuotation quotationModel)
+        public LibertyPendingQuotationDistributionUserControl(DockingSetupModel dockingSetup, LibertyNewQuotation quotationModel)
         {
             InitializeComponent();
-            var viewModel = new ExportDistributeViewModel(dockingSetup, quotationModel);
+            var viewModel = new LibertyPendingQuotationDistributionViewModel(dockingSetup, quotationModel);
             DataContext = viewModel;
         }
 
         private void ExportDistributionUserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            (this.DataContext as ExportDistributeViewModel).LoadExportOptions();
-            (this.DataContext as ExportDistributeViewModel).LoadDistributionOptions();
+            (this.DataContext as LibertyPendingQuotationDistributionViewModel).LoadExportOptions();
+            (this.DataContext as LibertyPendingQuotationDistributionViewModel).LoadDistributionOptions();
         }
     }
 }

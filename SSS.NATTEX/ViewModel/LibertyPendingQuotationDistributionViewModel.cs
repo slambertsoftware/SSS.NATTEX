@@ -21,7 +21,7 @@ using SSS.NATTEX.Views;
 
 namespace SSS.NATTEX.ViewModel
 {
-    public class ExportDistributeViewModel : MainViewModel
+    public class LibertyPendingQuotationDistributionViewModel : MainViewModel
     {
         #region fields 
         private string _templatesDirectory;
@@ -359,7 +359,7 @@ namespace SSS.NATTEX.ViewModel
 
         public DockingSetupModel LayoutModel { get; set; }
 
-        public NewQuotation QuotationModel { get; set; }
+        public LibertyNewQuotation QuotationModel { get; set; }
 
         public RelayCommand<System.Windows.Window> FinaliseCommand { get; set; }
 
@@ -367,7 +367,7 @@ namespace SSS.NATTEX.ViewModel
         #endregion
 
         #region constructors
-        public ExportDistributeViewModel(DockingSetupModel layoutModel, NewQuotation quotationModel)
+        public LibertyPendingQuotationDistributionViewModel(DockingSetupModel layoutModel, LibertyNewQuotation quotationModel)
         {
             this.LayoutModel = layoutModel;
             this.QuotationModel = quotationModel;
@@ -561,6 +561,7 @@ namespace SSS.NATTEX.ViewModel
                         document.AddCoreProperty("dc:title", "Quotation document - " + this.QuotationNumber + "docx");
                         document.AddCoreProperty("dc:subject", "Quotation document");
                         document.AddCoreProperty("dc:creator", "NAMS");
+                      
 
                         var searchValueList = document.FindUniqueByPattern(@"<[\w \=]{4,}>", RegexOptions.IgnoreCase);
                         if (document.FindUniqueByPattern(@"<[\w \=]{4,}>", RegexOptions.IgnoreCase).Count == this.ReplacementPatterns.Count)
@@ -643,7 +644,7 @@ namespace SSS.NATTEX.ViewModel
                 this.ReplacementPatterns.Add("<OnceOffJoiningFeeCost>", "R " + Convert.ToString(this.QuotationModel.JoiningFee));
 
                 this.ReplacementPatterns.Add("<NumMonthlyInstallments>", Convert.ToString(this.QuotationModel.NumOfMonthlyInstallments));
-                this.ReplacementPatterns.Add("<MonthlyInstallment>", "R " + Convert.ToString(this.QuotationModel.MonthlyJoiningFee));
+                this.ReplacementPatterns.Add("<MonthlyInstallment>", "R " + Convert.ToString(this.QuotationModel.InstallmentJoiningFee));
                 this.ReplacementPatterns.Add("<TotalQuotationValue>", "R " + Convert.ToString(this.QuotationModel.QuotationValue));
             
         }

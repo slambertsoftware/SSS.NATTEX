@@ -59,7 +59,7 @@ namespace SSS.NATTEX.Views
             layoutSetup.RightContentGrid = null;
             layoutSetup.LeftAnchorablePane.Parent = layoutPanel;
 
-            document.Content = new NewQuotationUserControl(layoutSetup, this.CurrentLogin);
+            document.Content = new LibertyNewQuotationUserControl(layoutSetup, this.CurrentLogin);
             documentsPane.Children.Add(document);
             document.PreviousContainerIndex = documentsPane.Children.IndexOf(document);
             document.Parent = documentsPane;

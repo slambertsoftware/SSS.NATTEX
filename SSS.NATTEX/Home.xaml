@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowState="Maximized" 
         SizeToContent="Manual"
-        Title="Home" Height="550" Width="900" Icon="Resources/Images/nattex_hand5.ico">
+        Title="Home" Height="550" Width="900" Icon="Resources/Images/nams_logo.ico">
     <Window.Resources>
         <Style x:Key="RoundButtonTemplate" TargetType="Button">
             <Setter Property="Background" Value="#FF428BCA" />

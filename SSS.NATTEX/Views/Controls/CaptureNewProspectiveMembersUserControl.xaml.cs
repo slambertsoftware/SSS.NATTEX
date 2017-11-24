@@ -25,7 +25,7 @@ namespace SSS.NATTEX.Views.Controls
     /// </summary>
     public partial class CaptureNewProspectiveMembersUserControl : UserControl
     {
-        public CaptureNewProspectiveMembersUserControl(DockingSetupModel layoutModel, NewQuotation quotationModel, CurrentLogin currentLogin)
+        public CaptureNewProspectiveMembersUserControl(DockingSetupModel layoutModel, LibertyNewQuotation quotationModel, CurrentLogin currentLogin)
         {
             InitializeComponent();
             var viewModel = new CaptureNewProspectiveMembersViewModel(layoutModel, quotationModel, currentLogin);

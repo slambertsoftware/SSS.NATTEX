@@ -8,7 +8,7 @@
         xmlns:toolkit="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
         xmlns:dockctrl="clr-namespace:Xceed.Wpf.AvalonDock.Controls;assembly=Xceed.Wpf.AvalonDock"
         mc:Ignorable="d"
-        Title="New Quotation Wizard" SizeToContent="WidthAndHeight" MinHeight="250" MinWidth="500" FontFamily="Arial" FontSize="10" ShowInTaskbar="True"  WindowStartupLocation="Manual" Icon="/SSS.NATTEX;component/Resources/Images/quote_2.jpg">
+        Title="New Quotation Wizard" SizeToContent="WidthAndHeight" MinHeight="250" MinWidth="500" FontFamily="Arial" FontSize="10" ShowInTaskbar="True" WindowStartupLocation="Manual" Icon="/SSS.NATTEX;component/Resources/Images/nams_logo.ico">
     <Grid>
         <ad:DockingManager Grid.Row="2" x:Name="dockingManager" Margin="0">
             <ad:DockingManager.DocumentHeaderTemplate>

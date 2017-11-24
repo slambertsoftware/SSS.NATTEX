@@ -8,29 +8,23 @@ using System.Threading.Tasks;
 
 namespace SSS.NATTEX.DAL
 {
-    public class PolicyScheme
+    public class LibertyPendingQuotationParameter
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int PolicySchemeID { get; set; }
-        public int PricingModelID { get; set; }
-        public int PolicySchemeTypeID { get; set; }
-
+        public int LibertyPendingQuotationParameterID { get; set; }
         [Required]
-        public string Name { get; set; }
+        public int QuotationValidDays { get; set; }
         [Required]
-        public string Description { get; set; }
+        public int NumMonthlyJoiningFeeInstallments { get; set; }
         [Required]
         public bool IsActive { get; set; }
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [Required]
+        public int CreateUserID { get; set; }
         public DateTime? CreateDate { get; set; }
+        public Nullable<int> RemoveUserID { get; set; }
         public DateTime? RemoveDate { get; set; }
         public DateTime? ModifyDate { get; set; }
-
-        public int CreateUserID { get; set; }
         public Nullable<int> ModifyUserID { get; set; }
-        public Nullable<int> RemoveUserID { get; set; }
-        public virtual ICollection<PricingModel> PricingModel { get; set; }
-        public virtual ICollection<PolicySchemeType> PolicySchemeTypes { get; set; }
     }
 }

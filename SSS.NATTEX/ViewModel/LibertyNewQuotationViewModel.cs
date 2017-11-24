@@ -16,7 +16,7 @@ using Xceed.Wpf.AvalonDock.Layout;
 
 namespace SSS.NATTEX.ViewModel
 {
-    public class NewQuotationViewModel : MainViewModel
+    public class LibertyNewQuotationViewModel : MainViewModel
     {
         private string _controlCaption;
         private string _selectedQuotationType;
@@ -38,6 +38,12 @@ namespace SSS.NATTEX.ViewModel
         private bool   _isFileBrowseButtonEnabled;
         private int    _customerID;
         private int    _pendingQuotationID;
+
+        private bool _isCustomerNameEnabled;
+        private bool _isCustomerAddressEnabled;
+        private bool _isCustomerEmailEnabled;
+        private bool _isCustomerContactNumberEnabled;
+        private bool _isCustomerOtherInfoEnabled;
 
         private Visibility _validationMessageVisibility;
         private Visibility _customerSelectionVisibility;
@@ -76,7 +82,6 @@ namespace SSS.NATTEX.ViewModel
             {
                 _selectedQuotationType = value;
                 this.RaisePropertyChanged("SelectedQuotationType");
-                Validate();
             }
         }
 
@@ -248,7 +253,7 @@ namespace SSS.NATTEX.ViewModel
             {
                 _selectedCustomerItem = value;
                 this.RaisePropertyChanged("SelectedCustomerItem");
-                Validate();
+                this.PopulateExistingCustomerDetails();
             }
         }
 
@@ -460,6 +465,72 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
+
+        public bool IsCustomerNameEnabled
+        {
+            get
+            {
+                return _isCustomerNameEnabled;
+            }
+            set
+            {
+                _isCustomerNameEnabled = value;
+                this.RaisePropertyChanged("IsCustomerNameEnabled");
+            }
+        }
+
+        public bool IsCustomerAddressEnabled
+        {
+            get
+            {
+                return _isCustomerAddressEnabled;
+            }
+            set
+            {
+                _isCustomerAddressEnabled = value;
+                this.RaisePropertyChanged("IsCustomerAddressEnabled");
+            }
+        }
+
+        public bool IsCustomerEmailEnabled
+        {
+            get
+            {
+                return _isCustomerEmailEnabled;
+            }
+            set
+            {
+                _isCustomerEmailEnabled = value;
+                this.RaisePropertyChanged("IsCustomerEmailEnabled");
+            }
+        }
+
+        public bool IsCustomerContactNumberEnabled
+        {
+            get
+            {
+                return _isCustomerContactNumberEnabled;
+            }
+            set
+            {
+                _isCustomerContactNumberEnabled = value;
+                this.RaisePropertyChanged("IsCustomerContactNumberEnabled");
+            }
+        }
+
+        public bool IsCustomerOtherInfoEnabled
+        {
+            get
+            {
+                return _isCustomerOtherInfoEnabled;
+            }
+            set
+            {
+                _isCustomerOtherInfoEnabled = value;
+                this.RaisePropertyChanged("IsCustomerOtherInfoEnabled");
+            }
+        }
+
         public DockingSetupModel LayoutModel { get; set; }
 
         public RelayCommand<Window> ProceedCommand { get; set; }
@@ -473,7 +544,7 @@ namespace SSS.NATTEX.ViewModel
         #endregion
 
         #region constructors
-        public NewQuotationViewModel(DockingSetupModel layoutModel, CurrentLogin currentLogin)
+        public LibertyNewQuotationViewModel(DockingSetupModel layoutModel, CurrentLogin currentLogin)
         { 
             this.LayoutModel = layoutModel;
             this.CurrentLogin = currentLogin;
@@ -495,6 +566,12 @@ namespace SSS.NATTEX.ViewModel
             this.ValidationMessageVisibility = Visibility.Collapsed;
             this.CustomerSelectionVisibility = Visibility.Collapsed;
             this.FileCheckListVisibility = Visibility.Collapsed;
+            this.IsCustomerAddressEnabled = true;
+            this.IsCustomerContactNumberEnabled = true;
+            this.IsCustomerEmailEnabled = true;
+            this.IsCustomerNameEnabled = true;
+            this.IsCustomerOtherInfoEnabled = true;
+
             this.ResetUploadFileControl();
             this.IsFileBrowseButtonEnabled = true;
 
@@ -506,20 +583,93 @@ namespace SSS.NATTEX.ViewModel
         #region methods
         public void UpdateValidationStatus()
         {
-            this.Validate();
+           // this.Validate();
+        }
+
+        public void ValidateCustomerName()
+        {
+            if (string.IsNullOrEmpty(this.CustomerName))
+            {
+                this.ValidationMessage = "Please enter a customer name.";
+                this.ValidationMessageVisibility = Visibility.Visible;
+                this.IsValidInput = false;
+            }
+            else
+            {
+                this.ValidationMessage = "";
+                this.ValidationMessageVisibility = Visibility.Collapsed;
+                this.IsValidInput = true;
+            }
+        }
+
+        public void ValidateCustomerAddress()
+        {
+            if (string.IsNullOrEmpty(this.CustomerName))
+            {
+                this.ValidationMessage = "Please enter a customer address.";
+                this.ValidationMessageVisibility = Visibility.Visible;
+                this.IsValidInput = false;
+            }
+            else
+            {
+                this.ValidationMessage = "";
+                this.ValidationMessageVisibility = Visibility.Collapsed;
+                this.IsValidInput = true;
+            }
+        }
+
+        public void ValidateCustomerEmail()
+        {
+            if (string.IsNullOrEmpty(this.CustomerName))
+            {
+                this.ValidationMessage = "Please enter a customer e-mail address.";
+                this.ValidationMessageVisibility = Visibility.Visible;
+                this.IsValidInput = false;
+            }
+            else
+            {
+                this.ValidationMessage = "";
+                this.ValidationMessageVisibility = Visibility.Collapsed;
+                this.IsValidInput = true;
+            }
+        }
+
+        public void ValidateCustomerContactNumber()
+        {
+            if (string.IsNullOrEmpty(this.CustomerName))
+            {
+                this.ValidationMessage = "Please enter a customer contact number.";
+                this.ValidationMessageVisibility = Visibility.Visible;
+                this.IsValidInput = false;
+            }
+            else
+            {
+                this.ValidationMessage = "";
+                this.ValidationMessageVisibility = Visibility.Collapsed;
+                this.IsValidInput = true;
+            }
+        }
+
+        public void ValidateFileDescription()
+        {
+           if ((!string.IsNullOrWhiteSpace(this.UploadFileName)) && (string.IsNullOrWhiteSpace(this.UploadFileDescription)))
+            {
+                this.ValidationMessage = "Please enter a description for the uploaded file.";
+                this.ValidationMessageVisibility = Visibility.Visible;
+                this.IsValidInput = false;
+            }
+            else
+            {
+                this.ValidationMessage = "";
+                this.ValidationMessageVisibility = Visibility.Collapsed;
+            }
         }
 
         private void Validate()
         {
             this.IsValidInput = true;
 
-            if (string.IsNullOrEmpty(this.SelectedQuotationType))
-            {
-                this.ValidationMessage = "Please select a quotation type.";
-                this.ValidationMessageVisibility = Visibility.Visible;
-                this.IsValidInput = false;
-            }
-            else if (string.IsNullOrEmpty(this.CustomerName))
+            if (string.IsNullOrEmpty(this.CustomerName))
             {
                     this.ValidationMessage = "Please enter a customer name.";
                     this.ValidationMessageVisibility = Visibility.Visible;
@@ -636,12 +786,22 @@ namespace SSS.NATTEX.ViewModel
             if (this.IsExistingCustomerChecked)
             {
                 this.CustomerSelectionVisibility = Visibility.Visible;
-            }
+                this.IsCustomerNameEnabled = false;
+                this.IsCustomerAddressEnabled = false;
+                this.IsCustomerContactNumberEnabled = false;
+                this.IsCustomerEmailEnabled = false;
+                this.IsCustomerOtherInfoEnabled = false;
+        }
             else
             {
                 this.CustomerSelectionVisibility = Visibility.Collapsed;
                 this.SelectedCustomerItem = null;
                 this.SelectedCustomerName = string.Empty;
+                this.IsCustomerNameEnabled = true;
+                this.IsCustomerAddressEnabled = true;
+                this.IsCustomerContactNumberEnabled = true;
+                this.IsCustomerEmailEnabled = true;
+                this.IsCustomerOtherInfoEnabled = true;
             }
         }
 
@@ -662,7 +822,7 @@ namespace SSS.NATTEX.ViewModel
             bool filePreviouslyUploaded = false;
             if ((!string.IsNullOrWhiteSpace(this.UploadFileName)) && (string.IsNullOrWhiteSpace(this.UploadFileDescription)))
             {
-                Validate();
+                ValidateFileDescription();
             }
             else if ((!string.IsNullOrWhiteSpace(this.UploadFileName)) && (!string.IsNullOrWhiteSpace(this.UploadFileDescription)))
             {
@@ -807,10 +967,10 @@ namespace SSS.NATTEX.ViewModel
             {
                 using (var context = new NattexApplicationContext())
                 {
-                    var quotations = context.PendingQuotations.ToList();
+                    var quotations = context.LibertyPendingQuotations.ToList();
                     if ((quotations != null) && (quotations.Count > 0))
                     {
-                        foreach (PendingQuotation quotation in quotations)
+                        foreach (LibertyPendingQuotation quotation in quotations)
                         {
                             if ((quotation.QuotationNumber.StartsWith("Q" + "-" + DateTime.Now.ToString("yyyyMMdd") + "-" + this.CustomerNumber.Substring(11, 7))) && (quotation.IsActive == true))
                             {
@@ -873,6 +1033,31 @@ namespace SSS.NATTEX.ViewModel
             return result;
         }
 
+        private void PopulateExistingCustomerDetails()
+        {
+            if (!string.IsNullOrEmpty(this.SelectedCustomerName) && this.IsExistingCustomerChecked)
+            {
+                using (var context = new NattexApplicationContext())
+                {
+                    var customer = context.Customers.Where(x => x.CompanyName == this.SelectedCustomerName).FirstOrDefault<Customer>();
+                    if (customer!= null)
+                    {
+                        this.CustomerID = customer.CustomerID;
+                        this.CustomerName = customer.CompanyName;
+                        this.CustomerAddress = customer.Address;
+                        this.CustomerContactNumber = customer.ContactNumber;
+                        this.CustomerEmail = customer.EmailAddress;
+                        this.CustomerOtherInfo = customer.OtherInfo;
+                        this.IsCustomerNameEnabled = false;
+                        this.IsCustomerAddressEnabled = false;
+                        this.IsCustomerContactNumberEnabled = false;
+                        this.IsCustomerEmailEnabled = false;
+                        this.IsCustomerOtherInfoEnabled = false;
+                    }
+                }
+            }
+        }
+
         private void ProceedAction(Window window)
         {
             Window win = (Window)window;
@@ -915,21 +1100,21 @@ namespace SSS.NATTEX.ViewModel
                     }
                     SaveNewQuotationDocuments();
 
-                    NewQuotation newQuotationModel = new NewQuotation()
+                    LibertyNewQuotation newQuotationModel = new LibertyNewQuotation()
                     {
-                         PendingQuotationID = this.PendingQuotationID,
-                         QuotationNumber = this.QuotationNumber,
-                         QuotationType = this.SelectedQuotationType,
-                         IsExistingCustomer = this.IsExistingCustomerChecked,
-                         SelectedCustomer = this.SelectedCustomerName,
-                         CustomerNumber = this.CustomerNumber,
-                         CustomerName = this.CustomerName,
-                         CustomerAddress = this.CustomerAddress,
-                         CustomerContactNumber = this.CustomerContactNumber,
-                         CustomerEmailAddress = this.CustomerEmail,
-                         CustomerOtherInfo = this.CustomerOtherInfo,
-                         PricingModel = this.SelectedPricingModel,
-                         QuotationPreparedBy = "NAMS Administrator",
+                        QuotationID = this.PendingQuotationID,
+                        QuotationNumber = this.QuotationNumber,
+                        QuotationType = this.SelectedQuotationType,
+                        IsExistingCustomer = this.IsExistingCustomerChecked,
+                        SelectedCustomer = this.SelectedCustomerName,
+                        CustomerNumber = this.CustomerNumber,
+                        CustomerName = this.CustomerName,
+                        CustomerAddress = this.CustomerAddress,
+                        CustomerContactNumber = this.CustomerContactNumber,
+                        CustomerEmailAddress = this.CustomerEmail,
+                        CustomerOtherInfo = this.CustomerOtherInfo,
+                        PricingModel = this.SelectedPricingModel,
+                        QuotationPreparedBy = this.CurrentLogin.UserFirstName + " " + this.CurrentLogin.UserLastName,
                          QuotationDocuments = this.QuotationDocuments == null ? (this.QuotationDocuments = new ObservableCollection<QuotationUploadDocument>()).ToList() : QuotationDocuments.ToList()
                     };
 
@@ -983,7 +1168,7 @@ namespace SSS.NATTEX.ViewModel
 
         private void SaveNewQuotation()
         {
-            PendingQuotation pendingQuotation = new PendingQuotation()
+            LibertyPendingQuotation pendingQuotation = new LibertyPendingQuotation()
             {
                 QuotationHeader = "",
                 QuotationType = this.SelectedQuotationType,
@@ -1006,9 +1191,9 @@ namespace SSS.NATTEX.ViewModel
 
             using (var context = new NattexApplicationContext())
             {
-                context.PendingQuotations.Add(pendingQuotation);
+                context.LibertyPendingQuotations.Add(pendingQuotation);
                 context.SaveChanges();
-                this.PendingQuotationID = pendingQuotation.PendingQuotationID;
+                this.PendingQuotationID = pendingQuotation.LibertyPendingQuotationID;
             }
         }
 
@@ -1016,12 +1201,12 @@ namespace SSS.NATTEX.ViewModel
         {
             if ((this.QuotationDocuments != null) && (this.QuotationDocuments.Count > 0))
             {
-                List<PendingQuotationDocument> pendingDocuments = new List<PendingQuotationDocument>();
+                List<LibertyPendingQuotationDocument> pendingDocuments = new List<LibertyPendingQuotationDocument>();
                 foreach(QuotationUploadDocument document in this.QuotationDocuments)
                 {
-                    PendingQuotationDocument pendingDocument = new PendingQuotationDocument()
+                    LibertyPendingQuotationDocument pendingDocument = new LibertyPendingQuotationDocument()
                     {
-                        PendingQuotationID = this.PendingQuotationID,
+                        LibertyPendingQuotationID = this.PendingQuotationID,
                         FileName = document.FileName,
                         FilePath = document.FilePath,
                         CopyToFilePath = document.CopyToFilePath,
@@ -1037,7 +1222,7 @@ namespace SSS.NATTEX.ViewModel
 
                 using (var context = new NattexApplicationContext())
                 {
-                    pendingDocuments.ForEach(pendingDocument => context.PendingQuotationDocuments.Add(pendingDocument));
+                    pendingDocuments.ForEach(pendingDocument => context.LibertyPendingQuotationDocuments.Add(pendingDocument));
                     context.SaveChanges();
                 }
             }

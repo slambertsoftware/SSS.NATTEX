@@ -8,13 +8,12 @@ using System.Threading.Tasks;
 
 namespace SSS.NATTEX.DAL
 {
-    public class PendingQuotationMemberGroupMember
+    public class LibertyPendingQuotationMember
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int PendingQuotationMemberGroupMemberID { get; set; }
-        public int PendingQuotationMemberGroupID { get; set; }
-        public int PendingQuotationID { get; set; }
+        public int LibertyPendingQuotationMemberID { get; set; }
+        public int LibertyPendingQuotationID { get; set; }
 
         public string Initial { get; set; }
         public string FirstName { get; set; }
@@ -27,16 +26,14 @@ namespace SSS.NATTEX.DAL
         public string Scheme { get; set; }
         public string CoverAmount { get; set; }
         public bool IsMemberSelected { get; set; }
-
-        [Required]
         public bool IsActive { get; set; }
         public DateTime? CreateDate { get; set; }
         public DateTime? RemoveDate { get; set; }
         public DateTime? ModifyDate { get; set; }
-        [Required]
         public int CreateUserID { get; set; }
         public Nullable<int> ModifyUserID { get; set; }
         public Nullable<int> RemoveUserID { get; set; }
-        public virtual PendingQuotationMemberGroup PendingQuotationMemberGroup { get; set; }
+        public virtual LibertyPendingQuotation PendingQuotation { get; set; }
+
     }
 }

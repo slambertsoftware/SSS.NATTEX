@@ -8,29 +8,22 @@ using System.Threading.Tasks;
 
 namespace SSS.NATTEX.DAL
 {
-    public class PendingQuotationMemberGroup
+    public class AvbobAgeGroup
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int PendingQuotationMemberGroupID { get; set; }
-        public int PendingQuotationMemberSchemeID { get; set; }
-        public int PendingQuotationID { get; set; }
-
-        public string GroupSchemeName { get; set; }
-
-        public string GroupName { get; set; }
-
-        public string GroupCoverAmount { get; set; }
-
+        public int AvbobAgeGroupID { get; set; }
+        [Required]
+        public string AgeGroup { get; set; }
+        public string Description { get; set; }
         [Required]
         public bool IsActive { get; set; }
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? CreateDate { get; set; }
-        public DateTime? RemoveDate { get; set; }
-        public DateTime? ModifyDate { get; set; }
         [Required]
         public int CreateUserID { get; set; }
-        public Nullable<int> ModifyUserID { get; set; }
+        public DateTime? CreateDate { get; set; }
         public Nullable<int> RemoveUserID { get; set; }
+        public DateTime? RemoveDate { get; set; }
+        public DateTime? ModifyDate { get; set; }
+        public Nullable<int> ModifyUserID { get; set; }
     }
 }

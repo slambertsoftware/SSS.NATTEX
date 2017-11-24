@@ -8,8 +8,11 @@
              d:DesignHeight="300" d:DesignWidth="300" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
     <Grid>
         <TabControl x:Name="DocumentTabController" >
-            <TabItem Header="Document">
+            <TabItem Header="Quotation">
                 <DocumentViewer x:Name="DocumentViewer" MinWidth="500" MinHeight="500" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+            </TabItem>
+            <TabItem Header="Document">
+                <WebBrowser x:Name="Document" MinWidth="500" MinHeight="500" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </TabItem>
         </TabControl>
        

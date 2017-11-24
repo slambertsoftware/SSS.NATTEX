@@ -1,4 +1,5 @@
-﻿using SSS.NATTEX.Models;
+﻿using SSS.NATTEX.DAL;
+using SSS.NATTEX.Models;
 using SSS.NATTEX.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -20,12 +21,12 @@ namespace SSS.NATTEX.Views.Controls
     /// <summary>
     /// Interaction logic for GeneratedQuotationUserControl.xaml
     /// </summary>
-    public partial class ConfirmQuotationUserControl : UserControl
+    public partial class LibertyPendingQuotationConfirmationUserControl : UserControl
     {
-        public ConfirmQuotationUserControl(DockingSetupModel dockingSetupModel, NewQuotation quotationModel)
+        public LibertyPendingQuotationConfirmationUserControl(DockingSetupModel dockingSetupModel, LibertyNewQuotation newQuotation)
         {
             InitializeComponent();
-            var viewModel = new ConfirmQuotationViewModel(dockingSetupModel, quotationModel);
+            var viewModel = new LibertyPendingQuotationConfirmationViewModel(dockingSetupModel, newQuotation);
             DataContext = viewModel;
         }
     }

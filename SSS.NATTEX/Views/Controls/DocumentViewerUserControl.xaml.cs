@@ -28,6 +28,7 @@ namespace SSS.NATTEX.Views.Controls
             var viewModel = new DocumentViewerViewModel(xpsDocument);
             DataContext = viewModel;
             DocumentViewer.Document = xpsDocument.GetFixedDocumentSequence();
+            Document.Navigate("file:///" + @"file:///C:/Users/trebmals/Documents/Makro%20Order.pdf");
         }
     }
 }

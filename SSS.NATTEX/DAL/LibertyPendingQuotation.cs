@@ -40,6 +40,7 @@ namespace SSS.NATTEX.DAL
         public bool IsCoverAmountAppliedToAll { get; set; }
         public string  MonthlyPremiumDescription { get; set; }
         public decimal MonthlyPremium { get; set; }
+        public string MonthlyAdminFeeDescription { get; set; }
         public decimal AdminFee { get; set; }
         public decimal JoiningFeePerMember { get; set; }
         public decimal JoiningFee { get; set; }
@@ -50,14 +51,13 @@ namespace SSS.NATTEX.DAL
         public string QuotationCreateDate { get; set; }
         public string QuotationExpiryDate { get; set; }
 
-       
-        
-        public string MonthlyAdminFeeDescription { get; set; }
-
 
         public bool IsActive { get; set; }
+        public bool IsCancelled { get; set; }
+        public bool IsConfirmed { get; set; }
+        public bool IsAccepted { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? AcceptedDate { get; set; }
         public DateTime? CreateDate { get; set; }
         public DateTime? RemoveDate { get; set; }
         public DateTime? ModifyDate { get; set; }

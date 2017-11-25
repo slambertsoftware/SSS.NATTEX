@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
               xmlns:viewModel="clr-namespace:SSS.NATTEX.ViewModel"
              xmlns:local="clr-namespace:SSS.NATTEX.Views.Controls"
              xmlns:wpfToolkit="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
@@ -107,16 +108,22 @@
                     <TextBlock Grid.Row="3" Grid.Column="0"  Text="Existing Customer" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10, 2, 5,2" FontWeight="Bold" Visibility="{Binding ExistingCustomerCheckedVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
                     <CheckBox  Grid.Row="3" Grid.Column="1"  IsChecked="{Binding IsExistingCustomerChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Visibility="{Binding ExistingCustomerCheckedVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
                     <TextBlock Grid.Row="4" Grid.Column="0"  Text="Select Customer" Visibility="{Binding CustomerSelectionVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"   VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10, 2, 10,2" IsEnabled="False" FontWeight="Bold" ></TextBlock>
-                    <ComboBox  Grid.Row="4" Grid.Column="1"  Visibility="{Binding CustomerSelectionVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Left" ItemsSource="{Binding Customers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding SelectedCustomerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedCustomerItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"   Margin="0, 0, 10, 0" ToolTip="Select an existing customer" Width="150" ></ComboBox>
+                    <ComboBox  Grid.Row="4" Grid.Column="1"  Visibility="{Binding CustomerSelectionVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Left" ItemsSource="{Binding Customers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding SelectedCustomerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Margin="0, 0, 10, 0" ToolTip="Select an existing customer" MinWidth="180" Width="Auto" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding CustomerSelectionChangedCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
                     <TextBlock Grid.Row="4" Grid.Column="2"  Text="Customer Number"  Visibility="{Binding CustomerSelectionVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10, 2, 10,2" FontWeight="Bold" IsEnabled="False"></TextBlock>
-                    <TextBox   Grid.Row="4" Grid.Column="3"  x:Name="customerNumber"  Visibility="{Binding CustomerSelectionVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Height="22" Width="100"  Text="{Binding CustomerNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0"  VerticalAlignment="Center" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" IsEnabled="False"></TextBox>
+                    <TextBox   Grid.Row="4" Grid.Column="3"  x:Name="customerNumber"  Visibility="{Binding CustomerSelectionVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Height="22" MinWidth="100" Width="Auto"  Text="{Binding CustomerNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0"  VerticalAlignment="Center" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" IsEnabled="False"></TextBox>
 
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Customer Name" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Margin="10,0,5,0"></TextBlock>
                     <TextBox   Grid.Row="5" Grid.Column="1" x:Name="txtCustomerName"   Text="{Binding CustomerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="LightYellow"  Width="200" Height="22"  Margin="0 0 2, 0" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" MaxLength="100" LostFocus="txtCustomerName_LostFocus" IsEnabled="{Binding IsCustomerNameEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
                     <TextBlock Grid.Row="5" Grid.Column="2"  Text="Address" FontWeight="Bold" VerticalAlignment="Center" Margin="10, 2, 5,2" HorizontalAlignment="Right"></TextBlock>
                     <TextBox   Grid.Row="5" Grid.Column="3"  Grid.ColumnSpan="2"  x:Name="txtCustommerAddress"  Text="{Binding CustomerAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Background="LightYellow" Height="50" TextWrapping="Wrap" IsEnabled="{Binding IsCustomerAddressEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                AcceptsReturn="True" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"  Margin="0,2,10,2" VerticalContentAlignment="Top" HorizontalContentAlignment="Left" MaxLength="250"  LostFocus="txtCustommerAddress_LostFocus"/>
+                     AcceptsReturn="True" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"  Margin="0,2,10,2" VerticalContentAlignment="Top" HorizontalContentAlignment="Left" MaxLength="250"  LostFocus="txtCustommerAddress_LostFocus"/>
 
                     <TextBlock Grid.Row="6" Grid.Column="0"  Text="Contact No" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0"></TextBlock>
                     <TextBox   Grid.Row="6" Grid.Column="1" x:Name="txtCustomerContactNo"   Text="{Binding CustomerContactNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="LightYellow" Width="100" Height="22"  Margin="0 0 2, 0"  VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Left" MaxLength="100" IsEnabled="{Binding IsCustomerContactNumberEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  LostFocus="txtCustomerContactNo_LostFocus"></TextBox>
@@ -132,8 +139,13 @@
                     <StackPanel Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="4"  Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding FileCheckListVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <TextBlock Text="Uploaded Documents" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"></TextBlock>
                         <wpfToolkit:CheckListBox  x:Name="fileCheckListBox" ItemsSource="{Binding  QuotationDocuments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Margin="0,1,0,1" Height="Auto"  SelectedMemberPath="IsFileSelected"
-                           VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Command="{Binding FileCheckListCommand, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="FilePath"
+                           VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  Command="{Binding FileCheckListCommand, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" DisplayMemberPath="FilePath"
                            FontFamily="Arial">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="ItemSelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding CustomerSelectionChangedCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </wpfToolkit:CheckListBox>
                     </StackPanel>
                     <TextBlock  Grid.Row="10" Grid.Column="0"  Text="Upload" VerticalAlignment="Center"  Margin="0, 0, 5, 0"  HorizontalAlignment="Right" FontWeight="Bold"></TextBlock>

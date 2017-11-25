@@ -39,7 +39,7 @@ namespace SSS.NATTEX.Views.Controls
 
         private void NewQuotationControl_Loaded(object sender, RoutedEventArgs e)
         {
-            txtCustomerName.Focus();
+
         }
 
         private void txtCustomerName_LostFocus(object sender, RoutedEventArgs e)

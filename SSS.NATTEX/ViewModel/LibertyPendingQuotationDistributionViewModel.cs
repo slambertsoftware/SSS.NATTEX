@@ -411,8 +411,6 @@ namespace SSS.NATTEX.ViewModel
                         ConfirmedQuotationWindow redirecion = new ConfirmedQuotationWindow(this.QuotationXPSDocument);
                         win.Close();
                         redirecion.ShowDialog();
-
-                        
                     }
                     catch(Exception e)
                     {

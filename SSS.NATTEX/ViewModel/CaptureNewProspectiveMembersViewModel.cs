@@ -750,19 +750,12 @@ namespace SSS.NATTEX.ViewModel
             this.NumberOfMembers = 1;
             this.NumberOfMembersCaptured = 0;
             this.RemainingNumberOfMembers = this.NumberOfMembers - this.NumberOfMembersCaptured;
-            this.SelectedCoverAmount = "R 3 000.00";
-            this.SelectedMemberCoverAmount = "R 3 000.00";
+            this.SelectedCoverAmount = "R 3000.00";
+            this.SelectedMemberCoverAmount = "R 3000.00";
             this.IsApplyCoverAmountChecked = true;
             this.IsBirthYearEnabled = true;
             this.IsBirthMonthEnabled = true;
             this.IsBirthDayEnabled = true;
-          
-            this.QuotationTypes = new ObservableCollection<string>();
-            if (this.SelectedQuotationType == "Society Scheme Quotation")
-            {
-                this.PremiumVisibility = Visibility.Collapsed;
-                this.SchemeVisibility = Visibility.Collapsed;
-            }
 
             this.ValidationMessage = "";
             this.ValidationMessageVisibility = Visibility.Collapsed;
@@ -1331,11 +1324,12 @@ namespace SSS.NATTEX.ViewModel
                     this.QuotationModel.ProspectiveMembers = this.MembersUserControl.GetCapturedProspectiveMembers();
                     this.QuotationModel.NumberOfProspectiveMembers = Convert.ToString((this.QuotationModel.ProspectiveMembers == null) ? this.QuotationModel.ProspectiveMembers.Count : 0);
                     this.QuotationModel.ProspectiveMemberSchemes = this.MembersSchemeUserControl.GetProspectiveMemberSchemes();
+                    this.QuotationModel.IsCoverAmountAppliedToAll = this.IsApplyCoverAmountChecked;
+                    this.QuotationModel.CoverAmount = this.SelectedCoverAmount;
+
                     SavePendingQuotation();
                     SaveProcessedProspectiveMemberSchemes();
 
-                    this.QuotationModel.IsCoverAmountAppliedToAll = this.IsApplyCoverAmountChecked;
-                    this.QuotationModel.CoverAmount = this.SelectedCoverAmount;
                     this.LayoutModel.DocumentPane.Children.Remove(this.LayoutModel.Document);
                     if (this.LayoutModel.LeftAnchorablePane.Children.Count > 0 )
                     {
@@ -1372,7 +1366,10 @@ namespace SSS.NATTEX.ViewModel
                 if (quotation != null)
                 {
                     quotation.NumberOfProspectiveMembers = Convert.ToString(this.NumberOfMembers);
-                    context.Entry(quotation).State = System.Data.Entity.EntityState.Modified;
+                    quotation.IsCoverAmountAppliedToAll = this.QuotationModel.IsCoverAmountAppliedToAll;
+                    quotation.CoverAmount  = this.QuotationModel.CoverAmount;
+                    var entity = context.LibertyPendingQuotations.Find(this.QuotationModel.QuotationID);
+                    context.Entry(entity).CurrentValues.SetValues(quotation);
                     context.SaveChanges();
                 }
             };

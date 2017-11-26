@@ -1,4 +1,5 @@
-﻿using SSS.NATTEX.Models;
+﻿using SSS.NATTEX.DAL;
+using SSS.NATTEX.Models;
 using SSS.NATTEX.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,13 @@ namespace SSS.NATTEX.Views.Controls
         public void UpdatePendingQuotations(ConfirmedQuotation message)
         {
             (this.DataContext as NavigationPaneViewModel).UpdatePendingQuotations(message);
+        }
+
+        private void ListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ListBoxItem obj = (sender as ListBoxItem);
+            var s = (obj.DataContext as LibertyPendingQuotation);
+
         }
     }
 }

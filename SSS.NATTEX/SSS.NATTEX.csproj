@@ -497,5 +497,8 @@
   <ItemGroup>
     <Resource Include="Resources\Images\busy.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\busy.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

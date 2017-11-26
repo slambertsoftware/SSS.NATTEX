@@ -18,9 +18,6 @@
             <TabItem Header="{Binding QuotationTabHeader, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <DocumentViewer x:Name="DocumentViewer" Document="{Binding QuotationXPSDocument, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="600" MinHeight="500" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
             </TabItem>
-            <TabItem Header="Document">
-                <WebBrowser x:Name="Document" Width="600" MinHeight="600" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-            </TabItem>
         </TabControl>
     </Grid>
 </Window>

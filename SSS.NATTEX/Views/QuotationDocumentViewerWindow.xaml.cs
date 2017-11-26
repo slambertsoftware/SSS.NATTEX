@@ -3,6 +3,7 @@ using SSS.NATTEX.ViewModel;
 using SSS.NATTEX.Views.Controls;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,35 @@ namespace SSS.NATTEX.Views
             InitializeComponent();
             var viewModel = new QuotationDocumentViewerViewModel(this, newQuotation, currentLogin);
             DataContext = viewModel;
+        }
+
+        public void LoadDocuments(List<QuotationUploadDocument> documents)
+        {
+            if (documents != null)
+            {
+                foreach (QuotationUploadDocument document in documents)
+                {
+                    if (File.Exists(document.CopyToFilePath) && (document.FileExtension == ".pdf"))
+                    {
+                        WebBrowser browser = new WebBrowser() {
+                            VerticalAlignment = VerticalAlignment.Stretch,
+                            HorizontalAlignment = HorizontalAlignment.Stretch,
+                        };
+                        TabItem tab = new TabItem()
+                        {
+                            Header = document.FileDescription,
+                            VerticalAlignment = VerticalAlignment.Stretch,
+                            HorizontalAlignment = HorizontalAlignment.Stretch,
+                            VerticalContentAlignment = VerticalAlignment.Stretch,
+                            HorizontalContentAlignment = HorizontalAlignment.Stretch,
+                            Content = browser
+                        };
+ 
+                        browser.Navigate(new Uri(String.Format("file:///{0}",document.CopyToFilePath)));
+                        DocumentTabController.Items.Add(tab);
+                    }
+                }
+            }
         }
     }
 }

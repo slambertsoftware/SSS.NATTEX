@@ -54,6 +54,7 @@ namespace SSS.NATTEX.ViewModel
         private bool _isValidBirthDate;
         private bool _isValidInput;
         private bool _isDuplicateProspectiveMember;
+        private bool _isProceedEnabled;
 
         private string _idNumber;
         private string _validationMessage;
@@ -589,19 +590,6 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
-        public bool IsProceedEnbaled
-        {
-            get
-            {
-                return _isProceedEnbaled;
-            }
-            set
-            {
-                _isProceedEnbaled = value;
-                this.RaisePropertyChanged("IsProceedEnbaled");
-            }
-        }
-
         public Visibility CenturiesVisibility
         {
             get
@@ -718,6 +706,19 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
+        public bool IsProceedEnabled
+        {
+            get
+            {
+                return _isProceedEnabled;
+            }
+            set
+            {
+                _isProceedEnabled = value;
+                this.RaisePropertyChanged("IsProceedEnabled");
+            }
+        }
+
         public DockingSetupModel LayoutModel { get; set; }
         public RelayCommand<Window> SaveCommand { get; set; }
         public RelayCommand<Window> ResetCommand { get; set; }
@@ -760,7 +761,7 @@ namespace SSS.NATTEX.ViewModel
             this.ValidationMessage = "";
             this.ValidationMessageVisibility = Visibility.Collapsed;
             this.ValidationMessage = "";
-            this.IsProceedEnbaled = false;
+            this.IsProceedEnabled = false;
             this.ProceedVisibility = Visibility.Collapsed;
 
             WireUpEvents();
@@ -787,7 +788,6 @@ namespace SSS.NATTEX.ViewModel
             this.IsValidInput = true;
             ValidateIDNumber();
             ValidateBirthDate();
-            UpdateProcceedValidation();
  
             if ((!IsValidIDNumber) && (this.RemainingNumberOfMembers > 0))
             {
@@ -978,7 +978,7 @@ namespace SSS.NATTEX.ViewModel
         public void UpdateRemainingMembers()
         {
             this.RemainingNumberOfMembers = this.NumberOfMembers - this.NumberOfMembersCaptured;
-            UpdateProcceedValidation();
+            //UpdateProcceedValidation();
         }
 
 
@@ -986,13 +986,13 @@ namespace SSS.NATTEX.ViewModel
         {
             if ((this.RemainingNumberOfMembers > 0) || (this.IsValidInput == false))
             {
-                this.IsProceedEnbaled = false;
+                this.IsProceedEnabled = false;
                 this.ProceedVisibility = Visibility.Collapsed;
             }
 
             if ((this.RemainingNumberOfMembers == 0) && (this.IsValidInput == true))
             {
-                this.IsProceedEnbaled = true;
+                this.IsProceedEnabled = true;
                 this.ProceedVisibility = Visibility.Visible;
             }
         }
@@ -1554,7 +1554,7 @@ namespace SSS.NATTEX.ViewModel
 
                     if (this.RemainingNumberOfMembers == 0)
                     {
-                        this.IsProceedEnbaled = true;
+                        UpdateProcceedValidation();
                         this.ProceedVisibility = Visibility.Visible;
 
                         if (this.LayoutModel.LeftAnchorablePane.ChildrenCount == 0)

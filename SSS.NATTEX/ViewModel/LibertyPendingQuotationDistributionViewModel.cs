@@ -453,9 +453,8 @@ namespace SSS.NATTEX.ViewModel
             this.IsBusyVisibility = Visibility.Collapsed;
 
             BackgroundWorker.DoWork += BackgroundWorker_DoWork; ;
-            BackgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
             BackgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
-            BackgroundWorker.WorkerReportsProgress = true;
+            BackgroundWorker.WorkerReportsProgress = false;
             BackgroundWorker.WorkerSupportsCancellation = true; //Allow for the process to be cancelled
 
             WireUpEvents();
@@ -467,12 +466,14 @@ namespace SSS.NATTEX.ViewModel
             viewer.Owner = System.Windows.Application.Current.MainWindow;
             viewer.ShowActivated = true;
             viewer.ShowInTaskbar = true;
+            viewer.Width = (0.80 * viewer.Owner.Width);
+            viewer.WindowState = WindowState.Normal;
             viewer.BringIntoView();
         
             this.IsBusyStatus = false;
             this.IsBusyVisibility = Visibility.Collapsed;
             this.CurrentWindow.Close();
-            viewer.ShowDialog();
+            viewer.Show();
         }
 
         private void BackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -523,7 +524,6 @@ namespace SSS.NATTEX.ViewModel
                         this.ValidationMessageVisibility = Visibility.Collapsed;
                         this.IsValidInput = false;
                         this.BackgroundWorker.RunWorkerAsync();
-                        this.BackgroundWorker.ReportProgress(5, "Generating quotation document...");
                     }
                     catch(Exception e)
                     {
@@ -649,7 +649,6 @@ namespace SSS.NATTEX.ViewModel
             string resourceName = GetQuotationDocumentResourceName();
             Stream docStream = _assembly.GetManifestResourceStream(resourceName);
             Validate();
-            this.BackgroundWorker.ReportProgress(10, "Generating word document");
             if (this.QuotationModel != null)
             {
                 PopulateReplacementPatterns();
@@ -673,19 +672,15 @@ namespace SSS.NATTEX.ViewModel
                             {
                                 document.ReplaceText(searchValueList[i], GetReplacementValue(searchValueList[i]), false, RegexOptions.IgnoreCase);
                             }
-                            this.BackgroundWorker.ReportProgress(75, "Quotation data synchronised.");
+
                             try
                             {
                                 this.QuotationWordDocumentFilePath = this.DocumentOutputDirectory + GenerateOutputWordDocumentName();
                                 this.QuotationXPSDocumentFilePath = this.DocumentOutputDirectory + GenerateOutputXPSDocumentName();
                                 this.QuotationPrintDateTime = DateTime.Now.ToString("yyyyMMddHHmmss");
                                 document.SaveAs(this.QuotationWordDocumentFilePath);
-                                this.BackgroundWorker.ReportProgress(85, "Quotation document (.docx) saved.");
                                 this.QuotationXPSDocument = ConvertWordDocumentToXPSDocument(this.QuotationWordDocumentFilePath, this.QuotationXPSDocumentFilePath);
-                                this.BackgroundWorker.ReportProgress(85, "Quotation document (.xps) saved.");
                                 this.QuotationModel.QuotationXPSDocument = this.QuotationXPSDocument;
-                                this.BackgroundWorker.ReportProgress(95, "Processing completed.");
-                                this.BackgroundWorker.ReportProgress(100, "Done.");
                             }
                             catch (IOException exp)
                             {

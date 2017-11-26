@@ -90,6 +90,8 @@ namespace SSS.NATTEX.ViewModel
                 this.RaisePropertyChanged("QuotationXPSDocument");
             }
         }
+
+        
         #endregion
 
         #region constructors
@@ -110,7 +112,7 @@ namespace SSS.NATTEX.ViewModel
                 this.QuotationXPSDocument = this.QuotationModel.QuotationXPSDocument.GetFixedDocumentSequence();
                 if (this.QuotationModel.QuotationDocuments != null)
                 {
-
+                    this.CurrentWindow.LoadDocuments(this.QuotationModel.QuotationDocuments);
                 }
             }
 

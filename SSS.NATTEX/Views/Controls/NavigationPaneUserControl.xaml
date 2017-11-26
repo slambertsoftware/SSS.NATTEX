@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
             xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic"     
              xmlns:local="clr-namespace:SSS.NATTEX.Views.Controls"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -13,7 +14,8 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="{Binding QuotationNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock  Text="{Binding QuotationNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
+                </TextBlock>
             </Grid>
         </DataTemplate>
         
@@ -117,9 +119,14 @@
         <TabControl  MinWidth="300" Width="Auto" Height="Auto" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" TabStripPlacement="Right" HorizontalAlignment="Left" BorderThickness="1,1,1,0">
             <TabItem Header="Pending Quotations" Height="Auto" Width="Auto" Visibility="{Binding PendingQuotationsVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <Grid Background="Beige">
-                    <ListBox ItemsSource="{Binding PendingQuotations, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding PendingQuotationsVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource PendingQuotationItemDataTemplate}" BorderBrush="Gray" BorderThickness="1" Margin="0"
+                    <ListBox x:Name="lstPendingQuotations" ItemsSource="{Binding PendingQuotations, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding PendingQuotationsVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource PendingQuotationItemDataTemplate}" BorderBrush="Gray" BorderThickness="1" Margin="0" SelectedItem="{Binding SelectedPendingQuotation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              ScrollViewer.IsDeferredScrollingEnabled="True" 
                              ScrollViewer.CanContentScroll="True" >
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                                <EventSetter Event="MouseDoubleClick" Handler="ListBoxItem_MouseDoubleClick"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
                     </ListBox>
                 </Grid>
             </TabItem>

@@ -50,7 +50,7 @@ namespace SSS.NATTEX.DAL
         public decimal QuotationValue { get; set; }
         public string QuotationCreateDate { get; set; }
         public string QuotationExpiryDate { get; set; }
-
+        public string QuotationStatus { get; set; }
 
         public bool IsActive { get; set; }
         public bool IsCancelled { get; set; }

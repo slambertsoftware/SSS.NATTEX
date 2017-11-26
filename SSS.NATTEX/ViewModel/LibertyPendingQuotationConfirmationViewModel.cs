@@ -260,6 +260,8 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
+        public CurrentLogin CurrentLogin { get; set; }
+
         public DockingSetupModel LayoutModel { get; set; }
 
         public LibertyPendingQuotation LibertyPendingQuotation
@@ -285,10 +287,11 @@ namespace SSS.NATTEX.ViewModel
         #endregion
 
         #region constructors
-        public LibertyPendingQuotationConfirmationViewModel(DockingSetupModel layoutModel, LibertyNewQuotation newQuotation)
+        public LibertyPendingQuotationConfirmationViewModel(DockingSetupModel layoutModel, LibertyNewQuotation newQuotation, CurrentLogin currentLogin)
         {
             this.LayoutModel = layoutModel;
             this.LibertyNewQuotationModel = newQuotation;
+            this.CurrentLogin = currentLogin;
             this.PopulateLibertyPendingQuotation(newQuotation.QuotationID);
             this.SetupLibertyQuotationHeaders();
             this.DoLibertyQuotationDetail();
@@ -479,7 +482,6 @@ namespace SSS.NATTEX.ViewModel
             this.SavePendingQuotation();
         }
 
- 
         private int GetQuotationValidDays()
         {
             int result = 30;
@@ -598,7 +600,7 @@ namespace SSS.NATTEX.ViewModel
                         IsMaximized = false,
                         IconSource = new BitmapImage(new Uri(@"../../Resources/Images/quote_4_24.png", UriKind.Relative))
                     };
-                    this.LayoutModel.Document.Content = new LibertyPendingQuotationDistributionUserControl(this.LayoutModel, this.LibertyNewQuotationModel);
+                    this.LayoutModel.Document.Content = new LibertyPendingQuotationDistributionUserControl(this.LayoutModel, this.LibertyNewQuotationModel, this.CurrentLogin);
                     this.LayoutModel.DocumentPane.Children.Add(this.LayoutModel.Document);
                     this.LayoutModel.Document.PreviousContainerIndex = this.LayoutModel.DocumentPane.Children.IndexOf(this.LayoutModel.Document);
                     this.LayoutModel.Document.Parent = this.LayoutModel.DocumentPane;

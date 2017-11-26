@@ -22,10 +22,10 @@ namespace SSS.NATTEX.Views.Controls
     /// </summary>
     public partial class LibertyPendingQuotationDistributionUserControl : UserControl
     {
-        public LibertyPendingQuotationDistributionUserControl(DockingSetupModel dockingSetup, LibertyNewQuotation quotationModel)
+        public LibertyPendingQuotationDistributionUserControl(DockingSetupModel dockingSetup, LibertyNewQuotation quotationModel, CurrentLogin currentLogin)
         {
             InitializeComponent();
-            var viewModel = new LibertyPendingQuotationDistributionViewModel(dockingSetup, quotationModel);
+            var viewModel = new LibertyPendingQuotationDistributionViewModel(dockingSetup, quotationModel, currentLogin);
             DataContext = viewModel;
         }
 

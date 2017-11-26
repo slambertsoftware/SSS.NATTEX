@@ -9,7 +9,7 @@
     <Grid>
         <TabControl x:Name="DocumentTabController" >
             <TabItem Header="Quotation">
-                <DocumentViewer x:Name="DocumentViewer" MinWidth="500" MinHeight="500" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+                <DocumentViewer x:Name="DocumentViewer" Document="{Binding QuotationDocument, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="500" MinHeight="500" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
             </TabItem>
             <TabItem Header="Document">
                 <WebBrowser x:Name="Document" MinWidth="500" MinHeight="500" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>

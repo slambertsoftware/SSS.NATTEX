@@ -1,4 +1,6 @@
-﻿using SSS.NATTEX.Views.Controls;
+﻿using SSS.NATTEX.Models;
+using SSS.NATTEX.ViewModel;
+using SSS.NATTEX.Views.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,14 +19,15 @@ using System.Windows.Xps.Packaging;
 namespace SSS.NATTEX.Views
 {
     /// <summary>
-    /// Interaction logic for ConfirmedQuotationWindow.xaml
+    /// Interaction logic for QuotationDocumentViewerWindow.xaml
     /// </summary>
-    public partial class ConfirmedQuotationWindow : Window
+    public partial class QuotationDocumentViewerWindow : Window
     {
-        public ConfirmedQuotationWindow(XpsDocument document)
+        public QuotationDocumentViewerWindow(LibertyNewQuotation newQuotation, CurrentLogin currentLogin)
         {
             InitializeComponent();
-            this.Content = new DocumentViewerUserControl(document);
+            var viewModel = new QuotationDocumentViewerViewModel(this, newQuotation, currentLogin);
+            DataContext = viewModel;
         }
     }
 }

@@ -121,6 +121,7 @@ namespace SSS.NATTEX.ViewModel
         public CurrentLogin CurrentLogin { get; set; }
 
         public RelayCommand<System.Windows.Window> LoginCommand { get; set; }
+
         public RelayCommand<System.Windows.Window> LogoutCommand { get; set; }
         #endregion
 
@@ -140,7 +141,9 @@ namespace SSS.NATTEX.ViewModel
             LoginCommand = new RelayCommand<System.Windows.Window>(LoginAction);
             LogoutCommand = new RelayCommand<System.Windows.Window>(LogoutAction);
             Messenger.Default.Register<CurrentLogin>(this, LoginMessageAction);
+            Messenger.Default.Register<ConfirmedQuotation>(this, ConfirmedQuotationMessageAction);
         }
+
 
         private void LoginMessageAction(CurrentLogin message)
         {
@@ -152,7 +155,19 @@ namespace SSS.NATTEX.ViewModel
                     this.LogoutButtonVisibility = Visibility.Visible;
                     this.LoginButtonVisibility = Visibility.Collapsed;
                     this.MainWindow.UpdateContent(message.LoginStatus);
+                    this.MainWindow.UpdateNavigationControl();
                 }
+            }
+        }
+
+
+        private void ConfirmedQuotationMessageAction(ConfirmedQuotation message)
+        {
+            if (message != null)
+            {
+                this.LogoutButtonVisibility = Visibility.Visible;
+                this.LoginButtonVisibility = Visibility.Collapsed;
+                this.MainWindow.UpdateNavigationControl(message);
             }
         }
 
@@ -178,10 +193,9 @@ namespace SSS.NATTEX.ViewModel
 
                     }
                 }
-
             }
-
         }
+
 
         private void LogoutAction(System.Windows.Window window)
         {

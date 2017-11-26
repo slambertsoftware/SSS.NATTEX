@@ -1,4 +1,5 @@
-﻿using SSS.NATTEX.ViewModel;
+﻿using SSS.NATTEX.Models;
+using SSS.NATTEX.ViewModel;
 using SSS.NATTEX.Views.Controls;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Xceed.Wpf.AvalonDock.Layout;
 
 namespace SSS.NATTEX
 {
@@ -22,6 +24,8 @@ namespace SSS.NATTEX
     /// </summary>
     public partial class MainWindow : Window
     {
+        public MainViewUserControl MainViewUserControl { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -34,7 +38,8 @@ namespace SSS.NATTEX
             if (action == "Logged In")
             {
                 MainBorder.Background = null;
-                ContentGrid.Children.Add(new MainViewUserControl((this.DataContext as HomeViewModel).CurrentLogin));
+                this.MainViewUserControl = new MainViewUserControl((this.DataContext as HomeViewModel).CurrentLogin);
+                ContentGrid.Children.Add(this.MainViewUserControl);
             }
             else
             {
@@ -42,6 +47,22 @@ namespace SSS.NATTEX
                 ImageBrush brush = new ImageBrush();
                 brush.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/home1.jpg", UriKind.Absolute));
                 MainBorder.Background = brush;
+            }
+        }
+
+        public void UpdateNavigationControl(ConfirmedQuotation message)
+        {
+            if (this.MainViewUserControl != null)
+            {
+                this.MainViewUserControl.UpdateNavigation(message);
+            }
+        }
+
+        public void UpdateNavigationControl()
+        {
+            if (this.MainViewUserControl != null)
+            {
+                this.MainViewUserControl.UpdateNavigation();
             }
         }
     }

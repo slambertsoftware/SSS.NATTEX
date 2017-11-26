@@ -1,0 +1,26 @@
+﻿<Window x:Class="SSS.NATTEX.Views.QuotationDocumentViewerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:SSS.NATTEX.Views.Controls"
+        xmlns:local="clr-namespace:SSS.NATTEX.Views"
+        mc:Ignorable="d"
+        Title="{Binding WindowCaption}" WindowStartupLocation="CenterOwner" ResizeMode="CanResizeWithGrip">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <TabControl x:Name="DocumentTabController" MinWidth="600">
+            <TabItem Header="{Binding QuotationTabHeader, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <DocumentViewer x:Name="DocumentViewer" Document="{Binding QuotationXPSDocument, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="600" MinHeight="500" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+            </TabItem>
+            <TabItem Header="Document">
+                <WebBrowser x:Name="Document" Width="600" MinHeight="600" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

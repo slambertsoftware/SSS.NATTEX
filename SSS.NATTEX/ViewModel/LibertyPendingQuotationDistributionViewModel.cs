@@ -18,12 +18,15 @@ using Microsoft.Office.Interop.Word;
 using Microsoft.Win32;
 using System.Windows.Xps.Packaging;
 using SSS.NATTEX.Views;
+using SSS.NATTEX.DAL;
+using System.ComponentModel;
 
 namespace SSS.NATTEX.ViewModel
 {
     public class LibertyPendingQuotationDistributionViewModel : MainViewModel
     {
         #region fields 
+        private readonly BackgroundWorker BackgroundWorker = new BackgroundWorker();
         private string _templatesDirectory;
         private string _documentOutputDirectory;
         private string _validationMessage;
@@ -38,9 +41,14 @@ namespace SSS.NATTEX.ViewModel
         private string _quotationWordDocumentFilePath;
         private string _quotationXPSDocumentFilePath;
         private string _quotationPrintDateTime;
-       
+        private string _busyMessage;
+
+
         private bool _isProceedEnbaled;
         private bool _isValidInput;
+        private bool _isBusyStatus;
+
+        private Visibility _isBusyVisibility;
         private Visibility _validationMessageVisibility;
         private Visibility _proceedVisibility;
 
@@ -48,6 +56,7 @@ namespace SSS.NATTEX.ViewModel
         private Dictionary<string, string> _documentCustomProperties;
         private Dictionary<string, string> _documentCoreProperties;
         private XpsDocument _quotationXPSDocument;
+        private LibertyPendingQuotation _pendingQuotation;
         private ObservableCollection<string> _distributionOptions;
         private ObservableCollection<string> _exportOptions;
         private ObservableCollection<QuotationCalculationItem> _quotationDetails;
@@ -331,6 +340,45 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
+        public bool IsBusyStatus
+        {
+            get
+            {
+                return _isBusyStatus;
+            }
+            set
+            {
+                _isBusyStatus = value;
+                this.RaisePropertyChanged("IsBusyStatus");
+            }
+        }
+
+        public string BusyMessage
+        {
+            get
+            {
+                return _busyMessage;
+            }
+            set
+            {
+                _busyMessage = value;
+                this.RaisePropertyChanged("BusyMessage");
+            }
+        }
+
+        public LibertyPendingQuotation PendingQuotation
+        {
+            get
+            {
+                return _pendingQuotation;
+            }
+            set
+            {
+                _pendingQuotation = value;
+                this.RaisePropertyChanged("PendingQuotation");
+            }
+        }
+
         public Visibility ValidationMessageVisibility
         {
             get
@@ -357,9 +405,26 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
+        public Visibility IsBusyVisibility
+        {
+            get
+            {
+                return _isBusyVisibility;
+            }
+            set
+            {
+                _isBusyVisibility = value;
+                this.RaisePropertyChanged("IsBusyVisibility");
+            }
+        }
+
         public DockingSetupModel LayoutModel { get; set; }
 
         public LibertyNewQuotation QuotationModel { get; set; }
+
+        public CurrentLogin CurrentLogin { get; set; }
+
+        public System.Windows.Window CurrentWindow { get; set; }
 
         public RelayCommand<System.Windows.Window> FinaliseCommand { get; set; }
 
@@ -367,14 +432,16 @@ namespace SSS.NATTEX.ViewModel
         #endregion
 
         #region constructors
-        public LibertyPendingQuotationDistributionViewModel(DockingSetupModel layoutModel, LibertyNewQuotation quotationModel)
+        public LibertyPendingQuotationDistributionViewModel(DockingSetupModel layoutModel, LibertyNewQuotation quotationModel, CurrentLogin currentLogin)
         {
             this.LayoutModel = layoutModel;
             this.QuotationModel = quotationModel;
-
+            this.CurrentLogin = currentLogin;
+            this.PopulatePendingQuotation();
             this.ControlCaption = "Export and Distribute Quotation";
             this.TemplatesDirectory = @"Templates\";
-            this.DocumentOutputDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\NATTEX\NAMS\Quotations\" + DateTime.Now.ToString("yyyy-MM-dd") + @"\";
+            this.DocumentOutputDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\NATTEX\NAMS\Quotations\" + DateTime.Now.ToString("yyyy-MM-dd") + @"\" 
+                + quotationModel.CustomerNumber + @"\";
             if (!Directory.Exists(this.DocumentOutputDirectory))
             {
                 Directory.CreateDirectory(this.DocumentOutputDirectory);
@@ -382,11 +449,59 @@ namespace SSS.NATTEX.ViewModel
             this.QuotationHeading = GenerateQuotationHeading();
             this.ValidationMessageVisibility = Visibility.Collapsed;
             this.ValidationMessage = "";
+            this.IsBusyStatus = false;
+            this.IsBusyVisibility = Visibility.Collapsed;
+
+            BackgroundWorker.DoWork += BackgroundWorker_DoWork; ;
+            BackgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
+            BackgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
+            BackgroundWorker.WorkerReportsProgress = true;
+            BackgroundWorker.WorkerSupportsCancellation = true; //Allow for the process to be cancelled
+
             WireUpEvents();
+        }
+
+        private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            QuotationDocumentViewerWindow viewer = new QuotationDocumentViewerWindow(this.QuotationModel, this.CurrentLogin);
+            viewer.Owner = System.Windows.Application.Current.MainWindow;
+            viewer.ShowActivated = true;
+            viewer.ShowInTaskbar = true;
+            viewer.BringIntoView();
+        
+            this.IsBusyStatus = false;
+            this.IsBusyVisibility = Visibility.Collapsed;
+            this.CurrentWindow.Close();
+            viewer.ShowDialog();
+        }
+
+        private void BackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            int progress = e.ProgressPercentage;
+            this.BusyMessage = (e.UserState as string);
+        }
+
+        private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            this.IsBusyStatus = true;
+            this.IsBusyVisibility = Visibility.Visible;
+            GenerateExportQuotationDocument();
         }
         #endregion
 
         #region methods
+        private void PopulatePendingQuotation()
+        {
+            using (var context = new NattexApplicationContext())
+            {
+                LibertyPendingQuotation quotation = context.LibertyPendingQuotations.Where(x => x.LibertyPendingQuotationID == this.QuotationModel.QuotationID).FirstOrDefault<LibertyPendingQuotation>();
+                if (quotation != null)
+                {
+                    this.PendingQuotation = quotation;
+                }
+            }
+        }
+
         private void WireUpEvents()
         {
             FinaliseCommand = new RelayCommand<System.Windows.Window>(FinaliseAction);
@@ -396,7 +511,7 @@ namespace SSS.NATTEX.ViewModel
         private void FinaliseAction(System.Windows.Window window)
         {
             System.Windows.Window win = (System.Windows.Window)window;
-
+            this.CurrentWindow = win;
             if (win != null)
             {
                 Validate();
@@ -407,10 +522,8 @@ namespace SSS.NATTEX.ViewModel
                         this.ValidationMessage = "" ;
                         this.ValidationMessageVisibility = Visibility.Collapsed;
                         this.IsValidInput = false;
-                        GenerateExportQuotationDocument();
-                        ConfirmedQuotationWindow redirecion = new ConfirmedQuotationWindow(this.QuotationXPSDocument);
-                        win.Close();
-                        redirecion.ShowDialog();
+                        this.BackgroundWorker.RunWorkerAsync();
+                        this.BackgroundWorker.ReportProgress(5, "Generating quotation document...");
                     }
                     catch(Exception e)
                     {
@@ -419,9 +532,7 @@ namespace SSS.NATTEX.ViewModel
                         this.IsValidInput = false;
                     }
                 }
-                
             }
-
         }
 
         /// <summary>
@@ -499,10 +610,7 @@ namespace SSS.NATTEX.ViewModel
             {
                 this.ExportOptions = new ObservableCollection<string>();
             }
-            this.ExportOptions.Add("None");
-            this.ExportOptions.Add("MS Excel");
             this.ExportOptions.Add("MS Word");
-            this.ExportOptions.Add("PDF");
         }
 
         public void LoadDistributionOptions()
@@ -512,8 +620,6 @@ namespace SSS.NATTEX.ViewModel
                 this.DistributionOptions = new ObservableCollection<string>();
             }
             this.DistributionOptions.Add("None");
-            this.DistributionOptions.Add("E-mail Distribution List");
-            this.DistributionOptions.Add("SMS Distribution List");
         }
 
         private void GenerateExportQuotationDocument()
@@ -543,18 +649,17 @@ namespace SSS.NATTEX.ViewModel
             string resourceName = GetQuotationDocumentResourceName();
             Stream docStream = _assembly.GetManifestResourceStream(resourceName);
             Validate();
+            this.BackgroundWorker.ReportProgress(10, "Generating word document");
             if (this.QuotationModel != null)
             {
                 PopulateReplacementPatterns();
                 if ((docStream != null) && (IsValidInput))
                 {
-
                     using (DocX document = DocX.Load(docStream))
                     {
                         document.AddCustomProperty(new Xceed.Words.NET.CustomProperty("CompanyName", "Nattex Funeral Schemes"));
                         document.AddCustomProperty(new Xceed.Words.NET.CustomProperty("Product", "NATTEX Application Management System (NAMS)"));
                         document.AddCustomProperty(new Xceed.Words.NET.CustomProperty("Address", "Kimberley, Northern Cape, South Africa"));
-
                         document.AddCustomProperty(new Xceed.Words.NET.CustomProperty("Date", DateTime.Now));
                         document.AddCoreProperty("dc:title", "Quotation document - " + this.QuotationNumber + "docx");
                         document.AddCoreProperty("dc:subject", "Quotation document");
@@ -568,15 +673,19 @@ namespace SSS.NATTEX.ViewModel
                             {
                                 document.ReplaceText(searchValueList[i], GetReplacementValue(searchValueList[i]), false, RegexOptions.IgnoreCase);
                             }
-
+                            this.BackgroundWorker.ReportProgress(75, "Quotation data synchronised.");
                             try
                             {
                                 this.QuotationWordDocumentFilePath = this.DocumentOutputDirectory + GenerateOutputWordDocumentName();
                                 this.QuotationXPSDocumentFilePath = this.DocumentOutputDirectory + GenerateOutputXPSDocumentName();
                                 this.QuotationPrintDateTime = DateTime.Now.ToString("yyyyMMddHHmmss");
                                 document.SaveAs(this.QuotationWordDocumentFilePath);
+                                this.BackgroundWorker.ReportProgress(85, "Quotation document (.docx) saved.");
                                 this.QuotationXPSDocument = ConvertWordDocumentToXPSDocument(this.QuotationWordDocumentFilePath, this.QuotationXPSDocumentFilePath);
-
+                                this.BackgroundWorker.ReportProgress(85, "Quotation document (.xps) saved.");
+                                this.QuotationModel.QuotationXPSDocument = this.QuotationXPSDocument;
+                                this.BackgroundWorker.ReportProgress(95, "Processing completed.");
+                                this.BackgroundWorker.ReportProgress(100, "Done.");
                             }
                             catch (IOException exp)
                             {
@@ -588,6 +697,11 @@ namespace SSS.NATTEX.ViewModel
                     }
                 }
             }
+        }
+
+        private void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            GenerateMSWordDocument();
         }
 
         private void GeneratePDFDocument()
@@ -618,32 +732,32 @@ namespace SSS.NATTEX.ViewModel
             {
                 this.ReplacementPatterns = new Dictionary<string, string>();
             }
-                this.ReplacementPatterns.Add("<QuotationHeader>", this.QuotationModel.QuotationHeader);
-                this.ReplacementPatterns.Add("<CustomerNumber>", this.QuotationModel.CustomerNumber);
-                this.ReplacementPatterns.Add("<CustomerName>", this.QuotationModel.CustomerName);
-                this.ReplacementPatterns.Add("<CustomerAddress>", this.QuotationModel.CustomerAddress);
+                this.ReplacementPatterns.Add("<QuotationHeader>",this.PendingQuotation.QuotationHeader);
+                this.ReplacementPatterns.Add("<CustomerNumber>", this.PendingQuotation.CustomerNumber);
+                this.ReplacementPatterns.Add("<CustomerName>", this.PendingQuotation.CustomerName);
+                this.ReplacementPatterns.Add("<CustomerAddress>", this.PendingQuotation.CustomerAddress);
 
-                this.ReplacementPatterns.Add("<CustomerContactNumber>", this.QuotationModel.CustomerContactNumber);
-                this.ReplacementPatterns.Add("<CustomerEmailAddress>", this.QuotationModel.CustomerEmailAddress);
+                this.ReplacementPatterns.Add("<CustomerContactNumber>", this.PendingQuotation.CustomerContactNumber);
+                this.ReplacementPatterns.Add("<CustomerEmailAddress>", this.PendingQuotation.CustomerEmailAddress);
 
-                this.ReplacementPatterns.Add("<QuotationNo>", this.QuotationModel.QuotationNumber);
+                this.ReplacementPatterns.Add("<QuotationNo>", this.PendingQuotation.QuotationNumber);
 
-                this.ReplacementPatterns.Add("<QuotationCreateDate>", this.QuotationModel.QuotationCreateDate);
-                this.ReplacementPatterns.Add("<QuotationExpiryDate>", this.QuotationModel.QuotationExpiryDate);
-                this.ReplacementPatterns.Add("<QuotationPreparedBy>", this.QuotationModel.QuotationPreparedBy);
-                this.ReplacementPatterns.Add("<QuotationValidDays>", Convert.ToString(this.QuotationModel.QuotatationValidDays));
-                this.ReplacementPatterns.Add("<MonthlyPremiumDescription>", this.QuotationModel.MonthlyPremiumDescription);
+                this.ReplacementPatterns.Add("<QuotationCreateDate>", this.PendingQuotation.QuotationCreateDate);
+                this.ReplacementPatterns.Add("<QuotationExpiryDate>", this.PendingQuotation.QuotationExpiryDate);
+                this.ReplacementPatterns.Add("<QuotationPreparedBy>", this.PendingQuotation.QuotationPreparedBy);
+                this.ReplacementPatterns.Add("<QuotationValidDays>", Convert.ToString(this.PendingQuotation.QuotationValidDays));
+                this.ReplacementPatterns.Add("<MonthlyPremiumDescription>", this.PendingQuotation.MonthlyPremiumDescription);
 
-                this.ReplacementPatterns.Add("<MonthlyPremiumCost>", "R " + Convert.ToString(this.QuotationModel.TotalMonthlyPremium));
-                this.ReplacementPatterns.Add("<MonthlyAdminFeeDescription>", Convert.ToString(this.QuotationModel.MonthlyAdminFeeDescription));
-                this.ReplacementPatterns.Add("<MonthlyAdminFeeCost>", "R " + Convert.ToString(this.QuotationModel.AdminFee));
+                this.ReplacementPatterns.Add("<MonthlyPremiumCost>", "R " + Convert.ToString(this.PendingQuotation.MonthlyPremium));
+                this.ReplacementPatterns.Add("<MonthlyAdminFeeDescription>", Convert.ToString(this.PendingQuotation.MonthlyAdminFeeDescription));
+                this.ReplacementPatterns.Add("<MonthlyAdminFeeCost>", "R " + Convert.ToString(this.PendingQuotation.AdminFee));
 
-                this.ReplacementPatterns.Add("<OnceOffJoiningFeeDescription>", this.QuotationModel.JoiningFeeDescription);
-                this.ReplacementPatterns.Add("<OnceOffJoiningFeeCost>", "R " + Convert.ToString(this.QuotationModel.JoiningFee));
+                this.ReplacementPatterns.Add("<OnceOffJoiningFeeDescription>", this.PendingQuotation.JoiningFeeDescription);
+                this.ReplacementPatterns.Add("<OnceOffJoiningFeeCost>", "R " + Convert.ToString(this.PendingQuotation.JoiningFee));
 
-                this.ReplacementPatterns.Add("<NumMonthlyInstallments>", Convert.ToString(this.QuotationModel.NumOfMonthlyInstallments));
-                this.ReplacementPatterns.Add("<MonthlyInstallment>", "R " + Convert.ToString(this.QuotationModel.InstallmentJoiningFee));
-                this.ReplacementPatterns.Add("<TotalQuotationValue>", "R " + Convert.ToString(this.QuotationModel.QuotationValue));
+                this.ReplacementPatterns.Add("<NumMonthlyInstallments>", Convert.ToString(this.PendingQuotation.NumOfMonthlyInstallments));
+                this.ReplacementPatterns.Add("<MonthlyInstallment>", "R " + Convert.ToString(this.PendingQuotation.JoiningFeePerMember));
+                this.ReplacementPatterns.Add("<TotalQuotationValue>", "R " + Convert.ToString(this.PendingQuotation.QuotationValue));
             
         }
 
@@ -736,15 +850,16 @@ namespace SSS.NATTEX.ViewModel
             {
                 string str = exp.Message;
             }
+             finally
+            {
+                if (wordApplication != null)
+                {
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(wordApplication);
+                    GC.Collect(); 
+                }
+            }
             return null;
         }
-
-
-
-
-
-
-
         #endregion
     }
 }

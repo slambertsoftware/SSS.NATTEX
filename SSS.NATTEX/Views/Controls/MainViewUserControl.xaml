@@ -17,10 +17,26 @@
         <DockPanel Grid.Row="0">
             <Menu DockPanel.Dock="Top" Background="LightGray">
                 <MenuItem Header="Quotations" FontFamily="Arial" VerticalAlignment="Center">
-                    <MenuItem x:Name="mnuNewQuotation" Header="New Quotation" Click="mnuNewQuotation_Click"/>
-                    <MenuItem x:Name="mnuModifyQuotation"  Header="Modify Quoation"/>
-                    <MenuItem x:Name="mnuRemoveQuotation"  Header="Remove Quoation"/>
-                    <MenuItem x:Name="mnuViewQuotation" Header="View Quoation"/>
+                    <MenuItem x:Name="mnuNewQuotation" Header="New Quotation" Click="mnuNewQuotation_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/SSS.NATTEX;component/Resources/Images/quote_16.jpg"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="mnuModifyQuotation"  Header="Modify Quoation">
+                        <MenuItem.Icon>
+                            <Image Source="/SSS.NATTEX;component/Resources/Images/quote_16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="mnuRemoveQuotation"  Header="Remove Quoation">
+                        <MenuItem.Icon>
+                            <Image Source="/SSS.NATTEX;component/Resources/Images/quote_16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="mnuViewQuotation" Header="View Quoation">
+                        <MenuItem.Icon>
+                            <Image Source="/SSS.NATTEX;component/Resources/Images/quote_16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
 
                 <MenuItem Header="Applications">
@@ -48,6 +64,8 @@
             </avalonDock:DockingManager.Background>
             <avalonDock:LayoutRoot>
                 <avalonDock:LayoutPanel Orientation="Horizontal">
+                    <avalonDock:LayoutAnchorablePane  x:Name="leftAnchorablePane" DockWidth="300" DockHeight="*" IsMaximized="False"   />
+                    <avalonDock:LayoutAnchorablePane  x:Name="mainAnchorablePane" DockWidth="*"   DockHeight="*" IsMaximized="True"   />
                 </avalonDock:LayoutPanel>
             </avalonDock:LayoutRoot>
         </avalonDock:DockingManager>

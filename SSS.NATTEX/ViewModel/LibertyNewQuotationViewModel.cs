@@ -5,6 +5,7 @@ using SSS.NATTEX.Views.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -1151,6 +1152,7 @@ namespace SSS.NATTEX.ViewModel
                 CustomerOtherInfo = this.CustomerOtherInfo,
                 PricingModel = this.SelectedPricingModel,
                 QuotationPreparedBy = this.CurrentLogin.UserFirstName + " " + this.CurrentLogin.UserLastName,
+                QuotationCreateDate = DateTime.Now.ToString("D", CultureInfo.InvariantCulture),
                 CreateDate = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")),
                 CreateUserID = this.CurrentLogin.UserID,
                 IsActive = true

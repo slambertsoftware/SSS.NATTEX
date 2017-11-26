@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Xps.Packaging;
 
 namespace SSS.NATTEX.Models
 {
@@ -39,6 +40,7 @@ namespace SSS.NATTEX.Models
         public int    QuotatationValidDays { get; set; }
         public string MonthlyPremiumDescription { get; set; }
         public string MonthlyAdminFeeDescription { get; set; }
+        public XpsDocument QuotationXPSDocument { get; set; }
         public List<QuotationUploadDocument> QuotationDocuments { get; set; }
         public List<ProspectiveMember> ProspectiveMembers { get; set; }
         public List<ProspectiveMemberScheme> ProspectiveMemberSchemes { get; set; }

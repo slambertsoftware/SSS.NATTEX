@@ -1349,7 +1349,7 @@ namespace SSS.NATTEX.ViewModel
                         IsMaximized = false,
                         IconSource = new BitmapImage(new Uri(@"../../Resources/Images/quote_4_24.png", UriKind.Relative))
                     };
-                    this.LayoutModel.Document.Content = new LibertyPendingQuotationConfirmationUserControl(this.LayoutModel, this.QuotationModel);
+                    this.LayoutModel.Document.Content = new LibertyPendingQuotationConfirmationUserControl(this.LayoutModel, this.QuotationModel, this.CurrentLogin);
                     this.LayoutModel.DocumentPane.Children.Add(this.LayoutModel.Document);
                     this.LayoutModel.Document.PreviousContainerIndex = this.LayoutModel.DocumentPane.Children.IndexOf(this.LayoutModel.Document);
                     this.LayoutModel.Document.Parent = this.LayoutModel.DocumentPane;
@@ -1425,7 +1425,7 @@ namespace SSS.NATTEX.ViewModel
             int result = 0;
             using (var context = new NattexApplicationContext())
             {
-                LibertyPendingQuotationMemberScheme scheme = new LibertyPendingQuotationMemberScheme() { LibertyPendingQuotationID = this.QuotationModel.QuotationID, SchemeName = schemeName, IsActive = true, CreateDate = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd")), CreateUserID = this.CurrentLogin.UserID };
+                LibertyPendingQuotationMemberScheme scheme = new LibertyPendingQuotationMemberScheme() { LibertyPendingQuotationID = this.QuotationModel.QuotationID, SchemeName = schemeName, IsActive = true, CreateDate = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")), CreateUserID = this.CurrentLogin.UserID };
                 context.LibertyPendingQuotationMemberSchemes.Add(scheme);
                 context.SaveChanges();
                 result = scheme.LibertyPendingQuotationMemberSchemeID;
@@ -1446,7 +1446,7 @@ namespace SSS.NATTEX.ViewModel
                     GroupName = groupName,
                     GroupCoverAmount = coverAmount,
                     IsActive = true,
-                    CreateDate = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd")),
+                    CreateDate = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")),
                     CreateUserID = this.CurrentLogin.UserID
                 };
                 context.LibertyPendingQuotationMemberGroups.Add(memberGroup);
@@ -1475,7 +1475,7 @@ namespace SSS.NATTEX.ViewModel
                     CoverAmount = member.CoverAmount,
                     IsMemberSelected = member.IsMemberSelected,
                     IsActive = member.IsMemberSelected ? true : false,
-                    CreateDate = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd")),
+                    CreateDate = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")),
                     CreateUserID = this.CurrentLogin.UserID
                 };
                 groupMembers.Add(groupMember);

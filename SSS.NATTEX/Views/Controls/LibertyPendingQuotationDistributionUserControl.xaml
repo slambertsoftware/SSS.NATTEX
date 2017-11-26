@@ -7,6 +7,14 @@
              xmlns:wpfToolkit="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
              mc:Ignorable="d" FontFamily="Arial" FontSize="11" MinWidth="250" MinHeight="200" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="ExportDistributionUserControl" Loaded="ExportDistributionUserControl_Loaded" >
     <UserControl.Resources>
+        <DataTemplate x:Key="BusyContentTemplate">
+            <StackPanel Margin="4" Orientation="Vertical">
+                <TextBlock  Text="{Binding BusyMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Width="Auto" Height="22" FontWeight="Bold"/>
+                <StackPanel Margin="2">
+                    <Image Source="../../Resources/Images/busy.gif" Width="64" Height="64" VerticalAlignment="Center" HorizontalAlignment="Center"></Image>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
         <Style x:Key="PrimaryRoundButtonTemplate" TargetType="Button">
             <Setter Property="Background" Value="#FF428BCA" />
             <Setter Property="Height" Value="30"></Setter>
@@ -103,7 +111,13 @@
 
             <TextBlock Grid.Row="3" Grid.Column="2" Text="Distribute To:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0,10,0" FontWeight="Bold"></TextBlock>
             <ComboBox Grid.Row="3" Grid.Column="3" Height="22" Width="140" ItemsSource="{Binding DistributionOptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  SelectedItem="{Binding SelectedDistributionOption, UpdateSourceTrigger=PropertyChanged}" Margin="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"></ComboBox>
-
+            <wpfToolkit:BusyIndicator Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" IsBusy="{Binding IsBusyStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding IsBusyVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BusyContentTemplate="{StaticResource BusyContentTemplate}" >
+                <wpfToolkit:BusyIndicator.ProgressBarStyle>
+                    <Style TargetType="ProgressBar">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </Style>
+                </wpfToolkit:BusyIndicator.ProgressBarStyle>
+            </wpfToolkit:BusyIndicator>
             <Border    Grid.Row="5" Grid.ColumnSpan="5"  BorderThickness="0.65" BorderBrush="DarkGray"  VerticalAlignment="Top"></Border>
             <WrapPanel Grid.Row="5" Grid.ColumnSpan="5" HorizontalAlignment="Right" VerticalAlignment="Center">
                 <Button BorderBrush="#FFF" Name="FinaliseButton" FontFamily="Arial" Background="#FF0487F3" Foreground="#FFF3ECEC" Style="{StaticResource PrimaryRoundButtonTemplate}" Content="FINALISE" Height="22" Width="120" Command="{Binding FinaliseCommand}"

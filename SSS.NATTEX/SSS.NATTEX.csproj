@@ -90,6 +90,7 @@
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework.Classic" />
     <Reference Include="ReachFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -166,10 +167,12 @@
     <Compile Include="DAL\LibertyPolicyPremium.cs" />
     <Compile Include="DAL\CoverType.cs" />
     <Compile Include="DAL\Customer.cs" />
+    <Compile Include="Models\ConfirmedQuotation.cs" />
     <Compile Include="Models\CustomerItem.cs" />
     <Compile Include="Models\DockingSetupModel.cs" />
     <Compile Include="DAL\JoiningFee.cs" />
     <Compile Include="Models\CurrentLogin.cs" />
+    <Compile Include="Models\LibertyConfirmedQuotation.cs" />
     <Compile Include="Models\MemberSchemeGroupListModel.cs" />
     <Compile Include="Models\MemberSchemeGroup.cs" />
     <Compile Include="Models\MonthlyInstallmmentPeriod.cs" />
@@ -187,6 +190,8 @@
     <Compile Include="Models\QuotationUploadDocument.cs" />
     <Compile Include="Models\SchemeType.cs" />
     <Compile Include="DAL\ApplicationRole.cs" />
+    <Compile Include="ViewModel\NavigationPaneViewModel.cs" />
+    <Compile Include="ViewModel\QuotationDocumentViewerViewModel.cs" />
     <Compile Include="ViewModel\DocumentViewerViewModel.cs" />
     <Compile Include="ViewModel\LibertyPendingQuotationDistributionViewModel.cs" />
     <Compile Include="ViewModel\LibertyPendingQuotationConfirmationViewModel.cs" />
@@ -199,11 +204,14 @@
     <Compile Include="ViewModel\NewProspectiveMemberSchemeViewModel.cs" />
     <Compile Include="ViewModel\ReviewQuotationViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="Views\ConfirmedQuotationWindow.xaml.cs">
-      <DependentUpon>ConfirmedQuotationWindow.xaml</DependentUpon>
+    <Compile Include="Views\QuotationDocumentViewerWindow.xaml.cs">
+      <DependentUpon>QuotationDocumentViewerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\MainViewUserControl.xaml.cs">
       <DependentUpon>MainViewUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\NavigationPaneUserControl.xaml.cs">
+      <DependentUpon>NavigationPaneUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\NewProspectiveMembersUserControl.xaml.cs">
       <DependentUpon>NewProspectiveMembersUserControl.xaml</DependentUpon>
@@ -253,11 +261,15 @@
       <DependentUpon>Home.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\ConfirmedQuotationWindow.xaml">
+    <Page Include="Views\QuotationDocumentViewerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\MainViewUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\NavigationPaneUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -481,6 +493,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="nams_logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\busy.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -95,6 +95,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.2.2.0.4\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -139,6 +140,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DAL\AdminFee.cs" />
+    <Compile Include="DAL\ApplicationSecurity.cs" />
+    <Compile Include="DAL\ApplicationSetting.cs" />
     <Compile Include="DAL\AvbobAgeGroup.cs" />
     <Compile Include="DAL\AvbobPlan.cs" />
     <Compile Include="DAL\AvbobPolicyPremium.cs" />
@@ -191,6 +194,7 @@
     <Compile Include="Models\SchemeType.cs" />
     <Compile Include="DAL\ApplicationRole.cs" />
     <Compile Include="ViewModel\NavigationPaneViewModel.cs" />
+    <Compile Include="ViewModel\QuotationDetailViewModel.cs" />
     <Compile Include="ViewModel\QuotationDocumentViewerViewModel.cs" />
     <Compile Include="ViewModel\DocumentViewerViewModel.cs" />
     <Compile Include="ViewModel\LibertyPendingQuotationDistributionViewModel.cs" />
@@ -204,6 +208,13 @@
     <Compile Include="ViewModel\NewProspectiveMemberSchemeViewModel.cs" />
     <Compile Include="ViewModel\ReviewQuotationViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="Views\Controls\AvbobNewQuotationUserControl.xaml.cs">
+      <DependentUpon>AvbobNewQuotationUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\Convertors\BooleanToStringConvertor.cs" />
+    <Compile Include="Views\QuotationDetailWindow.xaml.cs">
+      <DependentUpon>QuotationDetailWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\QuotationDocumentViewerWindow.xaml.cs">
       <DependentUpon>QuotationDocumentViewerWindow.xaml</DependentUpon>
     </Compile>
@@ -261,6 +272,14 @@
       <DependentUpon>Home.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\Controls\AvbobNewQuotationUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\QuotationDetailWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\QuotationDocumentViewerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -498,7 +517,7 @@
     <Resource Include="Resources\Images\busy.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\busy.gif" />
+    <Resource Include="Resources\Images\liberty.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

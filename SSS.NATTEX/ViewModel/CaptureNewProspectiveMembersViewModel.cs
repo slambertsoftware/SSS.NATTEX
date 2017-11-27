@@ -1584,6 +1584,23 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
+
+
+        private void SaveCancelledPendingQuotation()
+        {
+            using (var context = new NattexApplicationContext())
+            {
+                LibertyPendingQuotation quotation = context.LibertyPendingQuotations.Where(x => x.LibertyPendingQuotationID == this.QuotationModel.QuotationID).FirstOrDefault<LibertyPendingQuotation>();
+                if (quotation != null)
+                {
+                    quotation.IsCancelled = true;
+                    var entity = context.LibertyPendingQuotations.Find(this.QuotationModel.QuotationID);
+                    context.Entry(entity).CurrentValues.SetValues(quotation);
+                    context.SaveChanges();
+                }
+            };
+        }
+
         /// <summary>
         /// Closes the form.
         /// </summary>
@@ -1593,6 +1610,7 @@ namespace SSS.NATTEX.ViewModel
             Window win = (Window)window;
             if (win != null)
             {
+                this.SaveCancelledPendingQuotation();
                 win.Close();
             }
         }

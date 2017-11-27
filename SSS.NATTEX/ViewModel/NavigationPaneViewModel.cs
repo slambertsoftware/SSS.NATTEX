@@ -1,12 +1,14 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using SSS.NATTEX.DAL;
 using SSS.NATTEX.Models;
+using SSS.NATTEX.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace SSS.NATTEX.ViewModel
@@ -15,7 +17,8 @@ namespace SSS.NATTEX.ViewModel
     {
         #region fields
         private ObservableCollection<LibertyPendingQuotation> _pendindingQuotations;
-        
+        private Visibility _navigationPaneVisibility;
+
 
         #endregion
 
@@ -33,7 +36,18 @@ namespace SSS.NATTEX.ViewModel
                 this.RaisePropertyChanged("PendingQuotations");
             }
         }
-        public RelayCommand ViewPendingQuotationCommand { get; set; }
+        public Visibility NavigationPaneVisibility
+        {
+            get
+            {
+                return _navigationPaneVisibility;
+            }
+            set
+            {
+                _navigationPaneVisibility = value;
+                this.RaisePropertyChanged("NavigationPaneVisibility");
+            }
+        }
         #endregion
 
         #region constructors
@@ -55,7 +69,6 @@ namespace SSS.NATTEX.ViewModel
         #region methods
         private void WireUpEvents()
         {
-            ViewPendingQuotationCommand = new RelayCommand(ViewPendingQuotationAction);
 
         }
 
@@ -85,21 +98,24 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
-        private void ViewPendingQuotationAction()
-        {
-          //var dobj = obj;
-        //    QuotationDocumentViewerWindow viewer = new QuotationDocumentViewerWindow(this.QuotationModel, this.CurrentLogin);
-        //    viewer.Owner = System.Windows.Application.Current.MainWindow;
-        //    viewer.ShowActivated = true;
-        //    viewer.ShowInTaskbar = true;
-        //    viewer.Width = (0.80 * viewer.Owner.Width);
-        //    viewer.WindowState = WindowState.Normal;
-        //    viewer.BringIntoView();
 
-        //    this.IsBusyStatus = false;
-        //    this.IsBusyVisibility = Visibility.Collapsed;
-        //    this.CurrentWindow.Close();
-        //    viewer.Show();
+
+        public void ShowPendingQuotationDetailWindow(LibertyPendingQuotation pendingQuotation)
+        {
+            if (pendingQuotation != null)
+            {
+                QuotationDetailWindow viewer = new QuotationDetailWindow(pendingQuotation);
+                viewer.Owner = System.Windows.Application.Current.MainWindow;
+                viewer.ShowActivated = true;
+                viewer.ShowInTaskbar = true;
+                viewer.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                //viewer.Width = (0.90 * viewer.Owner.Width);
+                viewer.WindowState = WindowState.Normal;
+                viewer.BringIntoView();
+                viewer.ShowDialog();
+                viewer.SizeToContent = SizeToContent.Width;
+            }
+
         }
         #endregion
     }

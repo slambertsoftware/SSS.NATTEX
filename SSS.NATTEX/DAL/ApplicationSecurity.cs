@@ -8,13 +8,16 @@ using System.Threading.Tasks;
 
 namespace SSS.NATTEX.DAL
 {
-    public class CoverType
+    public class ApplicationSecurity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int CoverTypeID { get; set; }
-        public decimal CoverTypeName { get; set; }
-        public string Description{ get; set; }
+        public int ApplicationSecurityID { get; set; }
+        [Required]
+        public string Setting { get; set; }
+        [Required]
+        public string Value { get; set; }
+        [Required]
         public bool IsActive { get; set; }
         public DateTime? CreateDate { get; set; }
         public DateTime? RemoveDate { get; set; }

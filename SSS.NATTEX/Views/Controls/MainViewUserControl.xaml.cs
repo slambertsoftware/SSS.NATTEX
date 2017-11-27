@@ -24,6 +24,7 @@ namespace SSS.NATTEX.Views.Controls
     {
         public CurrentLogin CurrentLogin { get; set; }
         public NavigationPaneUserControl NavigationControl { get; set; }
+        public LayoutAnchorable Anchorable { get; set; }
 
         public MainViewUserControl(CurrentLogin currentLogin)
         {
@@ -63,6 +64,14 @@ namespace SSS.NATTEX.Views.Controls
             {
                 this.NavigationControl.UpdatePendingQuotations(message);
             }
+            if (this.NavigationControl.GetNumOfPendingQuotations() > 0)
+            {
+                this.Anchorable.IsVisible = true;
+            }
+            else
+            {
+                this.Anchorable.IsVisible = false;
+            }
         }
 
         public void UpdateNavigation()
@@ -72,16 +81,23 @@ namespace SSS.NATTEX.Views.Controls
                 this.NavigationControl = new NavigationPaneUserControl();
                 UpdateControlLayout();
             }
+            if (this.NavigationControl.GetNumOfPendingQuotations() > 0)
+            {
+                this.Anchorable.IsVisible = true;
+            }
+            else
+            {
+                this.Anchorable.IsVisible = false;
+            }
         }
 
         private void UpdateControlLayout()
         {
-            LayoutAnchorable anchorable = new LayoutAnchorable()
+             this.Anchorable = new LayoutAnchorable()
             {
                 ContentId = "AB-001",
                 CanAutoHide = true,
                 AutoHideHeight = 200,
-
                 IsActive = true,
                 Title = "WORK LIST",
                 CanClose = true,
@@ -91,10 +107,10 @@ namespace SSS.NATTEX.Views.Controls
                 IconSource = new BitmapImage(new Uri(@"../../Resources/Images/quote_4_24.png", UriKind.Relative))
             };
 
-            anchorable.Content = this.NavigationControl;
-            leftAnchorablePane.Children.Add(anchorable);
-            anchorable.PreviousContainerIndex = leftAnchorablePane.Children.IndexOf(anchorable);
-            anchorable.Parent = leftAnchorablePane;
+            this.Anchorable.Content = this.NavigationControl;
+            leftAnchorablePane.Children.Add(this.Anchorable);
+            this.Anchorable.PreviousContainerIndex = leftAnchorablePane.Children.IndexOf(this.Anchorable);
+            this.Anchorable.Parent = leftAnchorablePane;
         }
     }
 }

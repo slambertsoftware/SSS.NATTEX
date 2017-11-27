@@ -577,6 +577,13 @@ namespace SSS.NATTEX.DAL
             };
             centuries.ForEach(century => context.Centuries.Add(century));
             context.SaveChanges();
+
+            var joiningFees = new List<JoiningFee>
+            {
+                new JoiningFee {Fee = 50M, IsActive = true, CreateDate = DateTime.Parse( DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")), CreateUserID = 1}
+            };
+            joiningFees.ForEach(joiningFee => context.JoiningFees.Add(joiningFee));
+            context.SaveChanges();
         }
     }
 }

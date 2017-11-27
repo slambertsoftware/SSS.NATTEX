@@ -45,8 +45,21 @@ namespace SSS.NATTEX.Views.Controls
         private void ListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ListBoxItem obj = (sender as ListBoxItem);
-            var s = (obj.DataContext as LibertyPendingQuotation);
+            var pendingQuotation = (obj.DataContext as LibertyPendingQuotation);
+            (this.DataContext as NavigationPaneViewModel).ShowPendingQuotationDetailWindow(pendingQuotation);
+        }
 
+        public int GetNumOfPendingQuotations()
+        {
+            int count = 0;
+            if ((this.DataContext as NavigationPaneViewModel).PendingQuotations == null)
+            {
+                return count;
+            }
+            else
+            {
+                return (this.DataContext as NavigationPaneViewModel).PendingQuotations.Count;
+            }
         }
     }
 }

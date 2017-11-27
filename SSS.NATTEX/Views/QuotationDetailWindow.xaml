@@ -1,0 +1,167 @@
+﻿<Window x:Class="SSS.NATTEX.Views.QuotationDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SSS.NATTEX.Views"
+        mc:Ignorable="d"
+        Title="{Binding WindowTitle}" FontFamily="Arial" SizeToContent="WidthAndHeight" MaxHeight="800" FontSize="11" Icon="/SSS.NATTEX;component/Resources/Images/nams_logo.ico">
+    <Window.Resources>
+        <DataTemplate x:Key="PendingQuotationItemDataTemplate">
+            <Grid Margin="0,2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock  Text="{Binding IDNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
+                </TextBlock>
+            </Grid>
+        </DataTemplate>
+        <Style x:Key="DataValueStyle" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="10">
+        <ScrollViewer VerticalScrollBarVisibility="Visible" Margin="10">
+            <TabControl x:Name="DocumentTabController" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <TabItem Header="{Binding QuotationTabHeader, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition MinHeight="21"  Height="Auto"></RowDefinition>
+                            <RowDefinition  Height="21"></RowDefinition>
+                            <RowDefinition  Height="21"></RowDefinition>
+                            <RowDefinition  Height="21"></RowDefinition>
+                            <RowDefinition  Height="21"></RowDefinition>
+                            <RowDefinition  Height="21"></RowDefinition>
+                            <RowDefinition MinHeight="21"  Height="Auto"></RowDefinition>
+                            <RowDefinition  Height="21"></RowDefinition>
+                            <RowDefinition  Height="21"></RowDefinition>
+                            <RowDefinition MinHeight="21" Height="Auto"></RowDefinition>
+                            <RowDefinition  Height="21"></RowDefinition>
+                            <RowDefinition  Height="21"></RowDefinition>
+                            <RowDefinition  MinHeight="21" Height="Auto"></RowDefinition>
+                            <RowDefinition  Height="21"></RowDefinition>
+                            <RowDefinition  Height="21"></RowDefinition>
+                            <RowDefinition  Height="21"></RowDefinition>
+                            <RowDefinition  Height="21"></RowDefinition>
+                            <RowDefinition  Height="21"></RowDefinition>
+                            <RowDefinition  Height="21"></RowDefinition>
+                            <RowDefinition MinHeight="21" Height="Auto"></RowDefinition>
+                            <RowDefinition MinHeight="21" Height="Auto"></RowDefinition>
+                            <RowDefinition  Height="21"></RowDefinition>
+                            <RowDefinition  Height="21"></RowDefinition>
+                            <RowDefinition  Height="21"></RowDefinition>
+                            <RowDefinition  Height="21"></RowDefinition>
+                            <RowDefinition  Height="21"></RowDefinition>
+                            <RowDefinition  Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Source="../Resources/Images/nattex_logo_tranparent.png" Width="149" Height="67"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="1"></Image>
+                        <Image Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Source="../Resources/Images/liberty.png" Width="67"   VerticalAlignment="Center" HorizontalAlignment="Left" Margin="1"></Image>
+                        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Stretch"  Background="LightGray" Height="20">
+                            <TextBlock Text="Quotation Detail" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
+                        </Border>
+                        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"  BorderThickness="1" BorderBrush="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0"></Border>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"  Text="{Binding QuotationHeader, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0, 10, 0" ></TextBlock>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"  Text="Quotation ID" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" ></TextBlock>
+                        <TextBlock Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2"  Text="{Binding LibertyPendingQuotationID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}" ></TextBlock>
+
+                        <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Text="Quotation Number" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" ></TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding QuotationNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}"  ></TextBlock>
+
+                        <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Text="Is the quotation for an existing customer?" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" ></TextBlock>
+                        <TextBlock Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding IsExistingCustomer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}"  ></TextBlock>
+
+                        <TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Text="Customer Address" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" ></TextBlock>
+                        <TextBlock Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding CustomerAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}" TextWrapping="Wrap" ></TextBlock>
+
+                        <TextBlock Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Text="Customer Contact Number" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" ></TextBlock>
+                        <TextBlock Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding CustomerContactNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}" ></TextBlock>
+
+                        <TextBlock Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Text="Customer Email Address" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" ></TextBlock>
+                        <TextBlock Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding CustomerEmailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}" ></TextBlock>
+
+                        <TextBlock Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Text="Other Customer Info" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" ></TextBlock>
+                        <TextBlock Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding CustomerOtherInfo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}" TextWrapping="Wrap"></TextBlock>
+
+                        <TextBlock Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" Text="Pricing model used for quotation" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" ></TextBlock>
+                        <TextBlock Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding PricingModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}" ></TextBlock>
+
+
+                        <TextBlock Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" Text="Quotation was prepared by?" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" ></TextBlock>
+                        <TextBlock Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding QuotationPreparedBy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ></TextBlock>
+
+                        <TextBlock Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2" Text="Number of prospective policy holders quoted for?" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" TextWrapping="Wrap" ></TextBlock>
+                        <TextBlock Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding NumberOfProspectiveMembers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}" ></TextBlock>
+
+                        <TextBlock Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="2" Text="Cover Amount" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" ></TextBlock>
+                        <TextBlock Grid.Row="13" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding CoverAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}"></TextBlock>
+
+                        <TextBlock Grid.Row="14" Grid.Column="0" Grid.ColumnSpan="2" Text="Is the same cover amount applied accross all members?" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" TextWrapping="Wrap" ></TextBlock>
+                        <TextBlock Grid.Row="14" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding IsCoverAmountAppliedToAll, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}" ></TextBlock>
+
+                        <TextBlock Grid.Row="15" Grid.Column="0" Grid.ColumnSpan="2" Text="Quotation Status" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" TextWrapping="Wrap" ></TextBlock>
+                        <TextBlock Grid.Row="15" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding QuotationStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}" ></TextBlock>
+
+                        <TextBlock Grid.Row="16" Grid.Column="0" Text="(Monthly) Admin Fee (R)" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" TextWrapping="Wrap" ></TextBlock>
+                        <TextBlock Grid.Row="16" Grid.Column="2" Text="{Binding AdminFee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}" ></TextBlock>
+
+                        <TextBlock Grid.Row="17" Grid.Column="0" Grid.ColumnSpan="2" Text="Joining Fee Per Member (R)" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" TextWrapping="Wrap" ></TextBlock>
+                        <TextBlock Grid.Row="17" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding JoiningFeePerMember, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}" ></TextBlock>
+
+                        <TextBlock Grid.Row="18" Grid.Column="0" Text="(Once off) Total Joining Fee (R)" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" TextWrapping="Wrap" ></TextBlock>
+                        <TextBlock Grid.Row="18" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding TotalJoiningFee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ></TextBlock>
+
+                        <TextBlock Grid.Row="19" Grid.Column="0" Grid.ColumnSpan="2" Text="Number of monthly joining fee installments (if option is selected)" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" TextWrapping="Wrap" ></TextBlock>
+                        <TextBlock Grid.Row="19" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding NumOfMonthlyInstallments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ></TextBlock>
+
+                        <TextBlock Grid.Row="20" Grid.Column="0" Grid.ColumnSpan="2" Text="Monthly joining fee installment (if option is selected)" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" TextWrapping="Wrap" ></TextBlock>
+                        <TextBlock Grid.Row="20" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding InstallmentJoiningFee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}"></TextBlock>
+
+
+                        <TextBlock Grid.Row="21" Grid.Column="0" Grid.ColumnSpan="2" Text="Joining Fee message" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" TextWrapping="Wrap" ></TextBlock>
+                        <TextBlock Grid.Row="21" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding JoiningFeeMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}"></TextBlock>
+
+                        <TextBlock Grid.Row="22" Grid.Column="0" Grid.ColumnSpan="2" Text="Additional Documents Uploaded " FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" TextWrapping="Wrap" ></TextBlock>
+                        <TextBlock Grid.Row="22" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding AdditionDocumentsUploaded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}"></TextBlock>
+
+
+                        <TextBlock Grid.Row="23" Grid.Column="0" Grid.ColumnSpan="2" Text="Total Quotation Value (R)" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" TextWrapping="Wrap" ></TextBlock>
+                        <TextBlock Grid.Row="23" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding QuotationValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}"></TextBlock>
+
+                        <TextBlock Grid.Row="24" Grid.Column="0" Grid.ColumnSpan="2" Text="Quotation created on" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" TextWrapping="Wrap" ></TextBlock>
+                        <TextBlock Grid.Row="24" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding QuotationCreateDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}"></TextBlock>
+
+
+                        <TextBlock Grid.Row="25" Grid.Column="0" Grid.ColumnSpan="2" Text="Quotation expires on" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" TextWrapping="Wrap" ></TextBlock>
+                        <TextBlock Grid.Row="25" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding QuotationExpiryDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}"></TextBlock>
+
+                        <TextBlock Grid.Row="26" Grid.Column="0" Grid.ColumnSpan="2" Text="Prospective Policy Holders" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" TextWrapping="Wrap" ></TextBlock>
+                        <Grid Grid.Row="26" Grid.Column="2" Grid.ColumnSpan="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" HorizontalAlignment="Center" Text="CAPTURED ID NUMBERS:" FontWeight="Bold" VerticalAlignment="Center"></TextBlock>
+                            <ListBox Grid.Row="1"  ItemsSource="{Binding PendingQuotationMembers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                     ScrollViewer.CanContentScroll="True" ItemTemplate="{StaticResource PendingQuotationItemDataTemplate}" >
+
+                            </ListBox>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="{Binding QuotationDocumentTabHeader, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <DocumentViewer x:Name="DocumentViewer"  Document="{Binding QuotationXPSDocument, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Stretch" 
+                                    VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MinHeight="790" MinWidth="800"
+                                    Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Grid}},Path=ActualWidth-10}" 
+                                    Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Grid}},Path=ActualHeight-10}"/>
+                </TabItem>
+            </TabControl>
+        </ScrollViewer>
+    </Grid>
+</Window>

@@ -51,7 +51,8 @@ namespace SSS.NATTEX.DAL
         public string QuotationCreateDate { get; set; }
         public string QuotationExpiryDate { get; set; }
         public string QuotationStatus { get; set; }
-
+        public string QuotationDocumentPath { get; set; }
+        public string QuotationXPSDocumentPath { get; set; }
         public bool IsActive { get; set; }
         public bool IsCancelled { get; set; }
         public bool IsConfirmed { get; set; }

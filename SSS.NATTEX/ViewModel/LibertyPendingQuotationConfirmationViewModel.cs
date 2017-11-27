@@ -618,6 +618,11 @@ namespace SSS.NATTEX.ViewModel
 
         }
 
+        private void ShowValidationMessage(string message)
+        {
+            MessageBox.Show(message, this.ControlCaption, MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+
 
         /// <summary>
         /// Closes the form.
@@ -628,7 +633,14 @@ namespace SSS.NATTEX.ViewModel
             Window win = (Window)window;
             if (win != null)
             {
-                win.Close();
+                string message = "Are you sure you want to cancel this quotation?";
+                string caption = "Cancel Pending Quotation";
+                MessageBoxResult result = System.Windows.MessageBox.Show(message, caption, MessageBoxButton.YesNo, MessageBoxImage.Information);
+                if (result == MessageBoxResult.Yes)
+                {
+                    SaveCancelledPendingQuotation();
+                    win.Close();
+                }
             }
         }
 
@@ -637,12 +649,29 @@ namespace SSS.NATTEX.ViewModel
             using (var context = new NattexApplicationContext())
             {
                 var entity = context.LibertyPendingQuotations.Find(this.LibertyPendingQuotation.LibertyPendingQuotationID);
+                this.LibertyPendingQuotation.IsConfirmed = true;
                 if (entity != null) {
                     context.Entry(entity).CurrentValues.SetValues(this.LibertyPendingQuotation);
                     context.SaveChanges();
                 }
             };
         }
+
+        private void SaveCancelledPendingQuotation()
+        {
+            using (var context = new NattexApplicationContext())
+            {
+                LibertyPendingQuotation quotation = context.LibertyPendingQuotations.Where(x => x.LibertyPendingQuotationID == this.LibertyPendingQuotation.LibertyPendingQuotationID).FirstOrDefault<LibertyPendingQuotation>();
+                if (quotation != null)
+                {
+                    quotation.IsCancelled = true;
+                    var entity = context.LibertyPendingQuotations.Find(this.LibertyPendingQuotation.LibertyPendingQuotationID);
+                    context.Entry(entity).CurrentValues.SetValues(quotation);
+                    context.SaveChanges();
+                }
+            };
+        }
+
         #endregion
     }
 }

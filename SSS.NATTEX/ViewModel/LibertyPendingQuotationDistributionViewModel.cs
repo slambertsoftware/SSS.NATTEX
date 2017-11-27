@@ -441,7 +441,7 @@ namespace SSS.NATTEX.ViewModel
             this.ControlCaption = "Export and Distribute Quotation";
             this.TemplatesDirectory = @"Templates\";
             this.DocumentOutputDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\NATTEX\NAMS\Quotations\" + DateTime.Now.ToString("yyyy-MM-dd") + @"\" 
-                + quotationModel.CustomerNumber + @"\";
+                + quotationModel.QuotationNumber + @"\";
             if (!Directory.Exists(this.DocumentOutputDirectory))
             {
                 Directory.CreateDirectory(this.DocumentOutputDirectory);
@@ -466,7 +466,7 @@ namespace SSS.NATTEX.ViewModel
             viewer.Owner = System.Windows.Application.Current.MainWindow;
             viewer.ShowActivated = true;
             viewer.ShowInTaskbar = true;
-            viewer.Width = (0.80 * viewer.Owner.Width);
+            viewer.Width = (0.90 * viewer.Owner.Width);
             viewer.WindowState = WindowState.Normal;
             viewer.BringIntoView();
         
@@ -544,6 +544,7 @@ namespace SSS.NATTEX.ViewModel
             System.Windows.Window win = (System.Windows.Window)window;
             if (win != null)
             {
+                SaveCancelledPendingQuotation();
                 win.Close();
             }
         }
@@ -680,6 +681,7 @@ namespace SSS.NATTEX.ViewModel
                                 this.QuotationPrintDateTime = DateTime.Now.ToString("yyyyMMddHHmmss");
                                 document.SaveAs(this.QuotationWordDocumentFilePath);
                                 this.QuotationXPSDocument = ConvertWordDocumentToXPSDocument(this.QuotationWordDocumentFilePath, this.QuotationXPSDocumentFilePath);
+                                this.SavePendingQuotation();
                                 this.QuotationModel.QuotationXPSDocument = this.QuotationXPSDocument;
                             }
                             catch (IOException exp)
@@ -855,6 +857,38 @@ namespace SSS.NATTEX.ViewModel
             }
             return null;
         }
+
+        private void SavePendingQuotation()
+        {
+            using (var context = new NattexApplicationContext())
+            {
+                LibertyPendingQuotation quotation = context.LibertyPendingQuotations.Where(x => x.LibertyPendingQuotationID == this.QuotationModel.QuotationID).FirstOrDefault<LibertyPendingQuotation>();
+                if (quotation != null)
+                {
+                    quotation.QuotationDocumentPath = this.QuotationWordDocumentFilePath;
+                    quotation.QuotationXPSDocumentPath = this.QuotationXPSDocumentFilePath;
+                    var entity = context.LibertyPendingQuotations.Find(this.QuotationModel.QuotationID);
+                    context.Entry(entity).CurrentValues.SetValues(quotation);
+                    context.SaveChanges();
+                }
+            };
+        }
+
+        private void SaveCancelledPendingQuotation()
+        {
+            using (var context = new NattexApplicationContext())
+            {
+                LibertyPendingQuotation quotation = context.LibertyPendingQuotations.Where(x => x.LibertyPendingQuotationID == this.QuotationModel.QuotationID).FirstOrDefault<LibertyPendingQuotation>();
+                if (quotation != null)
+                {
+                    quotation.IsCancelled = true;
+                    var entity = context.LibertyPendingQuotations.Find(this.QuotationModel.QuotationID);
+                    context.Entry(entity).CurrentValues.SetValues(quotation);
+                    context.SaveChanges();
+                }
+            };
+        }
+
         #endregion
     }
 }

@@ -44,7 +44,6 @@ namespace SSS.NATTEX.ViewModel
         private bool _isBirthMonthEnabled;
         private bool _isBirthDayEnabled;
         private bool _isValidIDNumber;
-        private bool _isProceedEnbaled;
         private bool _idNumberLengthValidation;
         private bool _idMonthValidation;
         private bool _idDayValidation;
@@ -1593,6 +1592,7 @@ namespace SSS.NATTEX.ViewModel
                 LibertyPendingQuotation quotation = context.LibertyPendingQuotations.Where(x => x.LibertyPendingQuotationID == this.QuotationModel.QuotationID).FirstOrDefault<LibertyPendingQuotation>();
                 if (quotation != null)
                 {
+                    quotation.IsConfirmed = null;
                     quotation.IsCancelled = true;
                     var entity = context.LibertyPendingQuotations.Find(this.QuotationModel.QuotationID);
                     context.Entry(entity).CurrentValues.SetValues(quotation);
@@ -1610,8 +1610,14 @@ namespace SSS.NATTEX.ViewModel
             Window win = (Window)window;
             if (win != null)
             {
-                this.SaveCancelledPendingQuotation();
-                win.Close();
+                string message = "Are you sure you want to cancel this quotation?";
+                string caption = "Cancel Pending Quotation";
+                MessageBoxResult result = System.Windows.MessageBox.Show(message, caption, MessageBoxButton.YesNo, MessageBoxImage.Information);
+                if (result == MessageBoxResult.Yes)
+                {
+                    SaveCancelledPendingQuotation();
+                    win.Close();
+                }
             }
         }
         #endregion

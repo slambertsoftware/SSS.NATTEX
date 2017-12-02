@@ -447,8 +447,8 @@ namespace SSS.NATTEX.ViewModel
         #region constructors
         public QuotationDetailViewModel(System.Windows.Window window, LibertyPendingQuotation pendingQuotation)
         {
+            this.WindowCaption = "Pending Quotation: " + pendingQuotation.QuotationNumber;
             this.CurrentWindow = (window as QuotationDetailWindow);
-            this.WindowCaption = "Confirmed Quoation No: " + pendingQuotation.QuotationNumber;
             this.PendingQuotation = pendingQuotation;
            
             this.QuotationTabHeader = pendingQuotation.QuotationNumber;
@@ -465,7 +465,7 @@ namespace SSS.NATTEX.ViewModel
             this.NumberOfProspectiveMembers = PendingQuotation.NumberOfProspectiveMembers;
             this.CoverAmount = PendingQuotation.CoverAmount;
             this.IsCoverAmountAppliedToAll = PendingQuotation.IsCoverAmountAppliedToAll ? "Yes" : "No";
-            if (PendingQuotation.IsConfirmed)
+            if (Convert.ToBoolean(PendingQuotation.IsConfirmed))
             {
                 this.QuotationStatus = "Confirmed";
             }
@@ -501,11 +501,11 @@ namespace SSS.NATTEX.ViewModel
                 {
                     this.PendingQuotationMembers = new ObservableCollection<LibertyPendingQuotationMember>(members);
                 }
-
-                if (context.LibertyPendingQuotationDocuments.ToList().Count > 0)
+                var documents = context.LibertyPendingQuotationDocuments.Where(x => x.LibertyPendingQuotationID == pendingQuotation.LibertyPendingQuotationID && x.IsActive == true).ToList<LibertyPendingQuotationDocument>();
+                if ((documents != null) && (documents.Count > 0))
                 {
                     this.AdditionDocumentsUploaded = "Yes";
-                    (this.CurrentWindow as QuotationDetailWindow).LoadDocuments(context.LibertyPendingQuotationDocuments.ToList());
+                    (this.CurrentWindow as QuotationDetailWindow).LoadDocuments(documents);
                 }
                 else
                 {

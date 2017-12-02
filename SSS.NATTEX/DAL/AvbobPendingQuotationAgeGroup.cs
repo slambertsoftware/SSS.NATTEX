@@ -8,11 +8,15 @@ using System.Threading.Tasks;
 
 namespace SSS.NATTEX.DAL
 {
-    public class AvbobAgeGroup
+    public class AvbobPendingQuotationAgeGroup
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int AvbobAgeGroupID { get; set; }
+        public int AvbobPendingQuotationAgeGroupID { get; set; }
+        [Required]
+        public int StartAge { get; set; }
+        [Required]
+        public int EndAge { get; set; }
         [Required]
         public string AgeGroup { get; set; }
         public string Description { get; set; }

@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace SSS.NATTEX.DAL
 {
-    public class AvbobPlan
+    public class AvbobPendingQuotationPlan
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int AvbobPlanID { get; set; }
-        public int AvbobAgeGroupID { get; set; }
+        public int AvbobPendingQuotationPlanID { get; set; }
+        public int AvbobPendingQuotationAgeGroupID { get; set; }
         [Required]
         public string PlanName { get; set; }
         public string PlanDescription { get; set; }
@@ -26,5 +26,6 @@ namespace SSS.NATTEX.DAL
         public DateTime? RemoveDate { get; set; }
         public DateTime? ModifyDate { get; set; }
         public Nullable<int> ModifyUserID { get; set; }
+        public virtual AvbobPendingQuotationAgeGroup AvbobPendingQuotationAgeGroup { get; set; }
     }
 }

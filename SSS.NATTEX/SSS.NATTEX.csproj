@@ -25,7 +25,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>4</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -142,9 +142,18 @@
     <Compile Include="DAL\AdminFee.cs" />
     <Compile Include="DAL\ApplicationSecurity.cs" />
     <Compile Include="DAL\ApplicationSetting.cs" />
-    <Compile Include="DAL\AvbobAgeGroup.cs" />
-    <Compile Include="DAL\AvbobPlan.cs" />
-    <Compile Include="DAL\AvbobPolicyPremium.cs" />
+    <Compile Include="DAL\AvbobPendingQuotation.cs" />
+    <Compile Include="DAL\AvbobPendingQuotationAgeGroup.cs" />
+    <Compile Include="DAL\AvbobPendingQuotationDocument.cs" />
+    <Compile Include="DAL\AvbobPendingQuotationImportDocument.cs" />
+    <Compile Include="DAL\AvbobPendingQuotationMember.cs" />
+    <Compile Include="DAL\AvbobPendingQuotationMemberUnitType.cs" />
+    <Compile Include="DAL\AvbobPendingQuotationPlan.cs" />
+    <Compile Include="DAL\AvbobPendingQuotationPolicy.cs" />
+    <Compile Include="DAL\AvbobPendingQuotationPolicyBook.cs" />
+    <Compile Include="DAL\AvbobPendingQuotationPolicyMember.cs" />
+    <Compile Include="DAL\AvbobPendingQuotationPolicyPremium.cs" />
+    <Compile Include="DAL\AvbobPendingQuotationPolicySummary.cs" />
     <Compile Include="DAL\AvbobPolicyScheme.cs" />
     <Compile Include="DAL\AvbobPolicySchemeType.cs" />
     <Compile Include="DAL\Century.cs" />
@@ -170,8 +179,10 @@
     <Compile Include="DAL\LibertyPolicyPremium.cs" />
     <Compile Include="DAL\CoverType.cs" />
     <Compile Include="DAL\Customer.cs" />
+    <Compile Include="Models\AvbobPolicyScheduleItem.cs" />
     <Compile Include="Models\ConfirmedQuotation.cs" />
     <Compile Include="Models\CustomerItem.cs" />
+    <Compile Include="Models\DataImportItemTemplateSelector.cs" />
     <Compile Include="Models\DockingSetupModel.cs" />
     <Compile Include="DAL\JoiningFee.cs" />
     <Compile Include="Models\CurrentLogin.cs" />
@@ -187,12 +198,14 @@
     <Compile Include="Models\ProspectiveMember.cs" />
     <Compile Include="Models\ProspectiveMemberGroup.cs" />
     <Compile Include="Models\QuotationCalculationItem.cs" />
+    <Compile Include="Models\QuotationImportDocument.cs" />
     <Compile Include="Models\QuotationItemTemplateSelector.cs" />
     <Compile Include="Models\QuotationParameter.cs" />
     <Compile Include="DAL\QuotationType.cs" />
     <Compile Include="Models\QuotationUploadDocument.cs" />
     <Compile Include="Models\SchemeType.cs" />
     <Compile Include="DAL\ApplicationRole.cs" />
+    <Compile Include="ViewModel\Avbob\AvbobNewQuotationViewModel.cs" />
     <Compile Include="ViewModel\NavigationPaneViewModel.cs" />
     <Compile Include="ViewModel\QuotationDetailViewModel.cs" />
     <Compile Include="ViewModel\QuotationDocumentViewerViewModel.cs" />
@@ -208,7 +221,10 @@
     <Compile Include="ViewModel\NewProspectiveMemberSchemeViewModel.cs" />
     <Compile Include="ViewModel\ReviewQuotationViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="Views\Controls\AvbobNewQuotationUserControl.xaml.cs">
+    <Compile Include="Views\AvbobNewQuotationWindow.xaml.cs">
+      <DependentUpon>AvbobNewQuotationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\Avbob\AvbobNewQuotationUserControl.xaml.cs">
       <DependentUpon>AvbobNewQuotationUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\Convertors\BooleanToStringConvertor.cs" />
@@ -272,7 +288,11 @@
       <DependentUpon>Home.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\Controls\AvbobNewQuotationUserControl.xaml">
+    <Page Include="Views\AvbobNewQuotationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\Avbob\AvbobNewQuotationUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -514,10 +534,18 @@
     <Resource Include="nams_logo.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\busy.gif" />
+    <None Include="Resources\Images\busy.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\liberty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\hourglass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\refresh.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

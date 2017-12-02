@@ -32,9 +32,22 @@ namespace SSS.NATTEX.Views.Controls
             this.CurrentLogin = currentLogin;
         }
 
-        private void mnuNewQuotation_Click(object sender, RoutedEventArgs e)
+        private void mnuLibertyNewQuotation_Click(object sender, RoutedEventArgs e)
         {
             NewQuotationWindow window = new NewQuotationWindow(this.CurrentLogin);
+            window.Owner = Application.Current.MainWindow;
+            Point point = GetWindowPosition();
+
+            window.Left = point.X;
+            window.Top = point.Y;
+            window.ShowDialog();
+        }
+
+
+
+        private void mnuAvbobNewQuotation_Click(object sender, RoutedEventArgs e)
+        {
+            AvbobNewQuotationWindow window = new AvbobNewQuotationWindow(this.CurrentLogin);
             window.Owner = Application.Current.MainWindow;
             Point point = GetWindowPosition();
 
@@ -93,7 +106,7 @@ namespace SSS.NATTEX.Views.Controls
 
         private void UpdateControlLayout()
         {
-             this.Anchorable = new LayoutAnchorable()
+            this.Anchorable = new LayoutAnchorable()
             {
                 ContentId = "AB-001",
                 CanAutoHide = true,

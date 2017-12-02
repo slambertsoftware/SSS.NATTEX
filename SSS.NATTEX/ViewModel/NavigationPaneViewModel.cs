@@ -112,7 +112,7 @@ namespace SSS.NATTEX.ViewModel
                 //viewer.Width = (0.90 * viewer.Owner.Width);
                 viewer.WindowState = WindowState.Normal;
                 viewer.BringIntoView();
-                viewer.ShowDialog();
+                viewer.Show();
                 viewer.SizeToContent = SizeToContent.Width;
             }
 

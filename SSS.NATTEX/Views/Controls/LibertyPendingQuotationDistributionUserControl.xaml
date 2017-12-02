@@ -10,8 +10,8 @@
         <DataTemplate x:Key="BusyContentTemplate">
             <StackPanel Margin="4" Orientation="Vertical">
                 <TextBlock  Text="Generating quotation document..." HorizontalAlignment="Left" Width="Auto" Height="22" FontWeight="Bold"/>
-                <StackPanel Margin="2">
-                    <Image Source="../../Resources/Images/busy.gif" Width="64" Height="64" VerticalAlignment="Center" HorizontalAlignment="Center"></Image>
+                <StackPanel Margin="2" Background="Transparent">
+                    <Image Source="../../Resources/Images/hourglass.png" Width="128" Height="128"></Image>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>

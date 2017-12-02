@@ -1028,84 +1028,6 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
-        private void ProceedAction(Window window)
-        {
-            Window win = (Window)window;
-            
-            if (win != null)
-            {
-                Validate();
-                if (IsValidInput)
-                {
-                    if (!(this.IsExistingCustomerChecked))
-                    {
-                        GenerateNewCustomerNumber();
-                        SaveNewCustomer();
-                    }
-                    this.GenerateNewQuoationNumber();
-
-                    SaveNewQuotation();
-           
-                    this.DocumentOutputDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\NATTEX\NAMS\Quotations\" + DateTime.Now.ToString("yyyy-MM-dd") + @"\" + this.QuotationNumber + @"\";
-
-                    if (!Directory.Exists(this.DocumentOutputDirectory))
-                    {
-                        Directory.CreateDirectory(this.DocumentOutputDirectory);
-                    }
-
-                    if ((this.QuotationDocuments != null) && (this.QuotationDocuments.Count > 0))
-                    {
-                        foreach(QuotationUploadDocument document in this.QuotationDocuments)
-                        {
-                            if ((document.IsFileSelected) && (File.Exists(document.FilePath)))
-                            {
-                                var destinationFilePath = this.DocumentOutputDirectory + document.FileName + document.FileExtension;
-                                System.IO.File.Copy(document.FilePath, destinationFilePath, true);
-                                document.CopyToFilePath = destinationFilePath;
-                            }
-                        }
-                    }
-                    SaveNewQuotationDocuments();
-
-                    LibertyNewQuotation newQuotationModel = new LibertyNewQuotation()
-                    {
-                        QuotationID = this.PendingQuotationID,
-                        QuotationNumber = this.QuotationNumber,
-                        QuotationType = this.SelectedQuotationType,
-                        IsExistingCustomer = this.IsExistingCustomerChecked,
-                        SelectedCustomer = this.SelectedCustomerName,
-                        CustomerNumber = this.CustomerNumber,
-                        CustomerName = this.CustomerName,
-                        CustomerAddress = this.CustomerAddress,
-                        CustomerContactNumber = this.CustomerContactNumber,
-                        CustomerEmailAddress = this.CustomerEmail,
-                        CustomerOtherInfo = this.CustomerOtherInfo,
-                        PricingModel = this.SelectedPricingModel,
-                        QuotationPreparedBy = this.CurrentLogin.UserFirstName + " " + this.CurrentLogin.UserLastName,
-                        QuotationCreateDate = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"),
-                        QuotationDocuments = this.QuotationDocuments == null ? (this.QuotationDocuments = new ObservableCollection<QuotationUploadDocument>()).ToList() : QuotationDocuments.ToList()
-                    };
-
-                    this.LayoutModel.DocumentPane.Children.Remove(this.LayoutModel.Document);
-                    this.LayoutModel.Document = new LayoutDocument()
-                    {
-                     ContentId = "QM-002",
-                        IsActive = true,
-                        Title = "2. DATA CAPTURING",
-                        CanClose = false,
-                        CanFloat = true,
-                        IsMaximized = false,
-                        IconSource = new BitmapImage(new Uri(@"../../Resources/Images/quote_4_24.png", UriKind.Relative))
-                    };
-                    this.LayoutModel.Document.Content = new CaptureNewProspectiveMembersUserControl(this.LayoutModel, newQuotationModel, this.CurrentLogin);
-                    this.LayoutModel.DocumentPane.Children.Add(this.LayoutModel.Document);
-                    this.LayoutModel.Document.PreviousContainerIndex = this.LayoutModel.DocumentPane.Children.IndexOf(this.LayoutModel.Document);
-                    this.LayoutModel.Document.Parent = this.LayoutModel.DocumentPane;
-                    this.LayoutModel.Document.DockAsDocument();
-                }
-            }
-        }
-
         private void SaveNewCustomer()
         {
             if (!IsDuplicateCustomerName())
@@ -1197,6 +1119,83 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
+        private void ProceedAction(Window window)
+        {
+            Window win = (Window)window;
+
+            if (win != null)
+            {
+                Validate();
+                if (IsValidInput)
+                {
+                    if (!(this.IsExistingCustomerChecked))
+                    {
+                        GenerateNewCustomerNumber();
+                        SaveNewCustomer();
+                    }
+                    this.GenerateNewQuoationNumber();
+
+                    SaveNewQuotation();
+
+                    this.DocumentOutputDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\NATTEX\NAMS\Quotations\" + DateTime.Now.ToString("yyyy-MM-dd") + @"\" + this.QuotationNumber + @"\";
+
+                    if (!Directory.Exists(this.DocumentOutputDirectory))
+                    {
+                        Directory.CreateDirectory(this.DocumentOutputDirectory);
+                    }
+
+                    if ((this.QuotationDocuments != null) && (this.QuotationDocuments.Count > 0))
+                    {
+                        foreach (QuotationUploadDocument document in this.QuotationDocuments)
+                        {
+                            if ((document.IsFileSelected) && (File.Exists(document.FilePath)))
+                            {
+                                var destinationFilePath = this.DocumentOutputDirectory + document.FileName + document.FileExtension;
+                                System.IO.File.Copy(document.FilePath, destinationFilePath, true);
+                                document.CopyToFilePath = destinationFilePath;
+                            }
+                        }
+                    }
+                    SaveNewQuotationDocuments();
+
+                    LibertyNewQuotation newQuotationModel = new LibertyNewQuotation()
+                    {
+                        QuotationID = this.PendingQuotationID,
+                        QuotationNumber = this.QuotationNumber,
+                        QuotationType = this.SelectedQuotationType,
+                        IsExistingCustomer = this.IsExistingCustomerChecked,
+                        SelectedCustomer = this.SelectedCustomerName,
+                        CustomerNumber = this.CustomerNumber,
+                        CustomerName = this.CustomerName,
+                        CustomerAddress = this.CustomerAddress,
+                        CustomerContactNumber = this.CustomerContactNumber,
+                        CustomerEmailAddress = this.CustomerEmail,
+                        CustomerOtherInfo = this.CustomerOtherInfo,
+                        PricingModel = this.SelectedPricingModel,
+                        QuotationPreparedBy = this.CurrentLogin.UserFirstName + " " + this.CurrentLogin.UserLastName,
+                        QuotationCreateDate = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"),
+                        QuotationDocuments = this.QuotationDocuments == null ? (this.QuotationDocuments = new ObservableCollection<QuotationUploadDocument>()).ToList() : QuotationDocuments.ToList()
+                    };
+
+                    this.LayoutModel.DocumentPane.Children.Remove(this.LayoutModel.Document);
+                    this.LayoutModel.Document = new LayoutDocument()
+                    {
+                        ContentId = "QM-002",
+                        IsActive = true,
+                        Title = "2. DATA CAPTURING",
+                        CanClose = false,
+                        CanFloat = true,
+                        IsMaximized = false,
+                        IconSource = new BitmapImage(new Uri(@"../../Resources/Images/quote_4_24.png", UriKind.Relative))
+                    };
+                    this.LayoutModel.Document.Content = new CaptureNewProspectiveMembersUserControl(this.LayoutModel, newQuotationModel, this.CurrentLogin);
+                    this.LayoutModel.DocumentPane.Children.Add(this.LayoutModel.Document);
+                    this.LayoutModel.Document.PreviousContainerIndex = this.LayoutModel.DocumentPane.Children.IndexOf(this.LayoutModel.Document);
+                    this.LayoutModel.Document.Parent = this.LayoutModel.DocumentPane;
+                    this.LayoutModel.Document.DockAsDocument();
+                }
+            }
+        }
         /// <summary>
         /// Closes the form.
         /// </summary>

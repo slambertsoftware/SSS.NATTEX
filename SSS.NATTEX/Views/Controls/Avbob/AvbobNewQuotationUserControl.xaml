@@ -1,0 +1,287 @@
+﻿<UserControl x:Class="SSS.NATTEX.Views.Controls.Avbob.AvbobNewQuotationUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SSS.NATTEX.Views.Controls"
+             xmlns:models="clr-namespace:SSS.NATTEX.Models"
+             mc:Ignorable="d" 
+             xmlns:wpfToolkit="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             FontFamily="Arial" FontSize="11" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" d:DesignWidth="800" d:DesignHeight="500" x:Name ="NewAvbobQuotationControl" Loaded="NewAvbobQuotationControl_Loaded" >
+    <UserControl.Resources>
+        <Style x:Key="PrimaryRoundButtonTemplate" TargetType="Button">
+            <Setter Property="Background" Value="#FF428BCA" />
+            <Setter Property="Height" Value="22"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="12" Background="{TemplateBinding Background}"
+                                BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="CancelRoundButtonTemplate" TargetType="Button">
+            <Setter Property="Background" Value="#FF8D9195" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+            <Setter Property="Height" Value="22"></Setter>
+            <Setter Property="BorderBrush" Value="#FFF"></Setter>
+            <Setter Property="FontFamily" Value="Arial"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}"
+                                BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <DataTemplate x:Key="HeaderColumnsDataTemplate">
+            <Grid Margin="0" HorizontalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250" ></ColumnDefinition>
+                    <ColumnDefinition Width="100" ></ColumnDefinition>
+                    <ColumnDefinition Width="100" ></ColumnDefinition>
+                    <ColumnDefinition Width="100" ></ColumnDefinition>
+                    <ColumnDefinition Width="150" ></ColumnDefinition>
+                    <ColumnDefinition Width="150" ></ColumnDefinition>
+                    <ColumnDefinition MinWidth="150" Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="LINE NR" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="DATE" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="POLICY NR" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock  Grid.Row="0" Grid.Column="3" Text ="SURNAME" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold"  Margin="0"></TextBlock>
+                <TextBlock  Grid.Row="0" Grid.Column="4" Text ="INITIALS" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="5" Text ="ID NUMBER" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="6" Text ="COVER AMOUNT (R)" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
+                <Border Background="Gray"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6"  Height="1" Width="Auto" BorderBrush="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0"></Border>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="ImportItemColumnsDataTemplate">
+            <Grid Margin="0" HorizontalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250" ></ColumnDefinition>
+                    <ColumnDefinition Width="100" ></ColumnDefinition>
+                    <ColumnDefinition Width="100" ></ColumnDefinition>
+                    <ColumnDefinition Width="100" ></ColumnDefinition>
+                    <ColumnDefinition Width="150" ></ColumnDefinition>
+                    <ColumnDefinition Width="150" ></ColumnDefinition>
+                    <ColumnDefinition MinWidth="150" Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="LINE NR" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="DATE" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="POLICY NR" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock  Grid.Row="0" Grid.Column="3" Text ="SURNAME" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold"  Margin="0"></TextBlock>
+                <TextBlock  Grid.Row="0" Grid.Column="4" Text ="INITIALS" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="5" Text ="ID NUMBER" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="6" Text ="COVER AMOUNT (R)" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
+                <Border Background="Gray"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6"  Height="1" Width="Auto" BorderBrush="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0"></Border>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="ImportItemSummaryDataTemplate">
+            <Grid Margin="0" HorizontalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250" ></ColumnDefinition>
+                    <ColumnDefinition Width="100" ></ColumnDefinition>
+                    <ColumnDefinition Width="100" ></ColumnDefinition>
+                    <ColumnDefinition Width="100" ></ColumnDefinition>
+                    <ColumnDefinition Width="150" ></ColumnDefinition>
+                    <ColumnDefinition Width="150" ></ColumnDefinition>
+                    <ColumnDefinition MinWidth="150" Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="LINE NR" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="DATE" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="POLICY NR" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock  Grid.Row="0" Grid.Column="3" Text ="SURNAME" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold"  Margin="0"></TextBlock>
+                <TextBlock  Grid.Row="0" Grid.Column="4" Text ="INITIALS" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="5" Text ="ID NUMBER" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="6" Text ="COVER AMOUNT (R)" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
+                <Border Background="Gray"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6"  Height="1" Width="Auto" BorderBrush="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0"></Border>
+            </Grid>
+        </DataTemplate>
+        <models:DataImportItemTemplateSelector x:Key="TemplateSelector" 
+                                                HeaderColumnsDataTemplate ="{StaticResource HeaderColumnsDataTemplate}" 
+                                              ImportItemColumnsDataTemplate ="{StaticResource ImportItemColumnsDataTemplate}" 
+                                              ImportItemSummaryDataTemplate  ="{StaticResource ImportItemSummaryDataTemplate }"></models:DataImportItemTemplateSelector>
+    </UserControl.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Visible" Margin="10">
+        <Border BorderBrush="Gray" BorderThickness="2"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Grid Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Row="0" Orientation="Vertical"   Margin="10, 0, 10, 1" >
+                    <TextBlock Text="{Binding ControlCaption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Arial"  FontSize="14" FontWeight="Bold"></TextBlock>
+                </StackPanel>
+
+                <Border Grid.Row="1" BorderThickness="0.5" BorderBrush="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"  Margin="10, 0, 10, 1"></Border>
+                <Border Grid.Row="1" Grid.ColumnSpan="4" BorderBrush="Red" Visibility="{Binding ValidationMessageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BorderThickness="2" >
+                    <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center" Visibility="{Binding ValidationMessageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2" >
+                        <Image Source="../../../Resources/Images/warning_24_2.png" Width="24" Height="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1"></Image>
+                        <TextBlock Text="{Binding ValidationMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10"  Foreground="Red" TextWrapping="Wrap"></TextBlock>
+                    </StackPanel>
+                </Border>
+
+                <Grid Grid.Row="2" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4" Orientation="Vertical"  Margin="0, 5, 10, 0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                        <TextBlock Text="Customer Details" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Arial" Margin="15, 10, 15, 0" FontSize="14" FontWeight="Bold" Foreground="Gray"></TextBlock>
+                        <Border BorderThickness="0.5" BorderBrush="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Center"></Border>
+                    </StackPanel>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0"  Text="Existing Customer" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10, 2, 5,2" FontWeight="Bold" Visibility="{Binding ExistingCustomerCheckedVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                    <CheckBox  Grid.Row="1" Grid.Column="1"  IsChecked="{Binding IsExistingCustomerChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Visibility="{Binding ExistingCustomerCheckedVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
+                    <TextBlock Grid.Row="2" Grid.Column="0"  Text="Select Customer" Visibility="{Binding CustomerSelectionVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"   VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10, 2, 10,2" IsEnabled="False" FontWeight="Bold" ></TextBlock>
+                    <ComboBox  Grid.Row="2" Grid.Column="1"  Visibility="{Binding CustomerSelectionVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Left" ItemsSource="{Binding Customers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding SelectedCustomerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Margin="0, 0, 10, 0" ToolTip="Select an existing customer" MinWidth="180" Width="Auto" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding CustomerSelectionChangedCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+                    <TextBlock Grid.Row="2" Grid.Column="2"  Text="Customer Number"  Visibility="{Binding CustomerSelectionVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10, 2, 10,2" FontWeight="Bold" IsEnabled="False"></TextBlock>
+                    <TextBox   Grid.Row="2" Grid.Column="3"  x:Name="customerNumber"  Visibility="{Binding CustomerSelectionVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Height="22" MinWidth="100" Width="Auto"  Text="{Binding CustomerNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0"  VerticalAlignment="Center" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" IsEnabled="False"></TextBox>
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Customer Name" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Margin="10,0,5,0"></TextBlock>
+                    <TextBox   Grid.Row="3" Grid.Column="1" x:Name="txtCustomerName"   Text="{Binding CustomerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="LightYellow"  Width="200" Height="22"  Margin="0 0 2, 0" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" MaxLength="100" LostFocus="CustomerName_LostFocus" IsEnabled="{Binding IsCustomerNameEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+
+                    <TextBlock Grid.Row="3" Grid.Column="2"  Text="Address" FontWeight="Bold" VerticalAlignment="Center" Margin="10, 2, 5,2" HorizontalAlignment="Right"></TextBlock>
+                    <TextBox   Grid.Row="3" Grid.Column="3"  Grid.ColumnSpan="2"  x:Name="txtCustommerAddress"  Text="{Binding CustomerAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Background="LightYellow" Height="50" TextWrapping="Wrap" IsEnabled="{Binding IsCustomerAddressEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     AcceptsReturn="True" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"  Margin="0,2,10,2" VerticalContentAlignment="Top" HorizontalContentAlignment="Left" MaxLength="250"  LostFocus="CustommerAddress_LostFocus"/>
+
+                    <TextBlock Grid.Row="4" Grid.Column="0"  Text="Contact No" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0"></TextBlock>
+                    <TextBox   Grid.Row="4" Grid.Column="1" x:Name="txtCustomerContactNo"   Text="{Binding CustomerContactNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="LightYellow" Width="100" Height="22"  Margin="0 0 2, 0"  VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Left" MaxLength="100" IsEnabled="{Binding IsCustomerContactNumberEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  LostFocus="CustomerContactNo_LostFocus"></TextBox>
+                    <TextBlock Grid.Row="4" Grid.Column="2"  Text="Email" FontWeight="Bold" VerticalAlignment="Center"  Margin="0, 2, 5,2" HorizontalAlignment="Right"></TextBlock>
+                    <TextBox   Grid.Row="4" Grid.Column="3" x:Name="txtCustomerEmail"    Grid.ColumnSpan="2"   Text="{Binding CustomerEmail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="LightYellow"  Width="250" Height="22"  Margin="0, 2, 10,2" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" MaxLength="250"  IsEnabled="{Binding IsCustomerEmailEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  LostFocus="CustomerEmail_LostFocus"></TextBox>
+                    <TextBlock Grid.Row="5" Grid.Column="0"  Text="Other info" FontWeight="Bold" VerticalAlignment="Center" Margin="0, 2, 5,2" HorizontalAlignment="Right"></TextBlock>
+                    <TextBox   Grid.Row="5" Grid.Column="1"  Grid.ColumnSpan="5" x:Name="txtCustomerOtherInfo"   Text="{Binding CustomerOtherInfo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Background="LightYellow"  Height="22"  Margin="0 0 10, 0"  VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" IsEnabled="{Binding IsCustomerOtherInfoEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  LostFocus="CustomerOtherInfo_LostFocus"></TextBox>
+
+                    <StackPanel Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="4" Orientation="Vertical"  Margin="0, 5, 10, 0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                        <TextBlock Text="Import Data" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Arial" Margin="15, 10, 15, 0" FontSize="14" FontWeight="Bold" Foreground="Gray"></TextBlock>
+                        <Border BorderThickness="0.5" BorderBrush="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Center"></Border>
+                    </StackPanel>
+                    <TextBlock  Grid.Row="7" Grid.Column="0"  Text="Import" VerticalAlignment="Center"  Margin="0, 0, 5, 0"  HorizontalAlignment="Right" FontWeight="Bold"></TextBlock>
+                    <TextBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding ImportFileName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Name="ImportFileNameTextBox" VerticalAlignment="Center" Margin="0, 2, 0,2" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Height="22"  Background="LightYellow" LostFocus="ImportFileNameTextBox_LostFocus"/>
+                    <Button Grid.Row="7"  Grid.Column="4"  HorizontalAlignment="Right" BorderBrush="#FFF" Height="22" Name="ImportBrowseButton" FontFamily="Arial"  Foreground="#FFF3ECEC" Style="{StaticResource PrimaryRoundButtonTemplate}" Content="Browse..." Width="120" Margin="0, 0, 10,0" Command="{Binding ImportFileBrowseCommand}" IsEnabled="{Binding IsImportFileBrowseButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip="Click to select input file to import" />
+                    <Button Grid.Row="7"  Grid.Column="4"   Width="22" Height="22" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding ClearCommand}" IsEnabled="{Binding IsImportButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+                        <Button.Content>
+                            <Image Source="../../../Resources/Images/refresh.png" Width="22" Height="22" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" ToolTip="Clear and Browse again."></Image>
+                        </Button.Content>
+                    </Button>
+                    <Button Grid.Row="7"  Grid.Column="4"  HorizontalAlignment="Right" BorderBrush="#FFF" Height="22" Name="ImportButton" FontFamily="Arial"  Foreground="#FFF3ECEC" Style="{StaticResource PrimaryRoundButtonTemplate}" Content="Import..." Width="120" Margin="0,2,10,0" Command="{Binding ImportCommand}" IsEnabled="{Binding IsImportButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip="Click to import data." Visibility="{Binding ImportButtonVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="#FFDA9110" VerticalAlignment="Top" />
+
+                    <Expander Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="6" IsExpanded="False" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10, 0, 10, 0" Visibility="{Binding ImportDataVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <Expander.Header>
+                            <TextBlock Text="Imported Data" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Stretch"></TextBlock>
+                        </Expander.Header>
+                        <DataGrid IsReadOnly="True" GridLinesVisibility="Vertical" AutoGenerateColumns="False" SelectedItem="{Binding SelectedGridRowItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding QuotationDetailResults, UpdateSourceTrigger=PropertyChanged}" Background="#FFEAEAEA" ScrollViewer.CanContentScroll="True" 
+                        ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"  Height="Auto" VerticalAlignment="Top" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                            <DataGrid.ColumnHeaderStyle>
+                                <Style TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="FontWeight" Value="Bold" />
+                                    <Setter Property="Background" Value="Gray" />
+                                </Style>
+                            </DataGrid.ColumnHeaderStyle>
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn CellTemplateSelector="{StaticResource TemplateSelector}">
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Expander>
+
+
+                    <StackPanel Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="4" Orientation="Vertical"  Margin="0, 5, 10, 0"  VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                        <TextBlock Text="Documents" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Arial" Margin="15, 1, 15, 0" FontSize="14" FontWeight="Bold" Foreground="Gray" ToolTip="Upload any relevant documents."></TextBlock>
+                        <Border BorderThickness="0.5" BorderBrush="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Center"></Border>
+                    </StackPanel>
+                    <StackPanel Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="4"  Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding FileCheckListVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <TextBlock Text="Uploaded Documents" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"></TextBlock>
+                        <wpfToolkit:CheckListBox  x:Name="fileCheckListBox" ItemsSource="{Binding  QuotationDocuments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Margin="0,1,0,1" Height="Auto"  SelectedMemberPath="IsFileSelected"
+                           VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  Command="{Binding FileCheckListCommand, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" DisplayMemberPath="FilePath"
+                           FontFamily="Arial">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="ItemSelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding CustomerSelectionChangedCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </wpfToolkit:CheckListBox>
+                    </StackPanel>
+                    <TextBlock  Grid.Row="11" Grid.Column="0"  Text="Upload" VerticalAlignment="Center"  Margin="0, 0, 5, 0"  HorizontalAlignment="Right" FontWeight="Bold"></TextBlock>
+                    <TextBox Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding UploadFileName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Name="FileNameTextBox" VerticalAlignment="Center" Margin="0, 2, 0,2" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Height="22"  Background="LightYellow"/>
+                    <Button Grid.Row="11"  Grid.Column="4"  HorizontalAlignment="Right" BorderBrush="#FFF" Height="22" Name="FileBrowseButton" FontFamily="Arial"  Foreground="#FFF3ECEC" Style="{StaticResource PrimaryRoundButtonTemplate}" Content="Browse..." Width="120" Margin="0, 0, 10,0" Command="{Binding DocumentFileBrowseCommand}" IsEnabled="{Binding IsFileBrowseButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip="Click to upload a document." />
+
+                    <TextBlock  Grid.Row="12" Grid.Column="0"  Text="Description" VerticalAlignment="Center"  Margin="10,0,5,0"  HorizontalAlignment="Right" FontWeight="Bold"></TextBlock>
+                    <wpfToolkit:WatermarkTextBox Grid.Row="12" Grid.Column="1"    Text="{Binding UploadFileDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Watermark="Enter a short description for the uploaded file." Height="22" Background="LightYellow"  Margin="0,0,10,0" 
+                                             Name="fileDescription" Visibility="{Binding UploadFileDescriptionVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" LostFocus="FileDescription_LostFocus" ToolTip="Enter a description for the uploaded file. The Browse... button will be disabled if no description is provided."
+                                             VerticalAlignment="Center" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                </Grid>
+
+
+                <Border    Grid.Row="5" BorderThickness="1" BorderBrush="LightGray"  VerticalAlignment="Top" Margin="10, 0, 10, 1"></Border>
+                <WrapPanel Grid.Row="5" Grid.Column="0"  HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    <Button BorderBrush="#FFF" Height="22" Name="ProceedButton" VerticalAlignment="Bottom" FontFamily="Arial" Background="#FF0487F3" Foreground="#FFF3ECEC" Style="{StaticResource PrimaryRoundButtonTemplate}" Content="PROCEED" Width="120" Command="{Binding ProceedCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip="Click to proceed." />
+                    <Button Content="CANCEL"  Width="120" Command="{Binding CancelCommand}" VerticalAlignment="Bottom"  Margin="2,2,10,2"  Style="{StaticResource CancelRoundButtonTemplate}" 
+				CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip ="Cancel any changes made and close the window." Background="#FF8D9195" />
+                </WrapPanel>
+
+            </Grid>
+        </Border>
+    </ScrollViewer>
+</UserControl>

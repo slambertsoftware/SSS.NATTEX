@@ -42,9 +42,17 @@ namespace SSS.NATTEX.DAL
         public DbSet<LibertyPendingQuotationParameter> LibertyPendingQuotationParameters { get; set; }
         
 
-        public DbSet<AvbobAgeGroup> AvbobAgeGroups { get; set; }
-        public DbSet<AvbobPlan> AvbobPlans { get; set; }
-        public DbSet<AvbobPolicyPremium> AvbobPolicyPremiums { get; set; }
+        public DbSet<AvbobPendingQuotationAgeGroup> AvbobPendingQuotationAgeGroups { get; set; }
+        public DbSet<AvbobPendingQuotationPlan> AvbobPendingQuotationPlans { get; set; }
+        public DbSet<AvbobPendingQuotationMember> AvbobPendingQuotationMembers { get; set; }
+        public DbSet<AvbobPendingQuotationPolicyPremium> AvbobPendingQuotationPolicyPremiums { get; set; }
+        public DbSet<AvbobPendingQuotationMemberUnitType> AvbobPendingQuotationMemberUnitTypes { get; set; }
+        public DbSet<AvbobPendingQuotationPolicy> AvbobPendingQuotationPolicies { get; set; }
+        public DbSet<AvbobPendingQuotationPolicyMember> AvbobPendingQuotationPolicyMembers { get; set; }
+        public DbSet<AvbobPendingQuotationPolicySummary> AvbobPendingQuotationPolicySummaries { get; set; }
+        public DbSet<AvbobPendingQuotationPolicyBook> AvbobPendingQuotationPolicyBooks { get; set; }
+        public DbSet<AvbobPendingQuotation> AvbobPendingQuotations { get; set; }
+
         public DbSet<AvbobPolicyScheme> AvbobPolicySchemes { get; set; }
         public DbSet<AvbobPolicySchemeType> AvbobPolicySchemeTypes { get; set; }
 

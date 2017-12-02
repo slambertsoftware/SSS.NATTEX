@@ -8,12 +8,14 @@ using System.Threading.Tasks;
 
 namespace SSS.NATTEX.DAL
 {
-    public class AvbobPolicyPremium
+    public class AvbobPendingQuotationPolicyPremium
     {
-        [Required]
-        public int AvbobPolicyPremiumID { get; set; }
-        public int AvbobAgeGroupID { get; set; }
-        public int AvbobPlanID { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int AvbobPendingQuotationPolicyPremiumID { get; set; }
+        public int AvbobPendingQuotationAgeGroupID { get; set; }
+        public int AvbobPendingQuotationPlanID { get; set; }
+        public int AvbobPendingQuotationMemberUnitTypeID { get; set; }
         [Required]
         public decimal MemberCover { get; set; }
         [Required]
@@ -62,7 +64,8 @@ namespace SSS.NATTEX.DAL
         public DateTime? ModifyDate { get; set; }
         public Nullable<int> ModifyUserID { get; set; }
 
-        public virtual AvbobAgeGroup AgeGroup { get; set; }
-        public virtual AvbobPlan Plan { get; set; }
+        public virtual ICollection<AvbobPendingQuotationAgeGroup> AvbobPendingQuotationAgeGroups { get; set; }
+        public virtual ICollection<AvbobPendingQuotationPlan> AvbobPendingQuotationPlans { get; set; }
+        public virtual ICollection<AvbobPendingQuotationMemberUnitType> AvbobPendingQuotationMemberUnitTypes { get; set; }
     }
 }

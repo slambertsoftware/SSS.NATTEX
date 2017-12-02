@@ -17,14 +17,14 @@
         <DockPanel Grid.Row="0">
             <Menu DockPanel.Dock="Top" Background="LightGray">
                 <MenuItem Header="Quotations" FontFamily="Arial" VerticalAlignment="Center">
-                    <MenuItem x:Name="mnuNewQuotation" Header="New Quotation" Click="mnuNewQuotation_Click">
+                    <MenuItem x:Name="mnuLibertyNewQuotation" Header="New Liberty Quotation" Click="mnuLibertyNewQuotation_Click">
                         <MenuItem.Icon>
                             <Image Source="/SSS.NATTEX;component/Resources/Images/quote_16.jpg"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem x:Name="mnuModifyQuotation"  Header="Modify Quoation">
+                    <MenuItem x:Name="mnuAvbobNewQuotation" Header="New Avbob Quotation" Click="mnuAvbobNewQuotation_Click">
                         <MenuItem.Icon>
-                            <Image Source="/SSS.NATTEX;component/Resources/Images/quote_16.png"/>
+                            <Image Source="/SSS.NATTEX;component/Resources/Images/quote_16.jpg"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem x:Name="mnuRemoveQuotation"  Header="Remove Quoation">

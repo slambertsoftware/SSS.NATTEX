@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SSS.NATTEX.Views"
         mc:Ignorable="d"
-        Title="{Binding WindowTitle}" FontFamily="Arial" SizeToContent="WidthAndHeight" MaxHeight="800" FontSize="11" Icon="/SSS.NATTEX;component/Resources/Images/nams_logo.ico">
+        Title="{Binding WindowCaption, UpdateSourceTrigger=PropertyChanged}" FontFamily="Arial" SizeToContent="WidthAndHeight" MaxHeight="800" FontSize="11" Icon="/SSS.NATTEX;component/Resources/Images/nams_logo.ico">
     <Window.Resources>
         <DataTemplate x:Key="PendingQuotationItemDataTemplate">
             <Grid Margin="0,2">
@@ -94,7 +94,7 @@
 
 
                         <TextBlock Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" Text="Quotation was prepared by?" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" ></TextBlock>
-                        <TextBlock Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding QuotationPreparedBy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ></TextBlock>
+                        <TextBlock Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding QuotationPreparedBy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource DataValueStyle}"></TextBlock>
 
                         <TextBlock Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2" Text="Number of prospective policy holders quoted for?" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" TextWrapping="Wrap" ></TextBlock>
                         <TextBlock Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding NumberOfProspectiveMembers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}" ></TextBlock>
@@ -115,10 +115,10 @@
                         <TextBlock Grid.Row="17" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding JoiningFeePerMember, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}" ></TextBlock>
 
                         <TextBlock Grid.Row="18" Grid.Column="0" Text="(Once off) Total Joining Fee (R)" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" TextWrapping="Wrap" ></TextBlock>
-                        <TextBlock Grid.Row="18" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding TotalJoiningFee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ></TextBlock>
+                        <TextBlock Grid.Row="18" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding TotalJoiningFee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource DataValueStyle}" ></TextBlock>
 
                         <TextBlock Grid.Row="19" Grid.Column="0" Grid.ColumnSpan="2" Text="Number of monthly joining fee installments (if option is selected)" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" TextWrapping="Wrap" ></TextBlock>
-                        <TextBlock Grid.Row="19" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding NumOfMonthlyInstallments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ></TextBlock>
+                        <TextBlock Grid.Row="19" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding NumOfMonthlyInstallments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource DataValueStyle}"></TextBlock>
 
                         <TextBlock Grid.Row="20" Grid.Column="0" Grid.ColumnSpan="2" Text="Monthly joining fee installment (if option is selected)" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" TextWrapping="Wrap" ></TextBlock>
                         <TextBlock Grid.Row="20" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding InstallmentJoiningFee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}"></TextBlock>

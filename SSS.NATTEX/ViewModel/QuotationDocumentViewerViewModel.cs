@@ -19,7 +19,9 @@ namespace SSS.NATTEX.ViewModel
         private string _quotationTabHeader;
         private CurrentLogin _currentLogin;
         private LibertyNewQuotation _quotationModel;
+        private AvbobQuotationModel _avbobQuotationModel;
         private LibertyPendingQuotation _libertyPendingQuotation;
+        private AvbobPendingQuotation _avbobPendingQuotation;
         private FixedDocumentSequence _quotationXPSDocument;
         #endregion
 
@@ -65,6 +67,19 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
+        public AvbobQuotationModel AvbobQuotationModel
+        {
+            get
+            {
+                return _avbobQuotationModel;
+            }
+            set
+            {
+                _avbobQuotationModel = value;
+                this.RaisePropertyChanged("AvbobQuotationModel");
+            }
+        }
+
         public LibertyPendingQuotation PendingQuotation
         {
             get
@@ -75,6 +90,19 @@ namespace SSS.NATTEX.ViewModel
             {
                 _libertyPendingQuotation = value;
                 this.RaisePropertyChanged("LibertyPendingQuotation");
+            }
+        }
+
+        public AvbobPendingQuotation AvbobPendingQuotation
+        {
+            get
+            {
+                return _avbobPendingQuotation;
+            }
+            set
+            {
+                _avbobPendingQuotation = value;
+                this.RaisePropertyChanged("AvbobPendingQuotation");
             }
         }
 
@@ -98,7 +126,7 @@ namespace SSS.NATTEX.ViewModel
         public QuotationDocumentViewerViewModel(System.Windows.Window window, LibertyNewQuotation  quotationModel, CurrentLogin currentLogin)
         {
             this.QuotationModel = quotationModel;
-            this.PopulatePendingQuotation();
+            this.PopulateLibertyPendingQuotation();
             this.CurrentLogin = currentLogin;
             System.Windows.Window win = (System.Windows.Window)window;
 
@@ -122,10 +150,37 @@ namespace SSS.NATTEX.ViewModel
             };
             Messenger.Default.Send<ConfirmedQuotation>(confirmation);
         }
+
+        public QuotationDocumentViewerViewModel(System.Windows.Window window, AvbobQuotationModel quotationModel, CurrentLogin currentLogin)
+        {
+            this.AvbobQuotationModel = quotationModel;
+            this.PopulateAvbobPendingQuotation();
+            this.CurrentLogin = currentLogin;
+            System.Windows.Window win = (System.Windows.Window)window;
+
+            if (win != null)
+            {
+                this.CurrentWindow = (QuotationDocumentViewerWindow)win;
+            }
+            if (this.AvbobQuotationModel != null)
+            {
+                this.QuotationTabHeader = this.AvbobPendingQuotation.QuotationNumber;
+                if ((this.AvbobQuotationModel != null) && (this.AvbobQuotationModel.QuotationXPSDocument != null))
+                {
+                    this.QuotationXPSDocument = this.AvbobQuotationModel.QuotationXPSDocument.GetFixedDocumentSequence();
+                }
+            }
+
+            ConfirmedQuotation confirmation = new ConfirmedQuotation()
+            {
+                AvbobPendingQuotation = this.AvbobPendingQuotation
+            };
+            Messenger.Default.Send<ConfirmedQuotation>(confirmation);
+        }
         #endregion
 
         #region methods
-        private void PopulatePendingQuotation()
+        private void PopulateLibertyPendingQuotation()
         {
             using (var context = new NattexApplicationContext())
             {
@@ -137,6 +192,17 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
+        private void PopulateAvbobPendingQuotation()
+        {
+            using (var context = new NattexApplicationContext())
+            {
+                AvbobPendingQuotation quotation = context.AvbobPendingQuotations.Where(x => x.AvbobPendingQuotationID == this.AvbobQuotationModel.QuotationID).FirstOrDefault<AvbobPendingQuotation>();
+                if (quotation != null)
+                {
+                    this.AvbobPendingQuotation = quotation;
+                }
+            }
+        }
         #endregion
 
 

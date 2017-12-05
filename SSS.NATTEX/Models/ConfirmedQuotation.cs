@@ -10,5 +10,6 @@ namespace SSS.NATTEX.Models
     public class ConfirmedQuotation
     {
         public LibertyPendingQuotation PendingQuotation { get; set; }
+        public AvbobPendingQuotation AvbobPendingQuotation { get; set; }
     }
 }

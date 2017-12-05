@@ -58,7 +58,7 @@ namespace SSS.NATTEX.Views
             layoutSetup.RightContentGrid = null;
             layoutSetup.LeftAnchorablePane.Parent = layoutPanel;
 
-            document.Content = new AvbobNewQuotationUserControl(layoutSetup, this.CurrentLogin);
+            document.Content = new AvbobNewQuotationUserControl(this, layoutSetup, this.CurrentLogin);
             documentsPane.Children.Add(document);
             document.PreviousContainerIndex = documentsPane.Children.IndexOf(document);
             document.Parent = documentsPane;

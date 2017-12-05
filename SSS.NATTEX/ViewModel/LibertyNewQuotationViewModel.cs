@@ -29,7 +29,7 @@ namespace SSS.NATTEX.ViewModel
         private string _customerContactNo;
         private string _customerEmail;
         private string _customerOtherInfo;
-        private string _ValidationMessage;
+        private string _validationMessage;
         private string _uploadFileName;
         private string _uploadFileDescription;
         private string _quotationNumber;
@@ -302,11 +302,11 @@ namespace SSS.NATTEX.ViewModel
         {
             get
             {
-                return _ValidationMessage;
+                return _validationMessage;
             }
             set
             {
-                _ValidationMessage = value;
+                _validationMessage = value;
                 this.RaisePropertyChanged("ValidationMessage");
             }
         }

@@ -36,11 +36,57 @@ namespace SSS.NATTEX.Views
             DataContext = viewModel;
         }
 
+        public QuotationDetailWindow(AvbobPendingQuotation pendingQuotation)
+        {
+            InitializeComponent();
+            var viewModel = new QuotationDetailViewModel(this, pendingQuotation);
+            DataContext = viewModel;
+        }
+
         public void LoadDocuments(List<LibertyPendingQuotationDocument> documents)
         {
             if (documents != null)
             {
                 foreach (LibertyPendingQuotationDocument document in documents)
+                {
+                    if (File.Exists(document.CopyToFilePath) && (document.FileExtension == ".pdf"))
+                    {
+                        WebBrowser browser = new WebBrowser()
+                        {
+                            VerticalAlignment = VerticalAlignment.Stretch,
+                            HorizontalAlignment = HorizontalAlignment.Stretch,
+                            MaxWidth = 800,
+                            MaxHeight = 800
+                        };
+                        TabItem tab = new TabItem()
+                        {
+                            Header = document.FileDescription,
+                            VerticalAlignment = VerticalAlignment.Stretch,
+                            HorizontalAlignment = HorizontalAlignment.Stretch,
+                            VerticalContentAlignment = VerticalAlignment.Stretch,
+                            HorizontalContentAlignment = HorizontalAlignment.Stretch,
+                            MaxWidth = 800,
+                            MaxHeight = 800,
+                            Content = browser
+                        };
+
+                        browser.Navigate(new Uri(String.Format("file:///{0}", document.CopyToFilePath)));
+                        DocumentTabController.Items.Add(tab);
+                    }
+                }
+            }
+        }
+
+        public void ChangeToAvbobImageSource()
+        {
+            CustomerLogo.Source = new BitmapImage(new Uri(@"../Resources/Images/avbob.png", UriKind.Relative));
+        }
+
+        public void LoadDocuments(List<AvbobPendingQuotationDocument> documents)
+        {
+            if (documents != null)
+            {
+                foreach (AvbobPendingQuotationDocument document in documents)
                 {
                     if (File.Exists(document.CopyToFilePath) && (document.FileExtension == ".pdf"))
                     {

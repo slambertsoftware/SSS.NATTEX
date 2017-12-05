@@ -52,6 +52,8 @@ namespace SSS.NATTEX.DAL
         public DbSet<AvbobPendingQuotationPolicySummary> AvbobPendingQuotationPolicySummaries { get; set; }
         public DbSet<AvbobPendingQuotationPolicyBook> AvbobPendingQuotationPolicyBooks { get; set; }
         public DbSet<AvbobPendingQuotation> AvbobPendingQuotations { get; set; }
+        public DbSet<AvbobPendingQuotationDocument> AvbobPendingQuotationDocuments { get; set; }
+
 
         public DbSet<AvbobPolicyScheme> AvbobPolicySchemes { get; set; }
         public DbSet<AvbobPolicySchemeType> AvbobPolicySchemeTypes { get; set; }

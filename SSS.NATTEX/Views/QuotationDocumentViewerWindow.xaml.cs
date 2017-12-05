@@ -1,4 +1,5 @@
-﻿using SSS.NATTEX.Models;
+﻿using SSS.NATTEX.DAL;
+using SSS.NATTEX.Models;
 using SSS.NATTEX.ViewModel;
 using SSS.NATTEX.Views.Controls;
 using System;
@@ -31,6 +32,13 @@ namespace SSS.NATTEX.Views
             DataContext = viewModel;
         }
 
+        public QuotationDocumentViewerWindow(AvbobQuotationModel newQuotation, CurrentLogin currentLogin)
+        {
+            InitializeComponent();
+            var viewModel = new QuotationDocumentViewerViewModel(this, newQuotation, currentLogin);
+            DataContext = viewModel;
+        }
+
         public void LoadDocuments(List<QuotationUploadDocument> documents)
         {
             if (documents != null)
@@ -54,6 +62,36 @@ namespace SSS.NATTEX.Views
                         };
  
                         browser.Navigate(new Uri(String.Format("file:///{0}",document.CopyToFilePath)));
+                        DocumentTabController.Items.Add(tab);
+                    }
+                }
+            }
+        }
+
+        public void LoadDocuments(List<AvbobPendingQuotationDocument> documents)
+        {
+            if (documents != null)
+            {
+                foreach (AvbobPendingQuotationDocument document in documents)
+                {
+                    if (File.Exists(document.CopyToFilePath) && (document.FileExtension == ".pdf"))
+                    {
+                        WebBrowser browser = new WebBrowser()
+                        {
+                            VerticalAlignment = VerticalAlignment.Stretch,
+                            HorizontalAlignment = HorizontalAlignment.Stretch,
+                        };
+                        TabItem tab = new TabItem()
+                        {
+                            Header = document.FileDescription,
+                            VerticalAlignment = VerticalAlignment.Stretch,
+                            HorizontalAlignment = HorizontalAlignment.Stretch,
+                            VerticalContentAlignment = VerticalAlignment.Stretch,
+                            HorizontalContentAlignment = HorizontalAlignment.Stretch,
+                            Content = browser
+                        };
+
+                        browser.Navigate(new Uri(String.Format("file:///{0}", document.CopyToFilePath)));
                         DocumentTabController.Items.Add(tab);
                     }
                 }

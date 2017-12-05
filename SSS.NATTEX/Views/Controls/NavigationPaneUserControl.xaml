@@ -19,28 +19,6 @@
             </Grid>
         </DataTemplate>
         
-        <SolidColorBrush x:Key="OutlookButtonForeground" Color="#FF204D89"/>
-
-        <LinearGradientBrush x:Key="OutlookButtonBackground" EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#FFD9EDFF" Offset="0"/>
-            <GradientStop Color="#FFC0DEFF" Offset="0.445"/>
-            <GradientStop Color="#FFC0D9FB" Offset="1"/>
-            <GradientStop Color="#FFAFD1F8" Offset="0.53"/>
-        </LinearGradientBrush>
-
-        <LinearGradientBrush x:Key="OutlookButtonHighlight" EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#FFFFBD69" Offset="0"/>
-            <GradientStop Color="#FFFFB75A" Offset="0.0967"/>
-            <GradientStop Color="#FFFFB14C" Offset="0.2580"/>
-            <GradientStop Color="#FFFB8C3C" Offset="0.3870"/>
-            <GradientStop Color="#FFFEB461" Offset="0.9677"/>
-            <GradientStop Color="#FFFEBB67" Offset="1"/>
-        </LinearGradientBrush>
-
-        <Style x:Key="OutlookTabControlStyle" TargetType="{x:Type TabControl}">
-            <Setter Property="TabStripPlacement" Value="Left"></Setter>
-        </Style>
-
         <Style TargetType="{x:Type TabItem}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -117,7 +95,7 @@
     <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
 
         <TabControl  MinWidth="300" Width="Auto" Height="Auto" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" TabStripPlacement="Right" HorizontalAlignment="Left" BorderThickness="1,1,1,0">
-            <TabItem Header="Pending Quotations" Height="Auto" Width="Auto" Visibility="{Binding PendingQuotationsVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <TabItem Height="Auto"  Header="LIBERTY - Pending Quotations" Width="Auto" Visibility="{Binding PendingQuotationsVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <Grid Background="Beige">
                     <ListBox x:Name="lstPendingQuotations" ItemsSource="{Binding PendingQuotations, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                              Visibility="{Binding PendingQuotationsVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource PendingQuotationItemDataTemplate}" BorderBrush="Gray" BorderThickness="1" Margin="0" SelectedItem="{Binding SelectedPendingQuotation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -126,6 +104,20 @@
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                                 <EventSetter Event="MouseDoubleClick" Handler="ListBoxItem_MouseDoubleClick"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                </Grid>
+            </TabItem>
+            <TabItem Height="Auto"  Width="Auto" Header="AVBOB - Pending Quotations" Visibility="{Binding AvbobPendingQuotationsVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <Grid Background="Beige">
+                    <ListBox x:Name="lstAvbobPendingQuotations" ItemsSource="{Binding AvbobPendingQuotations, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                             Visibility="{Binding AvbobPendingQuotationsVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource PendingQuotationItemDataTemplate}" BorderBrush="Gray" BorderThickness="1" Margin="0" SelectedItem="{Binding SelectedAvbobPendingQuotation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             ScrollViewer.IsDeferredScrollingEnabled="True" 
+                             ScrollViewer.CanContentScroll="True" >
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                                <EventSetter Event="MouseDoubleClick" Handler="AvbobListBoxItem_MouseDoubleClick"/>
                             </Style>
                         </ListBox.ItemContainerStyle>
                     </ListBox>

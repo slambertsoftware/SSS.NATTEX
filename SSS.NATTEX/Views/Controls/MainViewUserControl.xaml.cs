@@ -77,7 +77,7 @@ namespace SSS.NATTEX.Views.Controls
             {
                 this.NavigationControl.UpdatePendingQuotations(message);
             }
-            if (this.NavigationControl.GetNumOfPendingQuotations() > 0)
+            if ((this.NavigationControl.GetNumOfPendingQuotations() > 0) || (this.NavigationControl.GetNumOfAvbobPendingQuotations() > 0))
             {
                 this.Anchorable.IsVisible = true;
             }
@@ -94,7 +94,7 @@ namespace SSS.NATTEX.Views.Controls
                 this.NavigationControl = new NavigationPaneUserControl();
                 UpdateControlLayout();
             }
-            if (this.NavigationControl.GetNumOfPendingQuotations() > 0)
+            if ((this.NavigationControl.GetNumOfPendingQuotations() > 0) || (this.NavigationControl.GetNumOfAvbobPendingQuotations() > 0))
             {
                 this.Anchorable.IsVisible = true;
             }
@@ -110,7 +110,7 @@ namespace SSS.NATTEX.Views.Controls
             {
                 ContentId = "AB-001",
                 CanAutoHide = true,
-                AutoHideHeight = 200,
+                AutoHideHeight = 400,
                 IsActive = true,
                 Title = "WORK LIST",
                 CanClose = true,
@@ -124,6 +124,17 @@ namespace SSS.NATTEX.Views.Controls
             leftAnchorablePane.Children.Add(this.Anchorable);
             this.Anchorable.PreviousContainerIndex = leftAnchorablePane.Children.IndexOf(this.Anchorable);
             this.Anchorable.Parent = leftAnchorablePane;
+        }
+
+        private void mnuAppConfiguration_Click(object sender, RoutedEventArgs e)
+        {
+            ApplicationConfigurationWindow window = new ApplicationConfigurationWindow();
+            window.Owner = Application.Current.MainWindow;
+            Point point = GetWindowPosition();
+
+            window.Left = point.X;
+            window.Top = point.Y;
+            window.ShowDialog();
         }
     }
 }

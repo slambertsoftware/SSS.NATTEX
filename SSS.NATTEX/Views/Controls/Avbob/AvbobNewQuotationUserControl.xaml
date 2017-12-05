@@ -7,8 +7,9 @@
              xmlns:models="clr-namespace:SSS.NATTEX.Models"
              mc:Ignorable="d" 
              xmlns:wpfToolkit="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+             xmlns:hammer="clr-namespace:Hammer.SpinningWheel;assembly=Hammer.SpinningWheel"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             FontFamily="Arial" FontSize="11" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" d:DesignWidth="800" d:DesignHeight="500" x:Name ="NewAvbobQuotationControl" Loaded="NewAvbobQuotationControl_Loaded" >
+             FontFamily="Arial" FontSize="11" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" d:DesignWidth="800" d:DesignHeight="500" x:Name ="NewAvbobQuotationControl" >
     <UserControl.Resources>
         <Style x:Key="PrimaryRoundButtonTemplate" TargetType="Button">
             <Setter Property="Background" Value="#FF428BCA" />
@@ -48,22 +49,36 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="250" ></ColumnDefinition>
-                    <ColumnDefinition Width="100" ></ColumnDefinition>
-                    <ColumnDefinition Width="100" ></ColumnDefinition>
-                    <ColumnDefinition Width="100" ></ColumnDefinition>
-                    <ColumnDefinition Width="150" ></ColumnDefinition>
-                    <ColumnDefinition Width="150" ></ColumnDefinition>
-                    <ColumnDefinition MinWidth="150" Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="50" ></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="LINE NR" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="DATE" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0"></TextBlock>
-                <TextBlock Grid.Row="0" Grid.Column="2" Text="POLICY NR" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
-                <TextBlock  Grid.Row="0" Grid.Column="3" Text ="SURNAME" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold"  Margin="0"></TextBlock>
-                <TextBlock  Grid.Row="0" Grid.Column="4" Text ="INITIALS" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text ="LINE NR" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text ="POLICY NR" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="2" Text ="FIRST NAME" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="3" Text ="SURNAME" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold"  Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="4" Text ="BIRTH HDATE" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0"></TextBlock>
                 <TextBlock Grid.Row="0" Grid.Column="5" Text ="ID NUMBER" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0"></TextBlock>
-                <TextBlock Grid.Row="0" Grid.Column="6" Text ="COVER AMOUNT (R)" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="6" Text ="ENROLLMENT DATE" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="7" Text ="RELATION" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="8" Text ="COVER AMOUNT (R)" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="9" Text ="ADDRESS LINE 1" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="10" Text ="ADDRESS LINE 2" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="11" Text ="CODE" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="12" Text ="BENEFICIARY" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="13" Text ="BENEFICIARY ID" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
+
                 <Border Background="Gray"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6"  Height="1" Width="Auto" BorderBrush="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0"></Border>
             </Grid>
         </DataTemplate>
@@ -74,23 +89,37 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="250" ></ColumnDefinition>
-                    <ColumnDefinition Width="100" ></ColumnDefinition>
-                    <ColumnDefinition Width="100" ></ColumnDefinition>
-                    <ColumnDefinition Width="100" ></ColumnDefinition>
-                    <ColumnDefinition Width="150" ></ColumnDefinition>
-                    <ColumnDefinition Width="150" ></ColumnDefinition>
-                    <ColumnDefinition MinWidth="150" Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="50" ></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="LINE NR" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="DATE" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0"></TextBlock>
-                <TextBlock Grid.Row="0" Grid.Column="2" Text="POLICY NR" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
-                <TextBlock  Grid.Row="0" Grid.Column="3" Text ="SURNAME" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold"  Margin="0"></TextBlock>
-                <TextBlock  Grid.Row="0" Grid.Column="4" Text ="INITIALS" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0"></TextBlock>
-                <TextBlock Grid.Row="0" Grid.Column="5" Text ="ID NUMBER" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0"></TextBlock>
-                <TextBlock Grid.Row="0" Grid.Column="6" Text ="COVER AMOUNT (R)" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
-                <Border Background="Gray"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6"  Height="1" Width="Auto" BorderBrush="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0"></Border>
+                <TextBlock Grid.Row="0" Grid.Column="0"  Text="{Binding LineNr, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="1"  Text="{Binding PolicyNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="2"  Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="3"  Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="4"  Text="{Binding Birthdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="5"  Text="{Binding IDNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="6"  Text="{Binding EnrollmentDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="7"  Text="{Binding Relation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="8"  Text="{Binding Cover, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="9" Text="{Binding AddressLine1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="10" Text="{Binding AddressLine2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="11" Text="{Binding AddressCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="12" Text="{Binding Beneficiary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="13" Text="{Binding BeneficiaryIDNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="0"></TextBlock>
+                
+                <Border Background="Gray"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="15"  Height="1" Width="Auto" BorderBrush="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0"></Border>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="ImportItemSummaryDataTemplate">
@@ -100,27 +129,25 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="250" ></ColumnDefinition>
-                    <ColumnDefinition Width="100" ></ColumnDefinition>
-                    <ColumnDefinition Width="100" ></ColumnDefinition>
-                    <ColumnDefinition Width="100" ></ColumnDefinition>
-                    <ColumnDefinition Width="150" ></ColumnDefinition>
-                    <ColumnDefinition Width="150" ></ColumnDefinition>
-                    <ColumnDefinition MinWidth="150" Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="50" ></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="LINE NR" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="DATE" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0"></TextBlock>
-                <TextBlock Grid.Row="0" Grid.Column="2" Text="POLICY NR" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
-                <TextBlock  Grid.Row="0" Grid.Column="3" Text ="SURNAME" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold"  Margin="0"></TextBlock>
-                <TextBlock  Grid.Row="0" Grid.Column="4" Text ="INITIALS" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0"></TextBlock>
-                <TextBlock Grid.Row="0" Grid.Column="5" Text ="ID NUMBER" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0"></TextBlock>
-                <TextBlock Grid.Row="0" Grid.Column="6" Text ="COVER AMOUNT (R)" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
-                <Border Background="Gray"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6"  Height="1" Width="Auto" BorderBrush="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0"></Border>
             </Grid>
         </DataTemplate>
         <models:DataImportItemTemplateSelector x:Key="TemplateSelector" 
-                                                HeaderColumnsDataTemplate ="{StaticResource HeaderColumnsDataTemplate}" 
+                                              HeaderColumnsDataTemplate ="{StaticResource HeaderColumnsDataTemplate}" 
                                               ImportItemColumnsDataTemplate ="{StaticResource ImportItemColumnsDataTemplate}" 
                                               ImportItemSummaryDataTemplate  ="{StaticResource ImportItemSummaryDataTemplate }"></models:DataImportItemTemplateSelector>
     </UserControl.Resources>
@@ -138,7 +165,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-
+                
                 <StackPanel Grid.Row="0" Orientation="Vertical"   Margin="10, 0, 10, 1" >
                     <TextBlock Text="{Binding ControlCaption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Arial"  FontSize="14" FontWeight="Bold"></TextBlock>
                 </StackPanel>
@@ -148,6 +175,7 @@
                     <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center" Visibility="{Binding ValidationMessageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2" >
                         <Image Source="../../../Resources/Images/warning_24_2.png" Width="24" Height="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1"></Image>
                         <TextBlock Text="{Binding ValidationMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10"  Foreground="Red" TextWrapping="Wrap"></TextBlock>
+                        
                     </StackPanel>
                 </Border>
 
@@ -214,22 +242,22 @@
                     </StackPanel>
                     <TextBlock  Grid.Row="7" Grid.Column="0"  Text="Import" VerticalAlignment="Center"  Margin="0, 0, 5, 0"  HorizontalAlignment="Right" FontWeight="Bold"></TextBlock>
                     <TextBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding ImportFileName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Name="ImportFileNameTextBox" VerticalAlignment="Center" Margin="0, 2, 0,2" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Height="22"  Background="LightYellow" LostFocus="ImportFileNameTextBox_LostFocus"/>
-                    <Button Grid.Row="7"  Grid.Column="4"  HorizontalAlignment="Right" BorderBrush="#FFF" Height="22" Name="ImportBrowseButton" FontFamily="Arial"  Foreground="#FFF3ECEC" Style="{StaticResource PrimaryRoundButtonTemplate}" Content="Browse..." Width="120" Margin="0, 0, 10,0" Command="{Binding ImportFileBrowseCommand}" IsEnabled="{Binding IsImportFileBrowseButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    <Button Grid.Row="7"  Grid.Column="4"  HorizontalAlignment="Right" BorderBrush="#FFF" Height="22" Name="ImportBrowseButton" FontFamily="Arial"  Foreground="#FFF3ECEC" Style="{StaticResource PrimaryRoundButtonTemplate}" Content="Browse..." Width="120"  Command="{Binding ImportFileBrowseCommand}" IsEnabled="{Binding IsImportFileBrowseButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip="Click to select input file to import" />
-                    <Button Grid.Row="7"  Grid.Column="4"   Width="22" Height="22" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding ClearCommand}" IsEnabled="{Binding IsImportButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    <Button Grid.Row="7"  Grid.Column="4"   Width="22" Height="22" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding ClearCommand}" IsEnabled="{Binding IsImportButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                         CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
                         <Button.Content>
                             <Image Source="../../../Resources/Images/refresh.png" Width="22" Height="22" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" ToolTip="Clear and Browse again."></Image>
                         </Button.Content>
                     </Button>
-                    <Button Grid.Row="7"  Grid.Column="4"  HorizontalAlignment="Right" BorderBrush="#FFF" Height="22" Name="ImportButton" FontFamily="Arial"  Foreground="#FFF3ECEC" Style="{StaticResource PrimaryRoundButtonTemplate}" Content="Import..." Width="120" Margin="0,2,10,0" Command="{Binding ImportCommand}" IsEnabled="{Binding IsImportButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    <Button Grid.Row="7"  Grid.Column="4"  HorizontalAlignment="Right" BorderBrush="#FFF" Height="22" Name="ImportButton" FontFamily="Arial"  Foreground="#FFF3ECEC" Style="{StaticResource PrimaryRoundButtonTemplate}" Content="Import..." Width="120" Command="{Binding ImportCommand}" IsEnabled="{Binding IsImportButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip="Click to import data." Visibility="{Binding ImportButtonVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="#FFDA9110" VerticalAlignment="Top" />
 
-                    <Expander Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="6" IsExpanded="False" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10, 0, 10, 0" Visibility="{Binding ImportDataVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <Expander Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="6" IsExpanded="{Binding IsImportDataExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10, 0, 10, 0" Visibility="{Binding ImportDataVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <Expander.Header>
                             <TextBlock Text="Imported Data" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Stretch"></TextBlock>
                         </Expander.Header>
-                        <DataGrid IsReadOnly="True" GridLinesVisibility="Vertical" AutoGenerateColumns="False" SelectedItem="{Binding SelectedGridRowItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding QuotationDetailResults, UpdateSourceTrigger=PropertyChanged}" Background="#FFEAEAEA" ScrollViewer.CanContentScroll="True" 
+                        <DataGrid IsReadOnly="True" GridLinesVisibility="Vertical" AutoGenerateColumns="False" SelectedItem="{Binding SelectedGridRowItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataImportItems, UpdateSourceTrigger=PropertyChanged}" MaxHeight="300" Background="#FFEAEAEA" ScrollViewer.CanContentScroll="True" 
                         ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"  Height="Auto" VerticalAlignment="Top" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                             <DataGrid.ColumnHeaderStyle>
                                 <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -238,8 +266,22 @@
                                 </Style>
                             </DataGrid.ColumnHeaderStyle>
                             <DataGrid.Columns>
-                                <DataGridTemplateColumn CellTemplateSelector="{StaticResource TemplateSelector}">
-                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="LINE NR"    Binding="{Binding LineNr, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="POLICY NR"  Binding="{Binding PolicyNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="FIRST NAME" Binding="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="SURNAME"    Binding="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="BIRTH DATE" Binding="{Binding Birthdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="AGE"        Binding="{Binding Age, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="ID NUMBER"  Binding="{Binding IDNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="AGE"        Binding="{Binding Age, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="ENROLLMENT DATE" Binding="{Binding EnrollmentDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="RELATION"   Binding="{Binding Relation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="COVER AMOUNT (R)" Binding="{Binding CoverAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="ADDRESS LINE 1" Binding="{Binding AddressLine1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="ADDRESS LINE 2" Binding="{Binding AddressLine2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="CODE"        Binding="{Binding AddressCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="BENEFICIARY" Binding="{Binding Beneficiary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="BENEFICIARY ID" Binding="{Binding BeneficiaryIDNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Expander>
@@ -272,7 +314,13 @@
                                              VerticalAlignment="Center" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
                 </Grid>
 
+           
+                <StatusBar Grid.Row="4" x:Name ="processingStatusBar"  Visibility="{Binding SpinningWheelVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <StatusBarItem>
+                        <TextBlock Text="Please wait. Busy Processing..." FontSize="18" FontWeight="Bold"></TextBlock>
+                    </StatusBarItem>
 
+                </StatusBar>
                 <Border    Grid.Row="5" BorderThickness="1" BorderBrush="LightGray"  VerticalAlignment="Top" Margin="10, 0, 10, 1"></Border>
                 <WrapPanel Grid.Row="5" Grid.Column="0"  HorizontalAlignment="Right" VerticalAlignment="Bottom">
                     <Button BorderBrush="#FFF" Height="22" Name="ProceedButton" VerticalAlignment="Bottom" FontFamily="Arial" Background="#FF0487F3" Foreground="#FFF3ECEC" Style="{StaticResource PrimaryRoundButtonTemplate}" Content="PROCEED" Width="120" Command="{Binding ProceedCommand}"

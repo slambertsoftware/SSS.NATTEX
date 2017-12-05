@@ -22,16 +22,11 @@ namespace SSS.NATTEX.Views.Controls.Avbob
     /// </summary>
     public partial class AvbobNewQuotationUserControl : UserControl
     {
-        public AvbobNewQuotationUserControl(DockingSetupModel layoutModel, CurrentLogin currentLogin)
+        public AvbobNewQuotationUserControl(System.Windows.Window window, DockingSetupModel layoutModel, CurrentLogin currentLogin)
         {
             InitializeComponent();
-            var viewModel = new AvbobNewQuotationViewModel(layoutModel, currentLogin);
+            var viewModel = new AvbobNewQuotationViewModel(window, layoutModel, currentLogin);
             DataContext = viewModel;
-        }
-
-        private void NewAvbobQuotationControl_Loaded(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void CustomerContactNo_LostFocus(object sender, RoutedEventArgs e)
@@ -68,5 +63,6 @@ namespace SSS.NATTEX.Views.Controls.Avbob
         {
             (this.DataContext as AvbobNewQuotationViewModel).ValidateImportFileName();
         }
+
     }
 }

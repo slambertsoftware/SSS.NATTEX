@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SSS.NATTEX.Views"
         mc:Ignorable="d"
-        Title="{Binding WindowCaption, UpdateSourceTrigger=PropertyChanged}" FontFamily="Arial" SizeToContent="WidthAndHeight" MaxHeight="800" FontSize="11" Icon="/SSS.NATTEX;component/Resources/Images/nams_logo.ico">
+        Title="{Binding WindowCaption, UpdateSourceTrigger=PropertyChanged}" FontFamily="Arial" SizeToContent="WidthAndHeight" MaxHeight="800" FontSize="11" Icon="/SSS.NATTEX;component/Resources/Images/nams_logo.ico" Height="442" Width="665" >
     <Window.Resources>
         <DataTemplate x:Key="PendingQuotationItemDataTemplate">
             <Grid Margin="0,2">
@@ -20,8 +20,22 @@
             <Setter Property="HorizontalAlignment" Value="Left"></Setter>
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
         </Style>
+        <Style x:Key="PrimaryRoundButtonTemplate" TargetType="Button">
+            <Setter Property="Background" Value="#FF428BCA" />
+            <Setter Property="Height" Value="22"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="12" Background="{TemplateBinding Background}"
+                                BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
-    <Grid Margin="10">
+    <Grid Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <ScrollViewer VerticalScrollBarVisibility="Visible" Margin="10">
             <TabControl x:Name="DocumentTabController" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <TabItem Header="{Binding QuotationTabHeader, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
@@ -62,14 +76,14 @@
                             <RowDefinition  Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Image Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Source="../Resources/Images/nattex_logo_tranparent.png" Width="149" Height="67"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="1"></Image>
-                        <Image Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Source="../Resources/Images/liberty.png" Width="67"   VerticalAlignment="Center" HorizontalAlignment="Left" Margin="1"></Image>
+                        <Image Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" x:Name="CustomerLogo" Source="../Resources/Images/liberty.png" Width="67"   VerticalAlignment="Center" HorizontalAlignment="Left" Margin="1"></Image>
                         <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Stretch"  Background="LightGray" Height="20">
                             <TextBlock Text="Quotation Detail" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0"></TextBlock>
                         </Border>
                         <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"  BorderThickness="1" BorderBrush="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0"></Border>
                         <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"  Text="{Binding QuotationHeader, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0, 10, 0" ></TextBlock>
                         <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"  Text="Quotation ID" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" ></TextBlock>
-                        <TextBlock Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2"  Text="{Binding LibertyPendingQuotationID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}" ></TextBlock>
+                        <TextBlock Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2"  Text="{Binding PendingQuotationID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}" ></TextBlock>
 
                         <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Text="Quotation Number" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0, 10, 0" ></TextBlock>
                         <TextBlock Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding QuotationNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataValueStyle}"  ></TextBlock>
@@ -148,18 +162,53 @@
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0" HorizontalAlignment="Center" Text="CAPTURED ID NUMBERS:" FontWeight="Bold" VerticalAlignment="Center"></TextBlock>
-                            <ListBox Grid.Row="1"  ItemsSource="{Binding PendingQuotationMembers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                     ScrollViewer.CanContentScroll="True" ItemTemplate="{StaticResource PendingQuotationItemDataTemplate}" >
-
+                            <ListBox Grid.Row="1"  ItemsSource="{Binding PendingQuotationPolicyMembers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  ScrollViewer.CanContentScroll="True" ItemTemplate="{StaticResource PendingQuotationItemDataTemplate}" >
                             </ListBox>
                         </Grid>
                     </Grid>
                 </TabItem>
                 <TabItem Header="{Binding QuotationDocumentTabHeader, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                    <DocumentViewer x:Name="DocumentViewer"  Document="{Binding QuotationXPSDocument, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Stretch" 
+                    <Grid Margin="10">
+                        <DocumentViewer x:Name="DocumentViewer"  Document="{Binding QuotationXPSDocument, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Stretch" 
                                     VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MinHeight="790" MinWidth="800"
                                     Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Grid}},Path=ActualWidth-10}" 
                                     Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Grid}},Path=ActualHeight-10}"/>
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="SheduleViewer" Header="Schedule">
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="GENERATED POLICY SCHEDULE" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"></TextBlock>
+                        <Button Grid.Row="0"  Grid.Column="1"  HorizontalAlignment="Right" BorderBrush="#FFF" Height="22" Name="ExportScheduleButton" FontFamily="Arial"  Foreground="#FFF3ECEC" Style="{StaticResource PrimaryRoundButtonTemplate}" Content="Export Schedule" Width="120" Margin="0, 0, 0,0" Command="{Binding ExportScheduleCommand}" IsEnabled="{Binding IsExportScheduleButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" ToolTip="Export Schedule to Excel." />
+                        <Border Grid.Row="0"  BorderThickness="0.5" BorderBrush="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"></Border>
+
+                        <DataGrid Grid.Row="1" Grid.ColumnSpan="2" IsReadOnly="True" GridLinesVisibility="Vertical" AutoGenerateColumns="False" SelectedItem="{Binding SelectedGridRowItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding AvbobPolicyScheduleItems, UpdateSourceTrigger=PropertyChanged}"  Background="#FFEAEAEA" ScrollViewer.CanContentScroll="True" 
+                        ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"  Height="Auto" VerticalAlignment="Top" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                            <DataGrid.ColumnHeaderStyle>
+                                <Style TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="FontWeight" Value="Bold" />
+                                    <Setter Property="Background" Value="Gray" />
+                                </Style>
+                            </DataGrid.ColumnHeaderStyle>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="LINE NR"  Binding="{Binding LineNr, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="DATE"  Binding="{Binding EffectiveDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="POLICY NR"  Binding="{Binding PolicyNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="LAST NAME"    Binding="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="FIRST NAME" Binding="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="ID NUMBER"  Binding="{Binding IDNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="COVER AMOUNT (R)" Binding="{Binding CoverAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
                 </TabItem>
             </TabControl>
         </ScrollViewer>

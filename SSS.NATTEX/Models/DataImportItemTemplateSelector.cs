@@ -16,7 +16,7 @@ namespace SSS.NATTEX.Models
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
 
-            var result = item as AvbobPolicyScheduleItem;
+            var result = item as DataImportItem;
             if (result == null)
             {
                 return base.SelectTemplate(item, container);

@@ -61,5 +61,26 @@ namespace SSS.NATTEX.Views.Controls
                 return (this.DataContext as NavigationPaneViewModel).PendingQuotations.Count;
             }
         }
+
+        public int GetNumOfAvbobPendingQuotations()
+        {
+            int count = 0;
+            if ((this.DataContext as NavigationPaneViewModel).AvbobPendingQuotations == null)
+            {
+                return count;
+            }
+            else
+            {
+                return (this.DataContext as NavigationPaneViewModel).AvbobPendingQuotations.Count;
+            }
+        }
+
+        private void AvbobListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ListBoxItem obj = (sender as ListBoxItem);
+            var pendingQuotation = (obj.DataContext as AvbobPendingQuotation);
+            (this.DataContext as NavigationPaneViewModel).ShowPendingQuotationDetailWindow(pendingQuotation);
+
+        }
     }
 }

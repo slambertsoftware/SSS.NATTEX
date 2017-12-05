@@ -62,5 +62,7 @@ namespace SSS.NATTEX.DAL
 
         public virtual ICollection<AvbobPendingQuotation> AvbobPendingQuotations { get; set; }
         public virtual ICollection<AvbobPendingQuotationPolicy> AvbobPendingQuotationPolicies { get; set; }
+
+
     }
 }

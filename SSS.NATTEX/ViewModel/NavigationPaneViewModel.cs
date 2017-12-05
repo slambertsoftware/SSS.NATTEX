@@ -17,13 +17,14 @@ namespace SSS.NATTEX.ViewModel
     {
         #region fields
         private ObservableCollection<LibertyPendingQuotation> _pendindingQuotations;
+        private ObservableCollection<AvbobPendingQuotation> _avbobPendindingQuotations;
         private Visibility _navigationPaneVisibility;
-
-
+        public Visibility _avbobPendingQuotationsVisibility;
         #endregion
 
         #region properties
         public ConfirmedQuotation ConfirmedQuotation { get; set; }
+
         public ObservableCollection<LibertyPendingQuotation> PendingQuotations
         {
             get
@@ -36,6 +37,20 @@ namespace SSS.NATTEX.ViewModel
                 this.RaisePropertyChanged("PendingQuotations");
             }
         }
+
+        public ObservableCollection<AvbobPendingQuotation> AvbobPendingQuotations
+        {
+            get
+            {
+                return _avbobPendindingQuotations;
+            }
+            set
+            {
+                _avbobPendindingQuotations = value;
+                this.RaisePropertyChanged("AvbobPendingQuotations");
+            }
+        }
+
         public Visibility NavigationPaneVisibility
         {
             get
@@ -48,6 +63,20 @@ namespace SSS.NATTEX.ViewModel
                 this.RaisePropertyChanged("NavigationPaneVisibility");
             }
         }
+
+        public Visibility AvbobPendingQuotationsVisibility
+        {
+            get
+            {
+                return _avbobPendingQuotationsVisibility;
+            }
+            set
+            {
+                _avbobPendingQuotationsVisibility = value;
+                this.RaisePropertyChanged("AvbobPendingQuotationsVisibility");
+            }
+        }
+
         #endregion
 
         #region constructors
@@ -57,6 +86,12 @@ namespace SSS.NATTEX.ViewModel
             {
                 this.PendingQuotations = new ObservableCollection<LibertyPendingQuotation>();
                 this.PopulatePendingQuotations();
+            }
+
+            if (this.AvbobPendingQuotations == null)
+            {
+                this.AvbobPendingQuotations = new ObservableCollection<AvbobPendingQuotation>();
+                this.PopulateAvbobPendingQuotations();
             }
         }
 
@@ -83,6 +118,27 @@ namespace SSS.NATTEX.ViewModel
                     this.PendingQuotations = new ObservableCollection<LibertyPendingQuotation>();
                 }
                 this.PendingQuotations.Add(confirmation.PendingQuotation);
+
+                if (this.AvbobPendingQuotations == null)
+                {
+                    this.AvbobPendingQuotations = new ObservableCollection<AvbobPendingQuotation>();
+                }
+                this.AvbobPendingQuotations.Add(confirmation.AvbobPendingQuotation);
+            }
+        }
+
+
+        public void UpdateAvbobPendingQuotations(ConfirmedQuotation confirmation)
+        {
+            this.ConfirmedQuotation = confirmation;
+
+            if (this.ConfirmedQuotation != null)
+            {
+                if (this.AvbobPendingQuotations == null)
+                {
+                    this.AvbobPendingQuotations = new ObservableCollection<AvbobPendingQuotation>();
+                }
+                this.AvbobPendingQuotations.Add(confirmation.AvbobPendingQuotation);
             }
         }
 
@@ -98,7 +154,17 @@ namespace SSS.NATTEX.ViewModel
             }
         }
 
-
+        public void PopulateAvbobPendingQuotations()
+        {
+            using (var context = new NattexApplicationContext())
+            {
+                var quotations = context.AvbobPendingQuotations.Where(x => x.IsActive == true && x.IsConfirmed == true);
+                if (quotations != null)
+                {
+                    this.AvbobPendingQuotations = new ObservableCollection<AvbobPendingQuotation>(quotations);
+                }
+            }
+        }
 
         public void ShowPendingQuotationDetailWindow(LibertyPendingQuotation pendingQuotation)
         {
@@ -109,13 +175,27 @@ namespace SSS.NATTEX.ViewModel
                 viewer.ShowActivated = true;
                 viewer.ShowInTaskbar = true;
                 viewer.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                //viewer.Width = (0.90 * viewer.Owner.Width);
                 viewer.WindowState = WindowState.Normal;
                 viewer.BringIntoView();
                 viewer.Show();
                 viewer.SizeToContent = SizeToContent.Width;
             }
+        }
 
+        public void ShowPendingQuotationDetailWindow(AvbobPendingQuotation pendingQuotation)
+        {
+            if (pendingQuotation != null)
+            {
+                QuotationDetailWindow viewer = new QuotationDetailWindow(pendingQuotation);
+                viewer.Owner = System.Windows.Application.Current.MainWindow;
+                viewer.ShowActivated = true;
+                viewer.ShowInTaskbar = true;
+                viewer.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                viewer.WindowState = WindowState.Normal;
+                viewer.BringIntoView();
+                viewer.Show();
+                viewer.SizeToContent = SizeToContent.Width;
+            }
         }
         #endregion
     }

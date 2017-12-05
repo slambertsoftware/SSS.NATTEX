@@ -27,31 +27,21 @@
                             <Image Source="/SSS.NATTEX;component/Resources/Images/quote_16.jpg"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem x:Name="mnuRemoveQuotation"  Header="Remove Quoation">
-                        <MenuItem.Icon>
-                            <Image Source="/SSS.NATTEX;component/Resources/Images/quote_16.png"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem x:Name="mnuViewQuotation" Header="View Quoation">
-                        <MenuItem.Icon>
-                            <Image Source="/SSS.NATTEX;component/Resources/Images/quote_16.png"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
                 </MenuItem>
 
                 <MenuItem Header="Applications">
-                    <MenuItem Header="New Application" IsCheckable="true"/>
-                    <MenuItem Header="Update Application" IsCheckable="true"/>
-                    <MenuItem Header="Remove Application" IsCheckable="true"/>
-                    <MenuItem Header="View Application" IsCheckable="true"/>
+                    <MenuItem Header="New Application"/>
+                    <MenuItem Header="Update Application"/>
+                    <MenuItem Header="Remove Application"/>
+                    <MenuItem Header="View Application" />
                 </MenuItem>
                 <MenuItem Header="Schedules">
-                    <MenuItem Header="New Schedule" IsCheckable="true"/>
+                    <MenuItem Header="View Schedules" IsCheckable="true"/>
                 </MenuItem>
                 <MenuItem Header="Reports" />
                 <MenuItem Header="Administration">
-                    <MenuItem Header="Application Setup" IsCheckable="true"/>
-                    <MenuItem Header="User Management" IsCheckable="true"/>
+                    <MenuItem x:Name="mnuAppConfiguration"  Header="Application Configuration"  Click="mnuAppConfiguration_Click"/>
+                    <MenuItem Header="User Management"/>
                 </MenuItem>
                 <MenuItem Header="Help">
                     <MenuItem Header="Abouts NAMS" IsCheckable="true"/>

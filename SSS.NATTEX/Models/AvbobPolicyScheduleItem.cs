@@ -8,6 +8,7 @@ namespace SSS.NATTEX.Models
 {
     public class AvbobPolicyScheduleItem
     {
+        public int LineNumber { get; set; }
         public string PolicyNumber { get; set; }
         public string Initial { get; set; }
         public string FirstName { get; set; }
